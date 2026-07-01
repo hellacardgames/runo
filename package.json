@@ -1,0 +1,44 @@
+{
+  "name": "@hellacardgames/runo",
+  "version": "0.1.0",
+  "description": "A TypeScript library implementing the RUNO card game.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Richard Gieg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellacardgames/runo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hellacardgames/runo/issues"
+  },
+  "homepage": "https://github.com/hellacardgames/runo#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "prettier": "^3.9.4",
+    "tsdown": "^0.22.3",
+    "typescript": "^6.0.3"
+  }
+}
