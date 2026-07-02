@@ -15,9 +15,6 @@
     "url": "https://github.com/hellacardgames/runo/issues"
   },
   "homepage": "https://github.com/hellacardgames/runo#readme",
-  "engines": {
-    "node": ">=22"
-  },
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
   "exports": {

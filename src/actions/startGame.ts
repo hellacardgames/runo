@@ -1,33 +1,27 @@
-import type { Game, ActiveGame } from "../types/game.js";
+import { MIN_PLAYERS } from "../constants.js";
+import { games } from "../games.js";
 
 type StartGameResult =
-  | {
-      readonly success: true;
-      readonly game: ActiveGame;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidStatus";
-    };
+  { success: true } | { success: false; error: StartGameError };
 
-export function startGame(game: Game): StartGameResult {
-  if (game.status !== "open") {
-    return {
-      success: false,
-      error: "invalidStatus",
-    };
+type StartGameError =
+  "gameNotFound" | "playerNotFound" | "invalidStatus" | "minPlayersNotReached";
+
+export function startGame(gameId: string, playerId: string): StartGameResult {
+  const game = games.get(gameId);
+  if (!game) {
+    return { success: false, error: "gameNotFound" };
   }
-  return {
-    success: true,
-    game: {
-      ...game,
-      status: "active",
-      players: game.players.map((player) => ({
-        ...player,
-        roundsWon: 0,
-        points: 0,
-      })),
-      currentPlayerIndex: 0,
-    },
-  };
+  const player = game.players.find((p) => p.id === playerId);
+  if (!player) {
+    return { success: false, error: "playerNotFound" };
+  }
+  if (game.status !== "open") {
+    return { success: false, error: "invalidStatus" };
+  }
+  if (game.players.length < MIN_PLAYERS) {
+    return { success: false, error: "minPlayersNotReached" };
+  }
+  game.status = "active";
+  return { success: true };
 }

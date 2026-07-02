@@ -1,32 +1,19 @@
-import type {
-  AbandonedGame,
-  ForfeitedGame,
-  OpenGame,
-  Game,
-  ActiveGame,
-  CompletedGame,
-} from "../types/game.js";
+import { games } from "../games.js";
 
 type LeaveGameResult =
-  | {
-      readonly success: true;
-      readonly game:
-        OpenGame | ActiveGame | CompletedGame | ForfeitedGame | AbandonedGame;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidStatus";
-    };
+  { success: true } | { success: false; error: LeaveGameError };
 
-export function leaveGame(game: Game): LeaveGameResult {
-  if (game.status === "abandoned") {
-    return {
-      success: false,
-      error: "invalidStatus",
-    };
+type LeaveGameError = "gameNotFound" | "playerNotFound";
+
+export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
+  const game = games.get(gameId);
+  if (!game) {
+    return { success: false, error: "gameNotFound" };
   }
-  return {
-    success: true,
-    game: { ...game },
-  };
+  const player = game.players.find((p) => p.id === playerId);
+  if (!player) {
+    return { success: false, error: "playerNotFound" };
+  }
+  // TODO: Implement!
+  return { success: true };
 }

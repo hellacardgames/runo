@@ -1,24 +1,21 @@
-import type { CompletedGame, Game, ActiveGame } from "../types/game.js";
+import { games } from "../games.js";
 
 type PlayCardResult =
-  | {
-      readonly success: true;
-      readonly game: ActiveGame | CompletedGame;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidStatus";
-    };
+  { success: true } | { success: false; error: PlayCardError };
 
-export function playCard(game: Game): PlayCardResult {
-  if (game.status !== "active") {
-    return {
-      success: false,
-      error: "invalidStatus",
-    };
+type PlayCardError = "gameNotFound" | "playerNotFound" | "invalidStatus";
+
+export function playCard(gameId: string, playerId: string): PlayCardResult {
+  const game = games.get(gameId);
+  if (!game) {
+    return { success: false, error: "gameNotFound" };
   }
-  return {
-    success: true,
-    game: { ...game },
-  };
+  const player = game.players.find((p) => p.id === playerId);
+  if (!player) {
+    return { success: false, error: "playerNotFound" };
+  }
+  if (game.status !== "active") {
+    return { success: false, error: "invalidStatus" };
+  }
+  return { success: true };
 }

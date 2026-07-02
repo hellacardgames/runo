@@ -1,24 +1,34 @@
-import type { OpenGame, Game } from "../types/game.js";
+import { games } from "../games.js";
+import { MAX_PLAYERS } from "../constants.js";
+import type { Player } from "../types/player.js";
 
 type JoinGameResult =
-  | {
-      readonly success: true;
-      readonly game: OpenGame;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidStatus";
-    };
+  | { success: true; playerId: string }
+  | { success: false; error: JoinGameError };
 
-export function joinGame(game: Game): JoinGameResult {
-  if (game.status !== "open") {
-    return {
-      success: false,
-      error: "invalidStatus",
-    };
+type JoinGameError = "gameNotFound" | "invalidStatus" | "maxPlayersReached";
+
+export function joinGame(gameId: string, name: string): JoinGameResult {
+  const game = games.get(gameId);
+  if (!game) {
+    return { success: false, error: "gameNotFound" };
   }
+  if (game.status !== "open") {
+    return { success: false, error: "invalidStatus" };
+  }
+  if (game.players.length === MAX_PLAYERS) {
+    return { success: false, error: "maxPlayersReached" };
+  }
+  const player: Player = {
+    id: crypto.randomUUID(),
+    pid: crypto.randomUUID(),
+    name,
+    roundsWon: 0,
+    points: 0,
+  };
+  game.players.push(player);
   return {
     success: true,
-    game: { ...game },
+    playerId: player.id,
   };
 }

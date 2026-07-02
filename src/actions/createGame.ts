@@ -1,23 +1,35 @@
-import { randomUUID } from "node:crypto";
-import type { OpenGame } from "../types/game.js";
+import { games } from "../games.js";
+import { MAX_GAMES } from "../constants.js";
+import type { Game } from "../types/game.js";
+import type { Player } from "../types/player.js";
 
-type CreateGameResult = {
-  readonly success: true;
-  readonly game: OpenGame;
-};
+type CreateGameResult =
+  | { success: true; gameId: string; playerId: string }
+  | { success: false; error: CreateGameError };
+
+type CreateGameError = "maxGamesReached";
 
 export function createGame(name: string): CreateGameResult {
-  const player: OpenGame["players"][number] = {
-    id: randomUUID(),
-    pid: randomUUID(),
+  if (games.size === MAX_GAMES) {
+    return { success: false, error: "maxGamesReached" };
+  }
+  const player: Player = {
+    id: crypto.randomUUID(),
+    pid: crypto.randomUUID(),
     name,
+    roundsWon: 0,
+    points: 0,
   };
+  const game: Game = {
+    id: crypto.randomUUID(),
+    status: "open",
+    players: [player],
+    currentPlayerIndex: 0,
+  };
+  games.set(game.id, game);
   return {
     success: true,
-    game: {
-      id: randomUUID(),
-      status: "open",
-      players: [player],
-    },
+    gameId: game.id,
+    playerId: player.id,
   };
 }
