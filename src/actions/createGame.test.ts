@@ -8,18 +8,18 @@ beforeEach(() => {
 });
 
 test("creates an open game with one player", () => {
-  const result = createGame("Bob");
-  if (!result.success) {
+  const createGameResult = createGame("Bob");
+  if (!createGameResult.success) {
     throw new Error("Expected createGame to succeed.");
   }
   expect(games.size).toBe(1);
-  const game = games.get(result.gameId);
+  const game = games.get(createGameResult.gameId);
   if (!game) {
     throw new Error("Expected game to exist.");
   }
   expect(game.status).toBe("open");
   expect(game.players).toHaveLength(1);
-  const player = game.players.find((p) => p.id === result.playerId);
+  const player = game.players.find((p) => p.id === createGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }
@@ -30,12 +30,12 @@ test("creates an open game with one player", () => {
 
 test("does not allow creating more than MAX_GAMES", () => {
   for (let i = 0; i < MAX_GAMES; i++) {
-    const result = createGame("Bob");
-    expect(result.success).toBe(true);
+    const createGameResult = createGame("Bob");
+    expect(createGameResult.success).toBe(true);
   }
-  const result = createGame("Bob");
-  if (result.success) {
+  const createGameResult = createGame("Bob");
+  if (createGameResult.success) {
     throw new Error("Expected createGame to fail.");
   }
-  expect(result.error).toBe("maxGamesReached");
+  expect(createGameResult.error).toBe("maxGamesReached");
 });
