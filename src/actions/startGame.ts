@@ -5,7 +5,11 @@ type StartGameResult =
   { success: true } | { success: false; error: StartGameError };
 
 type StartGameError =
-  "gameNotFound" | "playerNotFound" | "invalidStatus" | "minPlayersNotReached";
+  | "gameNotFound"
+  | "playerNotFound"
+  | "notAdmin"
+  | "invalidStatus"
+  | "minPlayersNotReached";
 
 export function startGame(gameId: string, playerId: string): StartGameResult {
   const game = games.get(gameId);
@@ -15,6 +19,9 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
+  }
+  if (player !== game.players[0]) {
+    return { success: false, error: "notAdmin" };
   }
   if (game.status !== "open") {
     return { success: false, error: "invalidStatus" };
