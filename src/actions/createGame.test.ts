@@ -28,7 +28,7 @@ test("creates an open game with one player", () => {
   expect(player.points).toBe(0);
 });
 
-test("does not allow creating more than MAX_GAMES", () => {
+test("allows creating up to MAX_GAMES games", () => {
   for (let i = 0; i < MAX_GAMES; i++) {
     const createGameResult = createGame("Bob");
     expect(createGameResult.success).toBe(true);

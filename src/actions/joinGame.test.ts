@@ -31,7 +31,7 @@ test("adds a player", () => {
   expect(player).toBe(game.players[1]);
 });
 
-test("does not allow adding more than MAX_PLAYERS", () => {
+test("allows up to MAX_PLAYERS players", () => {
   const createGameResult = createGame("Bob");
   if (!createGameResult.success) {
     throw new Error("Expected createGame to succeed.");
@@ -45,4 +45,23 @@ test("does not allow adding more than MAX_PLAYERS", () => {
     throw new Error("Expected joinGame to fail.");
   }
   expect(joinGameResult.error).toBe("maxPlayersReached");
+});
+
+test("only allows joining open games", () => {
+  const createGameResult = createGame("Bob");
+  if (!createGameResult.success) {
+    throw new Error("Expected createGame to succeed.");
+  }
+  const game = games.get(createGameResult.gameId);
+  if (!game) {
+    throw new Error("Expected game to exist.");
+  }
+  for (const status of ["active", "completed", "forfeited"] as const) {
+    game.status = status;
+    const joinGameResult = joinGame(createGameResult.gameId, "Bob");
+    if (joinGameResult.success) {
+      throw new Error("Expected joinGame to fail.");
+    }
+    expect(joinGameResult.error).toBe("invalidStatus");
+  }
 });
