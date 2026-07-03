@@ -3,7 +3,8 @@ import { games } from "../games.js";
 type PlayCardResult =
   { success: true } | { success: false; error: PlayCardError };
 
-type PlayCardError = "gameNotFound" | "playerNotFound" | "invalidStatus";
+type PlayCardError =
+  "gameNotFound" | "playerNotFound" | "invalidStatus" | "outOfTurn";
 
 export function playCard(gameId: string, playerId: string): PlayCardResult {
   const game = games.get(gameId);
@@ -16,6 +17,9 @@ export function playCard(gameId: string, playerId: string): PlayCardResult {
   }
   if (game.status !== "active") {
     return { success: false, error: "invalidStatus" };
+  }
+  if (player !== game.players[game.currentPlayerIndex]) {
+    return { success: false, error: "outOfTurn" };
   }
   return { success: true };
 }
