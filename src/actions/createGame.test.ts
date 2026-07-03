@@ -18,12 +18,16 @@ test("creates an open game with one player", () => {
     throw new Error("Expected game to exist.");
   }
   expect(game.status).toBe("open");
+  expect(game.drawPile).toHaveLength(0);
+  expect(game.discardPile).toHaveLength(0);
+  expect(game.currentPlayerIndex).toBe(0);
   expect(game.players).toHaveLength(1);
   const player = game.players.find((p) => p.id === createGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }
   expect(player.name).toBe("Bob");
+  expect(player.hand).toHaveLength(0);
   expect(player.roundsWon).toBe(0);
   expect(player.points).toBe(0);
 });

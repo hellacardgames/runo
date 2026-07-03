@@ -17,6 +17,7 @@ export function createGame(name: string): CreateGameResult {
     id: crypto.randomUUID(),
     pid: crypto.randomUUID(),
     name,
+    hand: [],
     roundsWon: 0,
     points: 0,
   };
@@ -24,6 +25,8 @@ export function createGame(name: string): CreateGameResult {
     id: crypto.randomUUID(),
     status: "open",
     players: [player],
+    drawPile: [],
+    discardPile: [],
     currentPlayerIndex: 0,
   };
   games.set(game.id, game);

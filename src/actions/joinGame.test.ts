@@ -21,11 +21,13 @@ test("adds a player", () => {
   if (!game) {
     throw new Error("Expected game to exist.");
   }
+  expect(game.players).toHaveLength(2);
   const player = game.players.find((p) => p.id === joinGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }
   expect(player.name).toBe("Sally");
+  expect(player.hand).toHaveLength(0);
   expect(player.roundsWon).toBe(0);
   expect(player.points).toBe(0);
   expect(player).toBe(game.players[1]);

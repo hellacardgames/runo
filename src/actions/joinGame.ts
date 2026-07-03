@@ -23,6 +23,7 @@ export function joinGame(gameId: string, name: string): JoinGameResult {
     id: crypto.randomUUID(),
     pid: crypto.randomUUID(),
     name,
+    hand: [],
     roundsWon: 0,
     points: 0,
   };

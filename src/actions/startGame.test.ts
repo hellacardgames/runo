@@ -3,12 +3,14 @@ import { games } from "../games.js";
 import { createGame } from "./createGame.js";
 import { joinGame } from "./joinGame.js";
 import { startGame } from "./startGame.js";
+import { cards } from "../cards.js";
+import { CARDS_PER_HAND } from "../constants.js";
 
 beforeEach(() => {
   games.clear();
 });
 
-test("transitions game from open to active", () => {
+test("starts a game and initializes gameplay state", () => {
   const createGameResult = createGame("Bob");
   if (!createGameResult.success) {
     throw new Error("Expected createGame to succeed.");
@@ -26,6 +28,18 @@ test("transitions game from open to active", () => {
   }
   expect(game.status).toBe("active");
   expect(game.currentPlayerIndex).toBe(0);
+  expect(game.drawPile).toHaveLength(cards.length - 2 * CARDS_PER_HAND - 1);
+  expect(game.discardPile).toHaveLength(1);
+  const firstDiscard = game.discardPile[0];
+  if (!firstDiscard) {
+    throw new Error("Expected firstDiscard to exist.");
+  }
+  expect(firstDiscard.type).toBe("number");
+  for (const player of game.players) {
+    expect(player.hand).toHaveLength(CARDS_PER_HAND);
+    expect(player.roundsWon).toBe(0);
+    expect(player.points).toBe(0);
+  }
 });
 
 test("only allows starting open games", () => {
