@@ -1,4 +1,4 @@
-import type { Player } from "./player.js";
+import type { Player } from "./Player.js";
 
 export type Game = {
   readonly id: string;

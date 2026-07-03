@@ -1,6 +1,6 @@
 import { games } from "../games.js";
 import { MAX_PLAYERS } from "../constants.js";
-import type { Player } from "../types/player.js";
+import type { Player } from "../types/Player.js";
 
 type JoinGameResult =
   | { success: true; playerId: string }
