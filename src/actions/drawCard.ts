@@ -28,7 +28,15 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
   }
   // TODO: Check if player has playable card.
   if (game.drawPile.length === 0) {
-    game.drawPile = game.discardPile.splice(0, game.discardPile.length - 1);
+    game.drawPile = game.discardPile
+      .splice(0, game.discardPile.length - 1)
+      .map((discardedCard) => {
+        if (discardedCard.type === "discardedWild") {
+          return discardedCard.card;
+        } else {
+          return discardedCard;
+        }
+      });
     shuffle(game.drawPile);
   }
   const card = game.drawPile.pop();
