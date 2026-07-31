@@ -1,4 +1,5 @@
 import { games } from "../games.js";
+import { isCardPlayable } from "../utils/isCardPlayable.js";
 
 type PlayCardResult =
   { success: true } | { success: false; error: PlayCardError };
@@ -9,7 +10,8 @@ type PlayCardError =
   | "invalidStatus"
   | "outOfTurn"
   | "cardNotFound"
-  | "cardIsWild";
+  | "cardIsWild"
+  | "cardNotPlayable";
 
 export function playCard(
   gameId: string,
@@ -36,6 +38,9 @@ export function playCard(
   }
   if (card.type === "wild") {
     return { success: false, error: "cardIsWild" };
+  }
+  if (!isCardPlayable(card, player.hand, game.discardPile)) {
+    return { success: false, error: "cardNotPlayable" };
   }
   // TODO: Implement!
   return { success: true };
