@@ -40,4 +40,4 @@ type DiscardedWildCard = {
   readonly color: Color;
 };
 
-type Color = "red" | "yellow" | "green" | "blue";
+export type Color = "red" | "yellow" | "green" | "blue";

@@ -1,21 +1,23 @@
 import { games } from "../games.js";
+import type { Color } from "../types/Card.js";
 
-type PlayCardResult =
-  { success: true } | { success: false; error: PlayCardError };
+type PlayWildCardResult =
+  { success: true } | { success: false; error: PlayWildCardError };
 
-type PlayCardError =
+type PlayWildCardError =
   | "gameNotFound"
   | "playerNotFound"
   | "invalidStatus"
   | "outOfTurn"
   | "cardNotFound"
-  | "cardIsWild";
+  | "cardNotWild";
 
-export function playCard(
+export function playWildCard(
   gameId: string,
   playerId: string,
   cardId: string,
-): PlayCardResult {
+  color: Color,
+): PlayWildCardResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };
@@ -34,9 +36,10 @@ export function playCard(
   if (!card) {
     return { success: false, error: "cardNotFound" };
   }
-  if (card.type === "wild") {
-    return { success: false, error: "cardIsWild" };
+  if (card.type !== "wild") {
+    return { success: false, error: "cardNotWild" };
   }
   // TODO: Implement!
+  console.log(color);
   return { success: true };
 }
