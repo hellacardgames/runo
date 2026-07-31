@@ -103,3 +103,12 @@ test("wild draw four is playable if player does not have matching color", () => 
   ];
   expect(isCardPlayable(card, hand, discardPile)).toBe(true);
 });
+
+test("throws error if discard pile is empty", () => {
+  const card: Card = { id: "###", type: "number", color: "blue", value: 5 };
+  const hand: readonly Card[] = [];
+  const discardPile: readonly DiscardedCard[] = [];
+  expect(() => isCardPlayable(card, hand, discardPile)).toThrow(
+    "Discard pile is empty.",
+  );
+});
