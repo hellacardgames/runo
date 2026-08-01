@@ -29,6 +29,30 @@ export class PlayerList<
     this.#list.push(player);
   }
 
+  remove(player: T): void {
+    const index = this.#list.indexOf(player);
+    if (index === -1) {
+      return;
+    }
+    if (index === this.#currentPlayerIndex) {
+      this.advance();
+    }
+    this.#list.splice(index, 1);
+    if (this.#currentPlayerIndex > index) {
+      this.#currentPlayerIndex--;
+    }
+  }
+
+  advance(): void {
+    if (this.#list.length === 0) {
+      return;
+    }
+    const step = this.#reversed ? -1 : 1;
+    const rawIndex = this.#currentPlayerIndex + step;
+    const wrappedIndex = (rawIndex + this.#list.length) % this.#list.length;
+    this.#currentPlayerIndex = wrappedIndex;
+  }
+
   changeDirection(): void {
     this.#reversed = !this.#reversed;
   }
