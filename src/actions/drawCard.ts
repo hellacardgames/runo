@@ -1,4 +1,5 @@
 import { games } from "../games.js";
+import { isCardPlayable } from "../utils/isCardPlayable.js";
 import { shuffle } from "../utils/shuffle.js";
 
 type DrawCardResult =
@@ -26,7 +27,11 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
   if (player !== game.players[game.currentPlayerIndex]) {
     return { success: false, error: "outOfTurn" };
   }
-  // TODO: Check if player has playable card.
+  for (const card of player.hand) {
+    if (isCardPlayable(card, player.hand, game.discardPile)) {
+      return { success: false, error: "hasPlayableCard" };
+    }
+  }
   if (game.drawPile.length === 0) {
     game.drawPile = game.discardPile
       .splice(0, game.discardPile.length - 1)
