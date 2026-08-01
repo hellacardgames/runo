@@ -21,8 +21,9 @@ test("creates an open game with one player", () => {
   expect(game.drawPile).toHaveLength(0);
   expect(game.discardPile).toHaveLength(0);
   expect(game.currentPlayerIndex).toBe(0);
-  expect(game.players).toHaveLength(1);
-  const player = game.players.find((p) => p.id === createGameResult.playerId);
+  expect(game.playerList).toHaveLength(1);
+  // const player = game.players.find((p) => p.id === createGameResult.playerId);
+  const player = game.playerList.findById(createGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }

@@ -35,7 +35,7 @@ test("starts a game and initializes gameplay state", () => {
     throw new Error("Expected firstDiscard to exist.");
   }
   expect(firstDiscard.type).toBe("number");
-  for (const player of game.players) {
+  for (const player of game.playerList) {
     expect(player.hand).toHaveLength(CARDS_PER_HAND);
     expect(player.roundsWon).toBe(0);
     expect(player.points).toBe(0);
@@ -52,7 +52,7 @@ test("only allows starting open games", () => {
   if (!game) {
     throw new Error("Expected game to exist.");
   }
-  const player = game.players.find((p) => p.id === createGameResult.playerId);
+  const player = game.playerList.findById(createGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }

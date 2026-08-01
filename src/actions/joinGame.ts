@@ -16,7 +16,7 @@ export function joinGame(gameId: string, name: string): JoinGameResult {
   if (game.status !== "open") {
     return { success: false, error: "invalidStatus" };
   }
-  if (game.players.length === MAX_PLAYERS) {
+  if (game.playerList.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }
   const player: Player = {
@@ -27,7 +27,7 @@ export function joinGame(gameId: string, name: string): JoinGameResult {
     roundsWon: 0,
     points: 0,
   };
-  game.players.push(player);
+  game.playerList.add(player);
   return {
     success: true,
     playerId: player.id,

@@ -18,17 +18,17 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.players.find((p) => p.id === playerId);
+  const player = game.playerList.findById(playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (player !== game.players[0]) {
+  if (player !== game.playerList.getAt(0)) {
     return { success: false, error: "notAdmin" };
   }
   if (game.status !== "open") {
     return { success: false, error: "invalidStatus" };
   }
-  if (game.players.length < MIN_PLAYERS) {
+  if (game.playerList.length < MIN_PLAYERS) {
     return { success: false, error: "minPlayersNotReached" };
   }
 
@@ -38,7 +38,7 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
 
   // Deal cards to players.
   for (let i = 0; i < CARDS_PER_HAND; i++) {
-    for (const p of game.players) {
+    for (const p of game.playerList) {
       const card = game.drawPile.pop();
       if (!card) {
         throw new Error("Ran out of cards while dealing.");

@@ -2,6 +2,7 @@ import { games } from "../games.js";
 import { MAX_GAMES } from "../constants.js";
 import type { Game } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
+import { PlayerList } from "../utils/PlayerList.js";
 
 type CreateGameResult =
   | { success: true; gameId: string; playerId: string }
@@ -21,10 +22,12 @@ export function createGame(name: string): CreateGameResult {
     roundsWon: 0,
     points: 0,
   };
+  const playerList = new PlayerList<Player>();
+  playerList.add(player);
   const game: Game = {
     id: crypto.randomUUID(),
     status: "open",
-    players: [player],
+    playerList,
     drawPile: [],
     discardPile: [],
     currentPlayerIndex: 0,

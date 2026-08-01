@@ -17,14 +17,15 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.players.find((p) => p.id === playerId);
+  // const player = game.players.find((p) => p.id === playerId);
+  const player = game.playerList.findById(playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
   if (game.status !== "active") {
     return { success: false, error: "invalidStatus" };
   }
-  if (player !== game.players[game.currentPlayerIndex]) {
+  if (player !== game.playerList.currentPlayer) {
     return { success: false, error: "outOfTurn" };
   }
   for (const card of player.hand) {

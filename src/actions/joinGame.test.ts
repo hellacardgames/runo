@@ -21,8 +21,8 @@ test("adds a player", () => {
   if (!game) {
     throw new Error("Expected game to exist.");
   }
-  expect(game.players).toHaveLength(2);
-  const player = game.players.find((p) => p.id === joinGameResult.playerId);
+  expect(game.playerList).toHaveLength(2);
+  const player = game.playerList.findById(joinGameResult.playerId);
   if (!player) {
     throw new Error("Expected player to exist.");
   }
@@ -30,7 +30,7 @@ test("adds a player", () => {
   expect(player.hand).toHaveLength(0);
   expect(player.roundsWon).toBe(0);
   expect(player.points).toBe(0);
-  expect(player).toBe(game.players[1]);
+  expect(player).toBe(game.playerList.getAt(1));
 });
 
 test("allows up to MAX_PLAYERS players", () => {

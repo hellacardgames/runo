@@ -24,14 +24,14 @@ export function playWildCard(
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.players.find((p) => p.id === playerId);
+  const player = game.playerList.findById(playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
   if (game.status !== "active") {
     return { success: false, error: "invalidStatus" };
   }
-  if (player !== game.players[game.currentPlayerIndex]) {
+  if (player !== game.playerList.currentPlayer) {
     return { success: false, error: "outOfTurn" };
   }
   const card = player.hand.find((c) => c.id === cardId);
