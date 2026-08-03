@@ -1,7 +1,6 @@
+import { emitEvent, removePlayer } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
-import { emitEvent } from "../lib/emitEvent.js";
-import { removePlayer } from "../lib/removePlayer.js";
 import type { DiscardedCard } from "../types/Card.js";
 
 type LeaveGameResult =

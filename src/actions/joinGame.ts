@@ -1,6 +1,6 @@
+import { emitEvent } from "@hellacardgames/lib";
 import { games } from "../games.js";
 import { MAX_PLAYERS } from "../constants.js";
-import { emitEvent } from "../lib/emitEvent.js";
 import type { Player } from "../types/Player.js";
 
 type JoinGameResult =

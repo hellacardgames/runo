@@ -1,4 +1,4 @@
-import { shuffle } from "./shuffle.js";
+import { shuffle } from "@hellacardgames/lib";
 import type { Card } from "../types/Card.js";
 import type { Game } from "../types/Game.js";
 

@@ -1,7 +1,5 @@
+import { emitEvent, emitEventToPlayer, shuffle } from "@hellacardgames/lib";
 import { INITIAL_HAND_SIZE } from "../constants.js";
-import { emitEventToPlayer } from "./emitEventToPlayer.js";
-import { emitEvent } from "./emitEvent.js";
-import { shuffle } from "./shuffle.js";
 import type { Game } from "../types/Game.js";
 
 export function startRound(game: Game): void {
