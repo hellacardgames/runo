@@ -1,4 +1,4 @@
-// import { emitEvent } from "../../../lib";
+import { emitEvent } from "./emitEvent.js";
 import type { Game } from "../types/Game.js";
 
 export function changeTurn(game: Game) {
@@ -9,8 +9,8 @@ export function changeTurn(game: Game) {
     game.currentPlayerIndex =
       (game.currentPlayerIndex + 1) % game.players.length;
   }
-  // emitEvent(game, {
-  //   type: "turnChanged",
-  //   currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
-  // });
+  emitEvent(game, {
+    type: "turnChanged",
+    currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+  });
 }

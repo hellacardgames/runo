@@ -1,6 +1,6 @@
+import { shuffle } from "./shuffle.js";
 import type { Card } from "../types/Card.js";
 import type { Game } from "../types/Game.js";
-import { shuffle } from "./shuffle.js";
 
 export function drawCardFromDrawPile(game: Game): Card {
   if (game.drawPile.length === 0) {

@@ -1,5 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
+import { emitEvent } from "../lib/emitEvent.js";
 import { startRound } from "../lib/startRound.js";
 
 type StartGameResult =
@@ -37,10 +38,10 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   startRound(game);
   game.status = "started";
   game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
-  // emitEvent(startedGame, { type: "gameStarted" });
-  // emitEvent(startedGame, {
-  //   type: "expirationUpdated",
-  //   expiresAt: startedGame.expiresAt,
-  // });
+  emitEvent(game, { type: "gameStarted" });
+  emitEvent(game, {
+    type: "expirationUpdated",
+    expiresAt: game.expiresAt,
+  });
   return { success: true };
 }

@@ -2,6 +2,8 @@ import { EXPIRY_EXTENSION_MS, WINNING_SCORE } from "../constants.js";
 import { games } from "../games.js";
 import { changeTurn } from "../lib/changeTurn.js";
 import { drawCardFromDrawPile } from "../lib/drawCardFromDeck.js";
+import { emitEvent } from "../lib/emitEvent.js";
+import { emitEventToPlayer } from "../lib/emitEventToPlayer.js";
 import { getPointsForCard } from "../lib/getPointsForCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { startRound } from "../lib/startRound.js";
@@ -55,19 +57,19 @@ export function playCard(
   }
 
   game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
-  // emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
+  emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
 
   player.hand.splice(cardIndex, 1);
   game.discardPile.push(card);
-  // emitEvent(game, { type: "cardPlayed", username: player.username, card });
+  emitEvent(game, { type: "cardPlayed", username: player.username, card });
 
   if (card.type === "reverse") {
     if (game.players.length > 2) {
       game.isReversed = !game.isReversed;
-      // emitEvent(game, {
-      //   type: "directionChanged",
-      //   isReversed: game.isReversed,
-      // });
+      emitEvent(game, {
+        type: "directionChanged",
+        isReversed: game.isReversed,
+      });
     } else {
       changeTurn(game);
     }
@@ -81,12 +83,12 @@ export function playCard(
     cards.push(drawCardFromDrawPile(game));
     for (const c of cards) {
       targetPlayer.hand.push(c);
-      // emitEventToPlayer(targetPlayer, { type: "drewCard", card: c });
+      emitEventToPlayer(targetPlayer, { type: "drewCard", card: c });
     }
-    // emitEvent(game, {
-    //   type: "playerDrewTwoCards",
-    //   username: targetPlayer.username,
-    // });
+    emitEvent(game, {
+      type: "playerDrewTwoCards",
+      username: targetPlayer.username,
+    });
   }
 
   if (player.hand.length === 0) {
@@ -95,8 +97,8 @@ export function playCard(
       while ((cardToReturn = p.hand.pop())) {
         player.score += getPointsForCard(cardToReturn);
         game.drawPile.push(cardToReturn);
-        // emitEventToPlayer(p, { type: "returnedCard", cardId: cardToReturn.id });
-        // emitEvent(game, { type: "playerReturnedCard", username: p.username });
+        emitEventToPlayer(p, { type: "returnedCard", cardId: cardToReturn.id });
+        emitEvent(game, { type: "playerReturnedCard", username: p.username });
       }
     }
     const discardsToReturn = game.discardPile.splice(
@@ -111,29 +113,29 @@ export function playCard(
         return c;
       }),
     );
-    // emitEvent(game, { type: "discardPileReturned" });
+    emitEvent(game, { type: "discardPileReturned" });
 
     if (player.score >= WINNING_SCORE) {
-      // emitEvent(game, {
-      //   type: "playerWonGame",
-      //   username: player.username,
-      //   score: player.score,
-      // });
-      // emitEvent(game, { type: "gameCompleted" });
+      emitEvent(game, {
+        type: "playerWonGame",
+        username: player.username,
+        score: player.score,
+      });
+      emitEvent(game, { type: "gameCompleted" });
       game.status = "completed";
     } else {
-      // emitEvent(game, {
-      //   type: "playerWonRound",
-      //   username: player.username,
-      //   score: player.score,
-      // });
+      emitEvent(game, {
+        type: "playerWonRound",
+        username: player.username,
+        score: player.score,
+      });
       const currentPlayer = game.players[game.currentPlayerIndex]!;
       if (currentPlayer !== player) {
         game.currentPlayerIndex = game.players.indexOf(player);
-        // emitEvent(game, {
-        //   type: "turnChanged",
-        //   currentPlayerUsername: player.username,
-        // });
+        emitEvent(game, {
+          type: "turnChanged",
+          currentPlayerUsername: player.username,
+        });
       }
       startRound(game);
     }

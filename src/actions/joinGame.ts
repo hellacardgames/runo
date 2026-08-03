@@ -1,5 +1,6 @@
 import { games } from "../games.js";
 import { MAX_PLAYERS } from "../constants.js";
+import { emitEvent } from "../lib/emitEvent.js";
 import type { Player } from "../types/Player.js";
 
 type JoinGameResult =
@@ -43,6 +44,6 @@ export function joinGame(
     score: 0,
   };
   game.players.push(player);
-  // emitEvent(game, { type: "playerJoined", username });
+  emitEvent(game, { type: "playerJoined", username });
   return { success: true, playerId: player.id };
 }

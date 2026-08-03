@@ -2,6 +2,8 @@ import { EXPIRY_EXTENSION_MS } from "../constants.js";
 import { games } from "../games.js";
 import { changeTurn } from "../lib/changeTurn.js";
 import { drawCardFromDrawPile } from "../lib/drawCardFromDeck.js";
+import { emitEvent } from "../lib/emitEvent.js";
+import { emitEventToPlayer } from "../lib/emitEventToPlayer.js";
 import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 
@@ -38,16 +40,16 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
     return { success: false, error: "hasPlayableCard" };
   }
   game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
-  // emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
+  emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
   const card = drawCardFromDrawPile(game);
   player.hand.push(card);
-  // emitEventToPlayer(player, { type: "drewCard", card });
+  emitEventToPlayer(player, { type: "drewCard", card });
   const isPlayable = isCardPlayable(card, player.hand, game.discardPile);
-  // emitEvent(game, {
-  //   type: "playerDrewCard",
-  //   username: player.username,
-  //   isPlayable,
-  // });
+  emitEvent(game, {
+    type: "playerDrewCard",
+    username: player.username,
+    isPlayable,
+  });
   if (!isPlayable) {
     changeTurn(game);
   }

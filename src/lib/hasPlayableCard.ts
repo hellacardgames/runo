@@ -1,5 +1,5 @@
-import type { Card, DiscardedCard } from "../types/Card.js";
 import { isCardPlayable } from "./isCardPlayable.js";
+import type { Card, DiscardedCard } from "../types/Card.js";
 
 export function hasPlayableCard(
   hand: readonly Card[],

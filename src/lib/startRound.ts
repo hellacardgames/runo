@@ -1,5 +1,6 @@
-// import { emitEvent, emitEventToPlayer, shuffleCards } from "../../../lib";
 import { INITIAL_HAND_SIZE } from "../constants.js";
+import { emitEventToPlayer } from "./emitEventToPlayer.js";
+import { emitEvent } from "./emitEvent.js";
 import { shuffle } from "./shuffle.js";
 import type { Game } from "../types/Game.js";
 
@@ -12,8 +13,8 @@ export function startRound(game: Game): void {
         throw new Error("Ran out of cards while dealing to players.");
       }
       p.hand.push(card);
-      // emitEventToPlayer(p, { type: "cardDealt", card });
-      // emitEvent(game, { type: "cardDealtToPlayer", username: p.username });
+      emitEventToPlayer(p, { type: "cardDealt", card });
+      emitEvent(game, { type: "cardDealtToPlayer", username: p.username });
     }
   }
   let firstDiscard = game.drawPile.pop();
@@ -28,9 +29,9 @@ export function startRound(game: Game): void {
     }
   }
   game.discardPile.push(firstDiscard);
-  // emitEvent(game, { type: "cardDiscarded", card: lastDiscard });
+  emitEvent(game, { type: "cardDiscarded", card: firstDiscard });
   if (game.isReversed) {
     game.isReversed = false;
-    // emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
+    emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
   }
 }
