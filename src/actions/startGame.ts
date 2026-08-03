@@ -1,5 +1,4 @@
-import { cards } from "../cards.js";
-import { CARDS_PER_HAND, MIN_PLAYERS } from "../constants.js";
+import { CARDS, INITIAL_HAND_SIZE, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
 import { shuffle } from "../utils/shuffle.js";
 
@@ -33,11 +32,11 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   }
 
   // Initialize and shuffle the draw pile.
-  game.drawPile = [...cards];
+  game.drawPile = [...CARDS];
   shuffle(game.drawPile);
 
   // Deal cards to players.
-  for (let i = 0; i < CARDS_PER_HAND; i++) {
+  for (let i = 0; i < INITIAL_HAND_SIZE; i++) {
     for (const p of game.playerList) {
       const card = game.drawPile.pop();
       if (!card) {

@@ -3,8 +3,7 @@ import { games } from "../games.js";
 import { createGame } from "./createGame.js";
 import { joinGame } from "./joinGame.js";
 import { startGame } from "./startGame.js";
-import { cards } from "../cards.js";
-import { CARDS_PER_HAND } from "../constants.js";
+import { CARDS, INITIAL_HAND_SIZE } from "../constants.js";
 
 beforeEach(() => {
   games.clear();
@@ -28,7 +27,7 @@ test("starts a game and initializes gameplay state", () => {
   }
   expect(game.status).toBe("active");
   expect(game.currentPlayerIndex).toBe(0);
-  expect(game.drawPile).toHaveLength(cards.length - 2 * CARDS_PER_HAND - 1);
+  expect(game.drawPile).toHaveLength(CARDS.length - 2 * INITIAL_HAND_SIZE - 1);
   expect(game.discardPile).toHaveLength(1);
   const firstDiscard = game.discardPile[0];
   if (!firstDiscard) {
@@ -36,7 +35,7 @@ test("starts a game and initializes gameplay state", () => {
   }
   expect(firstDiscard.type).toBe("number");
   for (const player of game.playerList) {
-    expect(player.hand).toHaveLength(CARDS_PER_HAND);
+    expect(player.hand).toHaveLength(INITIAL_HAND_SIZE);
     expect(player.roundsWon).toBe(0);
     expect(player.points).toBe(0);
   }
