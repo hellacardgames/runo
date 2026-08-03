@@ -3,12 +3,24 @@ import { MAX_PLAYERS } from "../constants.js";
 import type { Player } from "../types/Player.js";
 
 type JoinGameResult =
-  | { success: true; playerId: string }
-  | { success: false; error: JoinGameError };
+  | {
+      readonly success: true;
+      readonly playerId: string;
+    }
+  | {
+      readonly success: false;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "maxPlayersReached"
+        | "alreadyInGame";
+    };
 
-type JoinGameError = "gameNotFound" | "invalidStatus" | "maxPlayersReached";
-
-export function joinGame(gameId: string, name: string): JoinGameResult {
+export function joinGame(
+  gameId: string,
+  userId: string,
+  username: string,
+): JoinGameResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };
@@ -19,17 +31,18 @@ export function joinGame(gameId: string, name: string): JoinGameResult {
   if (game.playerList.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }
+  if (game.playerList.findByUserId(userId)) {
+    return { success: false, error: "alreadyInGame" };
+  }
   const player: Player = {
     id: crypto.randomUUID(),
-    pid: crypto.randomUUID(),
-    name,
+    userId,
+    username,
+    events: [],
     hand: [],
-    roundsWon: 0,
-    points: 0,
+    score: 0,
   };
   game.playerList.add(player);
-  return {
-    success: true,
-    playerId: player.id,
-  };
+  // emitEvent(game, { type: "playerJoined", username });
+  return { success: true, playerId: player.id };
 }

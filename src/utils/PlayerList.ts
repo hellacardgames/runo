@@ -1,5 +1,5 @@
 export class PlayerList<
-  T extends { readonly id: string },
+  T extends { readonly id: string; readonly userId: string },
 > implements Iterable<T> {
   #list: T[] = [];
   #reversed = false;
@@ -7,6 +7,14 @@ export class PlayerList<
 
   get currentPlayer(): T | undefined {
     return this.#list[this.#currentPlayerIndex];
+  }
+
+  set currentPlayer(player: T) {
+    const index = this.#list.indexOf(player);
+    if (index === -1) {
+      throw new Error("Player not found.");
+    }
+    this.#currentPlayerIndex = index;
   }
 
   get isReversed(): boolean {
@@ -23,6 +31,14 @@ export class PlayerList<
 
   findById(id: string): T | undefined {
     return this.#list.find((p) => p.id === id);
+  }
+
+  findByUserId(userId: string): T | undefined {
+    return this.#list.find((p) => p.userId === userId);
+  }
+
+  map<U>(fn: (player: T, index: number) => U): U[] {
+    return this.#list.map(fn);
   }
 
   add(player: T): void {

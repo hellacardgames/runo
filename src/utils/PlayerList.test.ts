@@ -3,6 +3,7 @@ import { PlayerList } from "./PlayerList.js";
 
 type Player = {
   readonly id: string;
+  readonly userId: string;
 };
 
 test("starts empty and not reversed", () => {
@@ -14,8 +15,8 @@ test("starts empty and not reversed", () => {
 
 test("iterates over players in order", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   const players = [...playerList];
@@ -25,15 +26,15 @@ test("iterates over players in order", () => {
 
 test("first player added becomes current player", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
+  const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
   expect(playerList.currentPlayer).toBe(player1);
 });
 
 test("adding players does not change current player", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   expect(playerList.currentPlayer).toBe(player1);
@@ -41,7 +42,7 @@ test("adding players does not change current player", () => {
 
 test("gets a player at an index", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
+  const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
   expect(playerList.getAt(0)).toBe(player1);
 });
@@ -53,8 +54,8 @@ test("returns undefined for an invalid index", () => {
 
 test("reports the number of players", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   expect(playerList).toHaveLength(0);
   playerList.add(player1);
   expect(playerList).toHaveLength(1);
@@ -64,22 +65,22 @@ test("reports the number of players", () => {
 
 test("finds a player by id", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
+  const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
   expect(playerList.findById("player1")).toBe(player1);
 });
 
 test("returns undefined when the id is not found", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
+  const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
   expect(playerList.findById("invalid-id")).toBeUndefined();
 });
 
 test("finds the correct player among multiple players", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   expect(playerList.findById("player2")).toBe(player2);
@@ -96,8 +97,8 @@ test("toggles reversed state when changing direction", () => {
 
 test("removes a player from the list", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.remove(player1);
@@ -107,8 +108,8 @@ test("removes a player from the list", () => {
 
 test("returns to empty state when all players are removed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.remove(player1);
@@ -120,9 +121,9 @@ test("returns to empty state when all players are removed", () => {
 
 test("sets the first player added after being empty as current", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.remove(player1);
@@ -133,8 +134,8 @@ test("sets the first player added after being empty as current", () => {
 
 test("advances to next player when current player is removed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.remove(player1);
@@ -143,9 +144,9 @@ test("advances to next player when current player is removed", () => {
 
 test("moves to previous player when current player is removed while reversed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -156,9 +157,9 @@ test("moves to previous player when current player is removed while reversed", (
 
 test("wraps to first player when last current player is removed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -171,9 +172,9 @@ test("wraps to first player when last current player is removed", () => {
 
 test("wraps to last player when first current player is removed while reversed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -184,9 +185,9 @@ test("wraps to last player when first current player is removed while reversed",
 
 test("keeps current player when a later player is removed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -199,9 +200,9 @@ test("keeps current player when a later player is removed", () => {
 
 test("keeps current player when an earlier player is removed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -216,8 +217,8 @@ test("keeps current player when an earlier player is removed", () => {
 
 test("advances to next player", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
   expect(playerList.currentPlayer).toBe(player1);
@@ -227,9 +228,9 @@ test("advances to next player", () => {
 
 test("advances in reverse direction when reversed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -243,9 +244,9 @@ test("advances in reverse direction when reversed", () => {
 
 test("wraps to last player when advancing from first current player while reversed", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -257,9 +258,9 @@ test("wraps to last player when advancing from first current player while revers
 
 test("wraps to first player when advancing from last current player", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
-  const player2 = { id: "player2" };
-  const player3 = { id: "player3" };
+  const player1 = { id: "player1", userId: "player1" };
+  const player2 = { id: "player2", userId: "player2" };
+  const player3 = { id: "player3", userId: "player3" };
   playerList.add(player1);
   playerList.add(player2);
   playerList.add(player3);
@@ -278,7 +279,7 @@ test("does not advance when there are no players", () => {
 
 test("does not advance when there is one player", () => {
   const playerList = new PlayerList<Player>();
-  const player1 = { id: "player1" };
+  const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
   expect(playerList.currentPlayer).toBe(player1);
   playerList.advance();

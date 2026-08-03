@@ -1,41 +1,44 @@
+import { CARDS, EXPIRY_EXTENSION_MS, MAX_GAMES } from "../constants.js";
 import { games } from "../games.js";
-import { MAX_GAMES } from "../constants.js";
+import { PlayerList } from "../utils/PlayerList.js";
 import type { Game } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
-import { PlayerList } from "../utils/PlayerList.js";
 
 type CreateGameResult =
-  | { success: true; gameId: string; playerId: string }
-  | { success: false; error: CreateGameError };
+  | {
+      readonly success: true;
+      readonly gameId: string;
+      readonly playerId: string;
+    }
+  | {
+      readonly success: false;
+      readonly error: "maxGamesReached";
+    };
 
-type CreateGameError = "maxGamesReached";
-
-export function createGame(name: string): CreateGameResult {
+export function createGame(userId: string, username: string): CreateGameResult {
   if (games.size === MAX_GAMES) {
     return { success: false, error: "maxGamesReached" };
   }
   const player: Player = {
     id: crypto.randomUUID(),
-    pid: crypto.randomUUID(),
-    name,
+    userId,
+    username,
+    events: [],
     hand: [],
-    roundsWon: 0,
-    points: 0,
+    score: 0,
   };
-  const playerList = new PlayerList<Player>();
-  playerList.add(player);
+  const createdAt = Date.now();
   const game: Game = {
-    id: crypto.randomUUID(),
     status: "open",
-    playerList,
-    drawPile: [],
+    id: crypto.randomUUID(),
+    createdAt,
+    expiresAt: createdAt + EXPIRY_EXTENSION_MS,
+    chatMessages: [],
+    playerList: new PlayerList<Player>(),
+    drawPile: [...CARDS],
     discardPile: [],
-    currentPlayerIndex: 0,
   };
+  game.playerList.add(player);
   games.set(game.id, game);
-  return {
-    success: true,
-    gameId: game.id,
-    playerId: player.id,
-  };
+  return { success: true, gameId: game.id, playerId: player.id };
 }

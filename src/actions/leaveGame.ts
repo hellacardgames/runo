@@ -1,9 +1,16 @@
+import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
+import type { DiscardedCard } from "../types/Card.js";
+import type { Game } from "../types/Game.js";
 
 type LeaveGameResult =
-  { success: true } | { success: false; error: LeaveGameError };
-
-type LeaveGameError = "gameNotFound" | "playerNotFound";
+  | {
+      readonly success: true;
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound" | "playerNotFound";
+    };
 
 export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
   const game = games.get(gameId);
@@ -14,6 +21,37 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  // TODO: Implement!
+  // emitEvent(game, { type: "playerLeft", username: player.username });
+  game.playerList.remove(player);
+  const cardsToReturn = player.hand.splice(0);
+  for (const c of cardsToReturn) {
+    let discard: DiscardedCard;
+    if (c.type === "wild") {
+      discard = { type: "discardedWild", card: c, color: "blue" };
+    } else {
+      discard = c;
+    }
+    game.discardPile.unshift(discard);
+  }
+  if (game.playerList.length === 2 && game.playerList.isReversed) {
+    game.playerList.changeDirection();
+    // emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
+  }
+  if (game.status === "started" && game.playerList.length < MIN_PLAYERS) {
+    const forfeitedGame: Game = {
+      ...game,
+      status: "forfeited",
+      expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
+    };
+    games.set(game.id, forfeitedGame);
+    // emitEvent(forfeitedGame, { type: "gameForfeited" });
+    // emitEvent(forfeitedGame, {
+    //   type: "expirationUpdated",
+    //   expiresAt: forfeitedGame.expiresAt,
+    // });
+  }
+  if (game.playerList.length === 0) {
+    games.delete(game.id);
+  }
   return { success: true };
 }

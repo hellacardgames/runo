@@ -1,10 +1,11 @@
 import type { Card } from "./Card.js";
+import type { GameEvent } from "./GameEvent.js";
 
 export type Player = {
   readonly id: string;
-  readonly pid: string;
-  readonly name: string;
+  readonly userId: string;
+  readonly username: string;
+  readonly events: GameEvent[];
   hand: Card[];
-  roundsWon: number;
-  points: number;
+  score: number;
 };

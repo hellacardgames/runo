@@ -1,54 +1,55 @@
+import { EXPIRY_EXTENSION_MS } from "../constants.js";
 import { games } from "../games.js";
+import { changeTurn } from "../utils/changeTurn.js";
+import { drawCardFromDrawPile } from "../utils/drawCardFromDeck.js";
+import { hasPlayableCard } from "../utils/hasPlayableCard.js";
 import { isCardPlayable } from "../utils/isCardPlayable.js";
-import { shuffle } from "../utils/shuffle.js";
 
 type DrawCardResult =
-  { success: true } | { success: false; error: DrawCardError };
-
-type DrawCardError =
-  | "gameNotFound"
-  | "playerNotFound"
-  | "invalidStatus"
-  | "outOfTurn"
-  | "hasPlayableCard";
+  | {
+      readonly success: true;
+    }
+  | {
+      readonly success: false;
+      readonly error:
+        | "gameNotFound"
+        | "playerNotFound"
+        | "invalidStatus"
+        | "outOfTurn"
+        | "hasPlayableCard";
+    };
 
 export function drawCard(gameId: string, playerId: string): DrawCardResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  // const player = game.players.find((p) => p.id === playerId);
   const player = game.playerList.findById(playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (game.status !== "active") {
+  if (game.status !== "started") {
     return { success: false, error: "invalidStatus" };
   }
   if (player !== game.playerList.currentPlayer) {
     return { success: false, error: "outOfTurn" };
   }
-  for (const card of player.hand) {
-    if (isCardPlayable(card, player.hand, game.discardPile)) {
-      return { success: false, error: "hasPlayableCard" };
-    }
+  if (hasPlayableCard(player.hand, game.discardPile)) {
+    return { success: false, error: "hasPlayableCard" };
   }
-  if (game.drawPile.length === 0) {
-    game.drawPile = game.discardPile
-      .splice(0, game.discardPile.length - 1)
-      .map((discardedCard) => {
-        if (discardedCard.type === "discardedWild") {
-          return discardedCard.card;
-        } else {
-          return discardedCard;
-        }
-      });
-    shuffle(game.drawPile);
-  }
-  const card = game.drawPile.pop();
-  if (!card) {
-    throw new Error("Ran out of cards while drawing.");
-  }
+  game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
+  // emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
+  const card = drawCardFromDrawPile(game);
   player.hand.push(card);
+  // emitEventToPlayer(player, { type: "drewCard", card });
+  const isPlayable = isCardPlayable(card, player.hand, game.discardPile);
+  // emitEvent(game, {
+  //   type: "playerDrewCard",
+  //   username: player.username,
+  //   isPlayable,
+  // });
+  if (!isPlayable) {
+    changeTurn(game);
+  }
   return { success: true };
 }

@@ -1,11 +1,13 @@
 import type { Card } from "./types/Card.js";
 
+export const EXPIRY_EXTENSION_MS = 300000; // 5 minutes
 export const MAX_GAMES = 50;
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 10;
 export const INITIAL_HAND_SIZE = 7;
 export const ACTION_CARD_VALUE = 20;
 export const WILD_CARD_VALUE = 50;
+export const WINNING_SCORE = 100;
 
 export const CARDS: readonly Card[] = [
   { color: "red", type: "number", value: 0, id: crypto.randomUUID() },

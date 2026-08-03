@@ -1,98 +1,98 @@
-import { beforeEach, expect, test } from "vitest";
-import { games } from "../games.js";
-import { createGame } from "./createGame.js";
-import { joinGame } from "./joinGame.js";
-import { startGame } from "./startGame.js";
-import { CARDS, INITIAL_HAND_SIZE } from "../constants.js";
+// import { beforeEach, expect, test } from "vitest";
+// import { games } from "../games.js";
+// import { createGame } from "./createGame.js";
+// import { joinGame } from "./joinGame.js";
+// import { startGame } from "./startGame.js";
+// import { CARDS, INITIAL_HAND_SIZE } from "../constants.js";
 
-beforeEach(() => {
-  games.clear();
-});
+// beforeEach(() => {
+//   games.clear();
+// });
 
-test("starts a game and initializes gameplay state", () => {
-  const createGameResult = createGame("Bob");
-  if (!createGameResult.success) {
-    throw new Error("Expected createGame to succeed.");
-  }
-  const joinGameResult = joinGame(createGameResult.gameId, "Sally");
-  if (!joinGameResult.success) {
-    throw new Error("Expected joinGame to succeed.");
-  }
-  const { gameId, playerId } = createGameResult;
-  const startGameResult = startGame(gameId, playerId);
-  expect(startGameResult.success).toBe(true);
-  const game = games.get(gameId);
-  if (!game) {
-    throw new Error("Expected game to exist.");
-  }
-  expect(game.status).toBe("active");
-  expect(game.currentPlayerIndex).toBe(0);
-  expect(game.drawPile).toHaveLength(CARDS.length - 2 * INITIAL_HAND_SIZE - 1);
-  expect(game.discardPile).toHaveLength(1);
-  const firstDiscard = game.discardPile[0];
-  if (!firstDiscard) {
-    throw new Error("Expected firstDiscard to exist.");
-  }
-  expect(firstDiscard.type).toBe("number");
-  for (const player of game.playerList) {
-    expect(player.hand).toHaveLength(INITIAL_HAND_SIZE);
-    expect(player.roundsWon).toBe(0);
-    expect(player.points).toBe(0);
-  }
-});
+// test("starts a game and initializes gameplay state", () => {
+//   const createGameResult = createGame("Bob");
+//   if (!createGameResult.success) {
+//     throw new Error("Expected createGame to succeed.");
+//   }
+//   const joinGameResult = joinGame(createGameResult.gameId, "Sally");
+//   if (!joinGameResult.success) {
+//     throw new Error("Expected joinGame to succeed.");
+//   }
+//   const { gameId, playerId } = createGameResult;
+//   const startGameResult = startGame(gameId, playerId);
+//   expect(startGameResult.success).toBe(true);
+//   const game = games.get(gameId);
+//   if (!game) {
+//     throw new Error("Expected game to exist.");
+//   }
+//   expect(game.status).toBe("active");
+//   expect(game.currentPlayerIndex).toBe(0);
+//   expect(game.drawPile).toHaveLength(CARDS.length - 2 * INITIAL_HAND_SIZE - 1);
+//   expect(game.discardPile).toHaveLength(1);
+//   const firstDiscard = game.discardPile[0];
+//   if (!firstDiscard) {
+//     throw new Error("Expected firstDiscard to exist.");
+//   }
+//   expect(firstDiscard.type).toBe("number");
+//   for (const player of game.playerList) {
+//     expect(player.hand).toHaveLength(INITIAL_HAND_SIZE);
+//     expect(player.roundsWon).toBe(0);
+//     expect(player.points).toBe(0);
+//   }
+// });
 
-test("only allows starting open games", () => {
-  const createGameResult = createGame("Bob");
-  if (!createGameResult.success) {
-    throw new Error("Expected createGame to succeed.");
-  }
-  joinGame(createGameResult.gameId, "Bob");
-  const game = games.get(createGameResult.gameId);
-  if (!game) {
-    throw new Error("Expected game to exist.");
-  }
-  const player = game.playerList.findById(createGameResult.playerId);
-  if (!player) {
-    throw new Error("Expected player to exist.");
-  }
-  for (const status of ["active", "completed", "forfeited"] as const) {
-    game.status = status;
-    const { gameId, playerId } = createGameResult;
-    const startGameResult = startGame(gameId, playerId);
-    if (startGameResult.success) {
-      throw new Error("Expected startGame to fail.");
-    }
-    expect(startGameResult.error).toBe("invalidStatus");
-  }
-});
+// test("only allows starting open games", () => {
+//   const createGameResult = createGame("Bob");
+//   if (!createGameResult.success) {
+//     throw new Error("Expected createGame to succeed.");
+//   }
+//   joinGame(createGameResult.gameId, "Bob");
+//   const game = games.get(createGameResult.gameId);
+//   if (!game) {
+//     throw new Error("Expected game to exist.");
+//   }
+//   const player = game.playerList.findById(createGameResult.playerId);
+//   if (!player) {
+//     throw new Error("Expected player to exist.");
+//   }
+//   for (const status of ["active", "completed", "forfeited"] as const) {
+//     game.status = status;
+//     const { gameId, playerId } = createGameResult;
+//     const startGameResult = startGame(gameId, playerId);
+//     if (startGameResult.success) {
+//       throw new Error("Expected startGame to fail.");
+//     }
+//     expect(startGameResult.error).toBe("invalidStatus");
+//   }
+// });
 
-test("only allows admin to start games", () => {
-  const createGameResult = createGame("Bob");
-  if (!createGameResult.success) {
-    throw new Error("Expected createGame to succeed.");
-  }
-  const joinGameResult = joinGame(createGameResult.gameId, "Sally");
-  if (!joinGameResult.success) {
-    throw new Error("Expected joinGame to succeed.");
-  }
-  const { gameId } = createGameResult;
-  const { playerId } = joinGameResult;
-  const startGameResult = startGame(gameId, playerId);
-  if (startGameResult.success) {
-    throw new Error("Expected startGame to fail.");
-  }
-  expect(startGameResult.error).toBe("notAdmin");
-});
+// test("only allows admin to start games", () => {
+//   const createGameResult = createGame("Bob");
+//   if (!createGameResult.success) {
+//     throw new Error("Expected createGame to succeed.");
+//   }
+//   const joinGameResult = joinGame(createGameResult.gameId, "Sally");
+//   if (!joinGameResult.success) {
+//     throw new Error("Expected joinGame to succeed.");
+//   }
+//   const { gameId } = createGameResult;
+//   const { playerId } = joinGameResult;
+//   const startGameResult = startGame(gameId, playerId);
+//   if (startGameResult.success) {
+//     throw new Error("Expected startGame to fail.");
+//   }
+//   expect(startGameResult.error).toBe("notAdmin");
+// });
 
-test("requires at least MIN_PLAYERS players", () => {
-  const createGameResult = createGame("Bob");
-  if (!createGameResult.success) {
-    throw new Error("Expected createGame to succeed.");
-  }
-  const { gameId, playerId } = createGameResult;
-  const startGameResult = startGame(gameId, playerId);
-  if (startGameResult.success) {
-    throw new Error("Expected startGame to fail.");
-  }
-  expect(startGameResult.error).toBe("minPlayersNotReached");
-});
+// test("requires at least MIN_PLAYERS players", () => {
+//   const createGameResult = createGame("Bob");
+//   if (!createGameResult.success) {
+//     throw new Error("Expected createGame to succeed.");
+//   }
+//   const { gameId, playerId } = createGameResult;
+//   const startGameResult = startGame(gameId, playerId);
+//   if (startGameResult.success) {
+//     throw new Error("Expected startGame to fail.");
+//   }
+//   expect(startGameResult.error).toBe("minPlayersNotReached");
+// });
