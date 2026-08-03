@@ -6,7 +6,6 @@ import { getPointsForCard } from "../utils/getPointsForCard.js";
 import { isCardPlayable } from "../utils/isCardPlayable.js";
 import { startRound } from "../utils/startRound.js";
 import type { Card, Color, DiscardedCard } from "../types/Card.js";
-import type { Game } from "../types/Game.js";
 
 type PlayWildCardResult =
   | {
@@ -122,11 +121,7 @@ export function playWildCard(
       //   score: player.score,
       // });
       // emitEvent(game, { type: "gameCompleted" });
-      const completedGame: Game = {
-        ...game,
-        status: "completed",
-      };
-      games.set(game.id, completedGame);
+      game.status = "completed";
     } else {
       // emitEvent(game, {
       //   type: "playerWonRound",

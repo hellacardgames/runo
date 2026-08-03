@@ -1,7 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
 import { startRound } from "../utils/startRound.js";
-import type { Game } from "../types/Game.js";
 
 type StartGameResult =
   | {
@@ -36,12 +35,8 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
     return { success: false, error: "minPlayersNotReached" };
   }
   startRound(game);
-  const startedGame: Game = {
-    ...game,
-    status: "started",
-    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
-  };
-  games.set(game.id, startedGame);
+  game.status = "started";
+  game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
   // emitEvent(startedGame, { type: "gameStarted" });
   // emitEvent(startedGame, {
   //   type: "expirationUpdated",

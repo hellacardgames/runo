@@ -1,7 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
 import type { DiscardedCard } from "../types/Card.js";
-import type { Game } from "../types/Game.js";
 
 type LeaveGameResult =
   | {
@@ -38,12 +37,8 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
     // emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
   }
   if (game.status === "started" && game.playerList.length < MIN_PLAYERS) {
-    const forfeitedGame: Game = {
-      ...game,
-      status: "forfeited",
-      expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
-    };
-    games.set(game.id, forfeitedGame);
+    game.status = "forfeited";
+    game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
     // emitEvent(forfeitedGame, { type: "gameForfeited" });
     // emitEvent(forfeitedGame, {
     //   type: "expirationUpdated",
