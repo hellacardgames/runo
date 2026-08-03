@@ -52,6 +52,10 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
   });
   if (!isPlayable) {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
   }
   return { success: true };
 }

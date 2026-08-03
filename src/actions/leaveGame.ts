@@ -25,7 +25,14 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
 
   const player = game.players[playerIndex]!;
   emitEvent(game, { type: "playerLeft", username: player.username });
-  removePlayer(game, player);
+
+  const { turnChanged } = removePlayer(game, player);
+  if (turnChanged) {
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
+  }
 
   const cardsToReturn = player.hand.splice(0);
   for (const c of cardsToReturn) {

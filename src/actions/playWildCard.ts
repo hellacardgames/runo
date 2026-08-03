@@ -75,6 +75,10 @@ export function playWildCard(
 
   if (card.isDrawFour) {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
     const targetPlayer = game.players[game.currentPlayerIndex]!;
     const cards: Card[] = [];
     cards.push(drawCardFromDrawPile(game));
@@ -141,6 +145,10 @@ export function playWildCard(
     }
   } else {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
   }
 
   return { success: true };

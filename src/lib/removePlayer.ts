@@ -1,17 +1,32 @@
 import { changeTurn } from "./changeTurn.js";
-import type { Game } from "../types/Game.js";
-import type { Player } from "../types/Player.js";
 
-export function removePlayer(game: Game, player: Player): void {
+type RemovePlayerResult = {
+  readonly playerRemoved: boolean;
+  readonly turnChanged: boolean;
+};
+
+export function removePlayer<
+  Game extends {
+    currentPlayerIndex: number;
+    isReversed: boolean;
+    players: Player[];
+  },
+  Player,
+>(game: Game, player: Player): RemovePlayerResult {
+  let playerRemoved = false;
+  let turnChanged = false;
   const index = game.players.indexOf(player);
   if (index === -1) {
-    return;
+    return { playerRemoved, turnChanged };
   }
   if (index === game.currentPlayerIndex) {
     changeTurn(game);
+    turnChanged = true;
   }
   game.players.splice(index, 1);
   if (game.currentPlayerIndex > index) {
     game.currentPlayerIndex--;
   }
+  playerRemoved = true;
+  return { playerRemoved, turnChanged };
 }

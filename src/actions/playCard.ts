@@ -72,11 +72,23 @@ export function playCard(
       });
     } else {
       changeTurn(game);
+      emitEvent(game, {
+        type: "turnChanged",
+        currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+      });
     }
   } else if (card.type === "skip") {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
   } else if (card.type === "drawTwo") {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
     const targetPlayer = game.players[game.currentPlayerIndex]!;
     const cards: Card[] = [];
     cards.push(drawCardFromDrawPile(game));
@@ -141,6 +153,10 @@ export function playCard(
     }
   } else {
     changeTurn(game);
+    emitEvent(game, {
+      type: "turnChanged",
+      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    });
   }
 
   return { success: true };
