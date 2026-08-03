@@ -21,7 +21,7 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.findById(playerId);
+  const player = game.playerList.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }

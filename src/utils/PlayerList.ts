@@ -1,6 +1,4 @@
-export class PlayerList<
-  T extends { readonly id: string; readonly userId: string },
-> implements Iterable<T> {
+export class PlayerList<T> implements Iterable<T> {
   #list: T[] = [];
   #reversed = false;
   #currentPlayerIndex = 0;
@@ -29,12 +27,8 @@ export class PlayerList<
     return this.#list[index];
   }
 
-  findById(id: string): T | undefined {
-    return this.#list.find((p) => p.id === id);
-  }
-
-  findByUserId(userId: string): T | undefined {
-    return this.#list.find((p) => p.userId === userId);
+  find(predicate: (player: T) => boolean): T | undefined {
+    return this.#list.find(predicate);
   }
 
   map<U>(fn: (player: T, index: number) => U): U[] {

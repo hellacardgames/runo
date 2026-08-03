@@ -67,14 +67,14 @@ test("finds a player by id", () => {
   const playerList = new PlayerList<Player>();
   const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
-  expect(playerList.findById("player1")).toBe(player1);
+  expect(playerList.find((p) => p.id === "player1")).toBe(player1);
 });
 
 test("returns undefined when the id is not found", () => {
   const playerList = new PlayerList<Player>();
   const player1 = { id: "player1", userId: "player1" };
   playerList.add(player1);
-  expect(playerList.findById("invalid-id")).toBeUndefined();
+  expect(playerList.find((p) => p.id === "invalid-id")).toBeUndefined();
 });
 
 test("finds the correct player among multiple players", () => {
@@ -83,7 +83,7 @@ test("finds the correct player among multiple players", () => {
   const player2 = { id: "player2", userId: "player2" };
   playerList.add(player1);
   playerList.add(player2);
-  expect(playerList.findById("player2")).toBe(player2);
+  expect(playerList.find((p) => p.id === "player2")).toBe(player2);
 });
 
 test("toggles reversed state when changing direction", () => {

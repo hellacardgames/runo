@@ -31,7 +31,7 @@ export function joinGame(
   if (game.playerList.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }
-  if (game.playerList.findByUserId(userId)) {
+  if (game.playerList.find((p) => p.userId === userId)) {
     return { success: false, error: "alreadyInGame" };
   }
   const player: Player = {
