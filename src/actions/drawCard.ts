@@ -24,14 +24,14 @@ export function drawCard(gameId: string, playerId: string): DrawCardResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
   if (game.status !== "started") {
     return { success: false, error: "invalidStatus" };
   }
-  if (player !== game.playerList.currentPlayer) {
+  if (player !== game.players[game.currentPlayerIndex]) {
     return { success: false, error: "outOfTurn" };
   }
   if (hasPlayableCard(player.hand, game.discardPile)) {

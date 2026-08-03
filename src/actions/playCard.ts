@@ -32,14 +32,14 @@ export function playCard(
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
   if (game.status !== "started") {
     return { success: false, error: "invalidStatus" };
   }
-  if (player !== game.playerList.currentPlayer) {
+  if (player !== game.players[game.currentPlayerIndex]) {
     return { success: false, error: "outOfTurn" };
   }
   const cardIndex = player.hand.findIndex((c) => c.id === cardId);
@@ -62,8 +62,8 @@ export function playCard(
   // emitEvent(game, { type: "cardPlayed", username: player.username, card });
 
   if (card.type === "reverse") {
-    if (game.playerList.length > 2) {
-      game.playerList.changeDirection();
+    if (game.players.length > 2) {
+      game.isReversed = !game.isReversed;
       // emitEvent(game, {
       //   type: "directionChanged",
       //   isReversed: game.isReversed,
@@ -75,8 +75,7 @@ export function playCard(
     changeTurn(game);
   } else if (card.type === "drawTwo") {
     changeTurn(game);
-    // const targetPlayer = game.players[game.currentPlayerIndex]!;
-    const targetPlayer = game.playerList.currentPlayer;
+    const targetPlayer = game.players[game.currentPlayerIndex]!;
     const cards: Card[] = [];
     cards.push(drawCardFromDrawPile(game));
     cards.push(drawCardFromDrawPile(game));
@@ -92,7 +91,7 @@ export function playCard(
 
   if (player.hand.length === 0) {
     let cardToReturn: Card | undefined;
-    for (const p of game.playerList) {
+    for (const p of game.players) {
       while ((cardToReturn = p.hand.pop())) {
         player.score += getPointsForCard(cardToReturn);
         game.drawPile.push(cardToReturn);
@@ -128,8 +127,9 @@ export function playCard(
       //   username: player.username,
       //   score: player.score,
       // });
-      if (game.playerList.currentPlayer !== player) {
-        game.playerList.currentPlayer = player;
+      const currentPlayer = game.players[game.currentPlayerIndex]!;
+      if (currentPlayer !== player) {
+        game.currentPlayerIndex = game.players.indexOf(player);
         // emitEvent(game, {
         //   type: "turnChanged",
         //   currentPlayerUsername: player.username,

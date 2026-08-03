@@ -28,10 +28,10 @@ export function joinGame(
   if (game.status !== "open") {
     return { success: false, error: "invalidStatus" };
   }
-  if (game.playerList.length === MAX_PLAYERS) {
+  if (game.players.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }
-  if (game.playerList.find((p) => p.userId === userId)) {
+  if (game.players.find((p) => p.userId === userId)) {
     return { success: false, error: "alreadyInGame" };
   }
   const player: Player = {
@@ -42,7 +42,7 @@ export function joinGame(
     hand: [],
     score: 0,
   };
-  game.playerList.add(player);
+  game.players.push(player);
   // emitEvent(game, { type: "playerJoined", username });
   return { success: true, playerId: player.id };
 }

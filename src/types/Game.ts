@@ -1,4 +1,3 @@
-import type { PlayerList } from "../lib/PlayerList.js";
 import type { Card, DiscardedCard } from "./Card.js";
 import type { ChatMessage } from "./ChatMessage.js";
 import type { Player } from "./Player.js";
@@ -9,7 +8,10 @@ export type Game = {
   readonly createdAt: number;
   expiresAt: number;
   readonly chatMessages: ChatMessage[];
-  readonly playerList: PlayerList<Player>;
+  readonly players: Player[];
+  // readonly playerList: PlayerList<Player>;
   drawPile: Card[];
   discardPile: DiscardedCard[];
+  currentPlayerIndex: number;
+  isReversed: boolean;
 };

@@ -19,7 +19,7 @@ export function getClientState(
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
@@ -28,15 +28,15 @@ export function getClientState(
     gameId,
     playerId,
     username: player.username,
-    players: game.playerList.map((p) => ({
+    players: game.players.map((p) => ({
       username: p.username,
       numCards: p.hand.length,
       score: p.score,
     })),
     hand: player.hand,
     lastDiscard: game.discardPile[game.discardPile.length - 1]!,
-    currentPlayerUsername: game.playerList.currentPlayer!.username,
-    isReversed: game.playerList.isReversed,
+    currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    isReversed: game.isReversed,
     expiresAt: game.expiresAt,
     chatMessages: game.chatMessages,
   };

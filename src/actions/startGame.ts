@@ -21,17 +21,17 @@ export function startGame(gameId: string, playerId: string): StartGameResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
   if (game.status !== "open") {
     return { success: false, error: "invalidStatus" };
   }
-  if (player !== game.playerList.getAt(0)) {
+  if (game.players.indexOf(player) !== 0) {
     return { success: false, error: "playerNotAdmin" };
   }
-  if (game.playerList.length < MIN_PLAYERS) {
+  if (game.players.length < MIN_PLAYERS) {
     return { success: false, error: "minPlayersNotReached" };
   }
   startRound(game);

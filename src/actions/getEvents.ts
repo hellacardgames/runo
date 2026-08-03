@@ -20,7 +20,7 @@ export function getEvents(
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }

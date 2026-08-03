@@ -1,6 +1,5 @@
 import { CARDS, EXPIRY_EXTENSION_MS, MAX_GAMES } from "../constants.js";
 import { games } from "../games.js";
-import { PlayerList } from "../lib/PlayerList.js";
 import type { Game } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
@@ -34,11 +33,12 @@ export function createGame(userId: string, username: string): CreateGameResult {
     createdAt,
     expiresAt: createdAt + EXPIRY_EXTENSION_MS,
     chatMessages: [],
-    playerList: new PlayerList<Player>(),
+    players: [player],
     drawPile: [...CARDS],
     discardPile: [],
+    currentPlayerIndex: 0,
+    isReversed: false,
   };
-  game.playerList.add(player);
   games.set(game.id, game);
   return { success: true, gameId: game.id, playerId: player.id };
 }

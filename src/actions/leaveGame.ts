@@ -1,5 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
+import { removePlayer } from "../lib/removePlayer.js";
 import type { DiscardedCard } from "../types/Card.js";
 
 type LeaveGameResult =
@@ -16,12 +17,15 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
   if (!game) {
     return { success: false, error: "gameNotFound" };
   }
-  const player = game.playerList.find((p) => p.id === playerId);
-  if (!player) {
+  const playerIndex = game.players.findIndex((p) => p.id === playerId);
+  if (playerIndex === -1) {
     return { success: false, error: "playerNotFound" };
   }
+
+  const player = game.players[playerIndex]!;
   // emitEvent(game, { type: "playerLeft", username: player.username });
-  game.playerList.remove(player);
+  removePlayer(game, player);
+
   const cardsToReturn = player.hand.splice(0);
   for (const c of cardsToReturn) {
     let discard: DiscardedCard;
@@ -32,11 +36,13 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
     }
     game.discardPile.unshift(discard);
   }
-  if (game.playerList.length === 2 && game.playerList.isReversed) {
-    game.playerList.changeDirection();
+
+  if (game.players.length === 2 && game.isReversed) {
+    game.isReversed = false;
     // emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
   }
-  if (game.status === "started" && game.playerList.length < MIN_PLAYERS) {
+
+  if (game.status === "started" && game.players.length < MIN_PLAYERS) {
     game.status = "forfeited";
     game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
     // emitEvent(forfeitedGame, { type: "gameForfeited" });
@@ -45,7 +51,7 @@ export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
     //   expiresAt: forfeitedGame.expiresAt,
     // });
   }
-  if (game.playerList.length === 0) {
+  if (game.players.length === 0) {
     games.delete(game.id);
   }
   return { success: true };

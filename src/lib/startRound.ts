@@ -6,7 +6,7 @@ import type { Game } from "../types/Game.js";
 export function startRound(game: Game): void {
   shuffle(game.drawPile);
   for (let i = 0; i < INITIAL_HAND_SIZE; i++) {
-    for (const p of game.playerList) {
+    for (const p of game.players) {
       const card = game.drawPile.pop();
       if (!card) {
         throw new Error("Ran out of cards while dealing to players.");
@@ -29,8 +29,8 @@ export function startRound(game: Game): void {
   }
   game.discardPile.push(firstDiscard);
   // emitEvent(game, { type: "cardDiscarded", card: lastDiscard });
-  if (game.playerList.isReversed) {
-    game.playerList.changeDirection();
+  if (game.isReversed) {
+    game.isReversed = false;
     // emitEvent(game, { type: "directionChanged", isReversed: game.isReversed });
   }
 }

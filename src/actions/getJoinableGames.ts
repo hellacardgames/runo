@@ -13,10 +13,10 @@ export function getJoinableGames(): GetJoinableGamesResult {
   return {
     success: true,
     games: Array.from(games.values())
-      .filter((g) => g.status === "open" && g.playerList.length < MAX_PLAYERS)
+      .filter((g) => g.status === "open" && g.players.length < MAX_PLAYERS)
       .map((g) => ({
         id: g.id,
-        numPlayers: g.playerList.length,
+        numPlayers: g.players.length,
       })),
   };
 }
