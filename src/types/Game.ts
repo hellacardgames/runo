@@ -9,7 +9,6 @@ export type Game = {
   expiresAt: number;
   readonly chatMessages: ChatMessage[];
   readonly players: Player[];
-  // readonly playerList: PlayerList<Player>;
   drawPile: Card[];
   discardPile: DiscardedCard[];
   currentPlayerIndex: number;
