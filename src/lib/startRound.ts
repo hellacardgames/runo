@@ -18,13 +18,13 @@ export function startRound(game: Game): void {
     }
   }
   let firstDiscard = game.drawPile.pop();
-  if (firstDiscard === undefined) {
+  if (!firstDiscard) {
     throw new Error("Ran out of cards while picking first card to discard.");
   }
   while (firstDiscard.type !== "number") {
     game.drawPile.unshift(firstDiscard);
     firstDiscard = game.drawPile.pop();
-    if (firstDiscard === undefined) {
+    if (!firstDiscard) {
       throw new Error("Ran out of cards while picking first card to discard.");
     }
   }
