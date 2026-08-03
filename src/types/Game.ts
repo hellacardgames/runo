@@ -1,4 +1,4 @@
-import type { PlayerList } from "../utils/PlayerList.js";
+import type { PlayerList } from "../lib/PlayerList.js";
 import type { Card, DiscardedCard } from "./Card.js";
 import type { ChatMessage } from "./ChatMessage.js";
 import type { Player } from "./Player.js";

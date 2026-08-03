@@ -1,9 +1,9 @@
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
 import { games } from "../games.js";
-import { changeTurn } from "../utils/changeTurn.js";
-import { drawCardFromDrawPile } from "../utils/drawCardFromDeck.js";
-import { hasPlayableCard } from "../utils/hasPlayableCard.js";
-import { isCardPlayable } from "../utils/isCardPlayable.js";
+import { changeTurn } from "../lib/changeTurn.js";
+import { drawCardFromDrawPile } from "../lib/drawCardFromDeck.js";
+import { hasPlayableCard } from "../lib/hasPlayableCard.js";
+import { isCardPlayable } from "../lib/isCardPlayable.js";
 
 type DrawCardResult =
   | {

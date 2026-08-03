@@ -1,6 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { games } from "../games.js";
-import { startRound } from "../utils/startRound.js";
+import { startRound } from "../lib/startRound.js";
 
 type StartGameResult =
   | {

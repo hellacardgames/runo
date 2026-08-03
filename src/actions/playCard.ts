@@ -1,10 +1,10 @@
 import { EXPIRY_EXTENSION_MS, WINNING_SCORE } from "../constants.js";
 import { games } from "../games.js";
-import { changeTurn } from "../utils/changeTurn.js";
-import { drawCardFromDrawPile } from "../utils/drawCardFromDeck.js";
-import { getPointsForCard } from "../utils/getPointsForCard.js";
-import { isCardPlayable } from "../utils/isCardPlayable.js";
-import { startRound } from "../utils/startRound.js";
+import { changeTurn } from "../lib/changeTurn.js";
+import { drawCardFromDrawPile } from "../lib/drawCardFromDeck.js";
+import { getPointsForCard } from "../lib/getPointsForCard.js";
+import { isCardPlayable } from "../lib/isCardPlayable.js";
+import { startRound } from "../lib/startRound.js";
 import type { Card } from "../types/Card.js";
 
 type PlayCardResult =

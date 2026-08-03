@@ -1,6 +1,6 @@
 import { CARDS, EXPIRY_EXTENSION_MS, MAX_GAMES } from "../constants.js";
 import { games } from "../games.js";
-import { PlayerList } from "../utils/PlayerList.js";
+import { PlayerList } from "../lib/PlayerList.js";
 import type { Game } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
