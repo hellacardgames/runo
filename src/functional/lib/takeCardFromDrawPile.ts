@@ -14,7 +14,7 @@ export function takeCardFromDrawPile(game: StartedGame): Result {
 
   const card = game.drawPile[game.drawPile.length - 1];
   if (!card) {
-    throw new Error("Ran out of cards.");
+    throw new Error("Draw pile is empty.");
   }
 
   game = { ...game, drawPile: game.drawPile.slice(0, -1) };
