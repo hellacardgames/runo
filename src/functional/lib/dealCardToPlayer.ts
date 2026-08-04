@@ -1,5 +1,7 @@
 import { emitEvent } from "./emitEvent.js";
 import { emitEventToPlayer } from "./emitEventToPlayer.js";
+import { takeCardFromDrawPile } from "./takeCardFromDrawPile.js";
+import { addCardToPlayerHand } from "./addCardToPlayerHand.js";
 import type { StartedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
@@ -7,18 +9,10 @@ export function dealCardToPlayer(
   game: StartedGame,
   player: Player,
 ): StartedGame {
-  const card = game.drawPile[game.drawPile.length - 1];
-  if (!card) {
-    throw new Error("Ran out of cards while dealing to players.");
-  }
-
-  player = { ...player, hand: [...player.hand, card] };
-
-  game = {
-    ...game,
-    drawPile: game.drawPile.slice(0, -1),
-    players: game.players.map((p) => (p.id === player.id ? player : p)),
-  };
+  const takeCardResult = takeCardFromDrawPile(game);
+  game = takeCardResult.game;
+  const { card } = takeCardResult;
+  game = addCardToPlayerHand(game, player, card);
 
   game = emitEventToPlayer(game, player, { type: "cardDealt", card });
   game = emitEvent(game, {
