@@ -1,3 +1,4 @@
+import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import type { ClientState } from "../types/ClientState.js";
 import type { Game } from "../types/Game.js";
 
@@ -21,11 +22,6 @@ export function getClientState(
     return { success: false, error: "playerNotFound" };
   }
 
-  const currentPlayer = game.players[game.currentPlayerIndex];
-  if (!currentPlayer) {
-    throw new Error("currentPlayer is undefined.");
-  }
-
   const state: ClientState = {
     status: game.status,
     gameId: game.id,
@@ -38,7 +34,7 @@ export function getClientState(
     })),
     hand: player.hand,
     lastDiscard: game.discardPile[game.discardPile.length - 1] ?? null,
-    currentPlayerUsername: currentPlayer.username,
+    currentPlayerUsername: getCurrentPlayer(game).username,
     isReversed: game.isReversed,
     expiresAt: game.expiresAt,
     // chatMessages: game.chatMessages,

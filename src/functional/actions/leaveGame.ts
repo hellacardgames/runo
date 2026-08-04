@@ -1,6 +1,7 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { emitEvent } from "../lib/emitEvent.js";
+import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import { removePlayer } from "../lib/removePlayer.js";
 import type { Game } from "../types/Game.js";
 
@@ -28,7 +29,7 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
   if (removePlayerResult.turnChanged) {
     game = emitEvent(game, {
       type: "turnChanged",
-      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+      currentPlayerUsername: getCurrentPlayer(game).username,
     });
   }
 

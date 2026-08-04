@@ -6,6 +6,7 @@ import { emitEvent } from "../lib/emitEvent.js";
 import { emitEventToPlayer } from "../lib/emitEventToPlayer.js";
 import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
+import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import type { StartedGame } from "../types/Game.js";
 
 type DrawCardResult =
@@ -23,7 +24,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (player !== game.players[game.currentPlayerIndex]) {
+  if (player !== getCurrentPlayer(game)) {
     return { success: false, error: "outOfTurn" };
   }
   if (hasPlayableCard(player.hand, game.discardPile)) {
@@ -53,7 +54,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
     game = changeTurn(game);
     game = emitEvent(game, {
       type: "turnChanged",
-      currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+      currentPlayerUsername: getCurrentPlayer(game).username,
     });
   }
 
