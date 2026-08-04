@@ -45,23 +45,47 @@ test("deals cards to players in round-robin order", () => {
       { type: "number", value: 1, color: "red", id: "card-id-007" },
       { type: "number", value: 1, color: "red", id: "card-id-008" },
       { type: "number", value: 1, color: "red", id: "card-id-009" },
+      { type: "number", value: 1, color: "red", id: "card-id-010" },
+      { type: "number", value: 1, color: "red", id: "card-id-011" },
+      { type: "number", value: 1, color: "red", id: "card-id-012" },
+      { type: "number", value: 1, color: "red", id: "card-id-013" },
+      { type: "number", value: 1, color: "red", id: "card-id-014" },
+      { type: "number", value: 1, color: "red", id: "card-id-015" },
+      { type: "number", value: 1, color: "red", id: "card-id-016" },
+      { type: "number", value: 1, color: "red", id: "card-id-017" },
+      { type: "number", value: 1, color: "red", id: "card-id-018" },
+      { type: "number", value: 1, color: "red", id: "card-id-019" },
+      { type: "number", value: 1, color: "red", id: "card-id-020" },
+      { type: "number", value: 1, color: "red", id: "card-id-021" },
     ],
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
   };
-  game = dealCardsToPlayers(game, 3);
+  game = dealCardsToPlayers(game);
   expect(game.players[0]?.hand).toEqual([
+    { type: "number", value: 1, color: "red", id: "card-id-021" },
+    { type: "number", value: 1, color: "red", id: "card-id-018" },
+    { type: "number", value: 1, color: "red", id: "card-id-015" },
+    { type: "number", value: 1, color: "red", id: "card-id-012" },
     { type: "number", value: 1, color: "red", id: "card-id-009" },
     { type: "number", value: 1, color: "red", id: "card-id-006" },
     { type: "number", value: 1, color: "red", id: "card-id-003" },
   ]);
   expect(game.players[1]?.hand).toEqual([
+    { type: "number", value: 1, color: "red", id: "card-id-020" },
+    { type: "number", value: 1, color: "red", id: "card-id-017" },
+    { type: "number", value: 1, color: "red", id: "card-id-014" },
+    { type: "number", value: 1, color: "red", id: "card-id-011" },
     { type: "number", value: 1, color: "red", id: "card-id-008" },
     { type: "number", value: 1, color: "red", id: "card-id-005" },
     { type: "number", value: 1, color: "red", id: "card-id-002" },
   ]);
   expect(game.players[2]?.hand).toEqual([
+    { type: "number", value: 1, color: "red", id: "card-id-019" },
+    { type: "number", value: 1, color: "red", id: "card-id-016" },
+    { type: "number", value: 1, color: "red", id: "card-id-013" },
+    { type: "number", value: 1, color: "red", id: "card-id-010" },
     { type: "number", value: 1, color: "red", id: "card-id-007" },
     { type: "number", value: 1, color: "red", id: "card-id-004" },
     { type: "number", value: 1, color: "red", id: "card-id-001" },
