@@ -6,16 +6,20 @@ export function discardFirstCard(game: StartedGame): StartedGame {
 
   let firstDiscard = drawPile.pop();
   if (!firstDiscard) {
-    throw new Error("Ran out of cards while picking first card to discard.");
+    throw new Error("Draw pile is empty.");
   }
 
+  const skippedCards = [];
+
   while (firstDiscard.type !== "number") {
-    drawPile.unshift(firstDiscard);
+    skippedCards.unshift(firstDiscard);
     firstDiscard = drawPile.pop();
     if (!firstDiscard) {
-      throw new Error("Ran out of cards while picking first card to discard.");
+      throw new Error("Draw pile has no number cards.");
     }
   }
+
+  drawPile.unshift(...skippedCards);
 
   game = { ...game, drawPile, discardPile: [firstDiscard] };
   game = emitEvent(game, { type: "cardDiscarded", card: firstDiscard });
