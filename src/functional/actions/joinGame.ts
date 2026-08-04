@@ -1,26 +1,23 @@
 import { MAX_PLAYERS } from "../constants.js";
-import type { Game } from "../types/Game.js";
+import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
 type JoinGameResult =
   | {
       readonly success: true;
-      readonly game: Game;
+      readonly game: CreatedGame;
       readonly playerId: string;
     }
   | {
       readonly success: false;
-      readonly error: "invalidStatus" | "maxPlayersReached" | "alreadyInGame";
+      readonly error: "maxPlayersReached" | "alreadyInGame";
     };
 
 export function joinGame(
-  game: Game,
+  game: CreatedGame,
   userId: string,
   username: string,
 ): JoinGameResult {
-  if (game.status !== "created") {
-    return { success: false, error: "invalidStatus" };
-  }
   if (game.players.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }

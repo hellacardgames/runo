@@ -1,4 +1,5 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
+import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { emitEvent } from "../lib/emitEvent.js";
 import { removePlayer } from "../lib/removePlayer.js";
 import type { Game } from "../types/Game.js";
@@ -21,27 +22,17 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
 
   game = emitEvent(game, { type: "playerLeft", username: player.username });
 
-  const removeResult = removePlayer(game, player);
-  game = removeResult.game;
-  if (removeResult.turnChanged) {
+  const removePlayerResult = removePlayer(game, player);
+  game = removePlayerResult.game;
+
+  if (removePlayerResult.turnChanged) {
     game = emitEvent(game, {
       type: "turnChanged",
       currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
     });
   }
 
-  game = {
-    ...game,
-    discardPile: [
-      ...player.hand.map((c) => {
-        if (c.type === "wild") {
-          return { type: "discardedWild", card: c, color: "blue" } as const;
-        }
-        return c;
-      }),
-      ...game.discardPile,
-    ],
-  };
+  game = discardLeavingPlayerCards(game, player);
 
   if (game.players.length === 2 && game.isReversed) {
     const isReversed = false;

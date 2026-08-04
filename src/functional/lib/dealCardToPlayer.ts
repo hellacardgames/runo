@@ -1,9 +1,12 @@
 import { emitEvent } from "./emitEvent.js";
 import { emitEventToPlayer } from "./emitEventToPlayer.js";
-import type { Game } from "../types/Game.js";
+import type { StartedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
-export function dealCardToPlayer(game: Game, player: Player): Game {
+export function dealCardToPlayer(
+  game: StartedGame,
+  player: Player,
+): StartedGame {
   const card = game.drawPile[game.drawPile.length - 1];
   if (!card) {
     throw new Error("Ran out of cards while dealing to players.");

@@ -1,7 +1,7 @@
 import { emitEvent } from "./emitEvent.js";
-import type { Game } from "../types/Game.js";
+import type { StartedGame } from "../types/Game.js";
 
-export function discardFirstCard(game: Game): Game {
+export function discardFirstCard(game: StartedGame): StartedGame {
   const drawPile = [...game.drawPile];
 
   let firstDiscard = drawPile.pop();

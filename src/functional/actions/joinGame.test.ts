@@ -39,18 +39,6 @@ test("allows up to MAX_PLAYERS players", () => {
   expect(joinGameResult.error).toBe("maxPlayersReached");
 });
 
-test("only allows joining open games", () => {
-  let { game } = createGame("user-id-001", "bob");
-  for (const status of ["started", "completed", "forfeited"] as const) {
-    game = { ...game, status };
-    const joinGameResult = joinGame(game, "user-id-002", "alice");
-    if (joinGameResult.success) {
-      throw new Error("Expected joinGame to fail.");
-    }
-    expect(joinGameResult.error).toBe("invalidStatus");
-  }
-});
-
 test("prevents same user from joining twice", () => {
   const { game } = createGame("user-id-001", "bob");
   const result = joinGame(game, "user-id-001", "bob");

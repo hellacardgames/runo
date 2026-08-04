@@ -1,10 +1,10 @@
 import { EXPIRY_EXTENSION_MS } from "../../constants.js";
 import { CARDS } from "../constants.js";
-import type { Game } from "../types/Game.js";
+import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
 type CreateGameResult = {
-  readonly game: Game;
+  readonly game: CreatedGame;
   readonly playerId: string;
 };
 
@@ -19,7 +19,7 @@ export function createGame(userId: string, username: string): CreateGameResult {
   };
 
   const createdAt = Date.now();
-  const game: Game = {
+  const game: CreatedGame = {
     id: crypto.randomUUID(),
     createdAt,
     expiresAt: createdAt + EXPIRY_EXTENSION_MS,

@@ -1,8 +1,8 @@
 export function changeTurn<
   Game extends {
+    readonly players: readonly unknown[];
     readonly currentPlayerIndex: number;
     readonly isReversed?: boolean;
-    readonly players: readonly unknown[];
   },
 >(game: Game): Game {
   let currentPlayerIndex: number;
