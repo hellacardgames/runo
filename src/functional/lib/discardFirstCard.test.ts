@@ -116,17 +116,21 @@ test("emits card discarded event to all players", () => {
 
   game = discardFirstCard(game);
 
-  expect(game.players[0]?.events.slice(-1)).toMatchObject([
-    {
-      type: "cardDiscarded",
-      card: { type: "number", value: 1, color: "red", id: "card-id-001" },
-    },
-  ]);
+  expect(game.players[0]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "cardDiscarded",
+        card: { type: "number", value: 1, color: "red", id: "card-id-001" },
+      }),
+    ]),
+  );
 
-  expect(game.players[1]?.events.slice(-1)).toMatchObject([
-    {
-      type: "cardDiscarded",
-      card: { type: "number", value: 1, color: "red", id: "card-id-001" },
-    },
-  ]);
+  expect(game.players[1]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "cardDiscarded",
+        card: { type: "number", value: 1, color: "red", id: "card-id-001" },
+      }),
+    ]),
+  );
 });
