@@ -16,7 +16,7 @@ test("adds card to player's hand", () => {
   const player2: Player = {
     id: "player-id-002",
     userId: "user-id-002",
-    username: "username-003",
+    username: "username-002",
     events: [],
     hand: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },

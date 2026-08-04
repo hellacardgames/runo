@@ -1,5 +1,6 @@
 type Game = {
   readonly players: readonly {
+    readonly id: string;
     readonly events: readonly { readonly id: string }[];
   }[];
 };
@@ -14,7 +15,7 @@ export function emitEventToPlayer<T extends Game>(
   return {
     ...game,
     players: game.players.map((p) => {
-      if (p !== player) {
+      if (p.id !== player.id) {
         return p;
       }
       return {
