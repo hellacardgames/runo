@@ -20,13 +20,5 @@ export function dealCardToPlayer(
     username: player.username,
   });
 
-  if (game.isReversed) {
-    game = { ...game, isReversed: false };
-    game = emitEvent(game, {
-      type: "directionChanged",
-      isReversed: game.isReversed,
-    });
-  }
-
   return game;
 }
