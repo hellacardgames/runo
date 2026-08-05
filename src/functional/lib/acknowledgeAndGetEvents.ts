@@ -1,3 +1,5 @@
+import { requirePlayer } from "./requirePlayer.js";
+
 type AcknowledgeAndGetEventsResult<TGame extends Game> = {
   readonly events: readonly Event<TGame>[];
   readonly game: TGame;
@@ -16,9 +18,11 @@ type Game = {
 
 export function acknowledgeAndGetEvents<TGame extends Game>(
   game: TGame,
-  player: Player<TGame>,
+  playerId: string,
   lastReadId: string | null,
 ): AcknowledgeAndGetEventsResult<TGame> {
+  const { player } = requirePlayer(game, playerId);
+
   const lastReadEventIndex = player.events.findIndex(
     (e) => e.id === lastReadId,
   );
