@@ -23,6 +23,8 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
 
   game = emitEvent(game, { type: "playerLeft", username: player.username });
 
+  game = discardLeavingPlayerCards(game, player.id);
+
   const removePlayerResult = removePlayer(game, player.id);
   game = removePlayerResult.game;
 
@@ -32,8 +34,6 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
       currentPlayerUsername: getCurrentPlayer(game).username,
     });
   }
-
-  game = discardLeavingPlayerCards(game, player);
 
   if (game.players.length === 2 && game.isReversed) {
     const isReversed = false;

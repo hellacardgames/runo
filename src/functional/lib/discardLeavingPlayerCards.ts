@@ -1,7 +1,9 @@
 import type { Game } from "../types/Game.js";
-import type { Player } from "../types/Player.js";
+import { requirePlayer } from "./requirePlayer.js";
 
-export function discardLeavingPlayerCards(game: Game, player: Player): Game {
+export function discardLeavingPlayerCards(game: Game, playerId: string): Game {
+  const { player } = requirePlayer(game, playerId);
+
   return {
     ...game,
     discardPile: [
