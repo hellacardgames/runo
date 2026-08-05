@@ -40,7 +40,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   const takeCardResult = takeCardFromDrawPile(game);
   game = takeCardResult.game;
   const { card } = takeCardResult;
-  game = addCardToPlayerHand(game, player, card);
+  game = addCardToPlayerHand(game, player.id, card);
   game = emitEventToPlayer(game, player, { type: "drewCard", card });
 
   const isPlayable = isCardPlayable(card, player.hand, game.discardPile);

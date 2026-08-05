@@ -1,12 +1,14 @@
 import type { Card } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
-import type { Player } from "../types/Player.js";
+import { requirePlayer } from "./requirePlayer.js";
 
 export function addCardToPlayerHand(
   game: StartedGame,
-  player: Player,
+  playerId: string,
   card: Card,
 ): StartedGame {
+  const { player } = requirePlayer(game, playerId);
+
   return {
     ...game,
     players: game.players.map((p) => {

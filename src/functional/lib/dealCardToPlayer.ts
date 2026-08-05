@@ -12,7 +12,7 @@ export function dealCardToPlayer(
   const takeCardResult = takeCardFromDrawPile(game);
   game = takeCardResult.game;
   const { card } = takeCardResult;
-  game = addCardToPlayerHand(game, player, card);
+  game = addCardToPlayerHand(game, player.id, card);
 
   game = emitEventToPlayer(game, player, { type: "cardDealt", card });
   game = emitEvent(game, {
