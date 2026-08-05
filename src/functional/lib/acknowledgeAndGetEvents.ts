@@ -5,14 +5,14 @@ type AcknowledgeAndGetEventsResult<TGame extends Game> = {
   readonly game: TGame;
 };
 
-type Event<TGame extends Game> = Player<TGame>["events"][number];
-
-type Player<TGame extends Game> = TGame["players"][number];
+type Event<TGame extends Game> = TGame["players"][number]["events"][number];
 
 type Game = {
   readonly players: readonly {
     readonly id: string;
-    readonly events: readonly { readonly id: string }[];
+    readonly events: readonly {
+      readonly id: string;
+    }[];
   }[];
 };
 
