@@ -2,9 +2,9 @@ import { expect, test } from "vitest";
 import { removePlayer } from "./removePlayer.js";
 
 test("removes the given player", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -25,9 +25,9 @@ test("removes the given player", () => {
 });
 
 test("keeps current player when an earlier player is removed", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -42,9 +42,9 @@ test("keeps current player when an earlier player is removed", () => {
 });
 
 test("keeps current player when a later player is removed", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -59,9 +59,9 @@ test("keeps current player when a later player is removed", () => {
 });
 
 test("changes turn when removing current player", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -77,9 +77,9 @@ test("changes turn when removing current player", () => {
 });
 
 test("changes turn when removing current player in reverse", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -96,9 +96,9 @@ test("changes turn when removing current player in reverse", () => {
 });
 
 test("does not change turn when not removing current player", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -114,9 +114,9 @@ test("does not change turn when not removing current player", () => {
 });
 
 test("wraps turn to first player when current last player is removed", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -132,9 +132,9 @@ test("wraps turn to first player when current last player is removed", () => {
 });
 
 test("wraps turn to last player when reversed and current first player removed", () => {
-  const player1 = {};
-  const player2 = {};
-  const player3 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
+  const player3 = { id: "player-id-003" };
 
   let game = {
     players: [player1, player2, player3],
@@ -151,8 +151,8 @@ test("wraps turn to last player when reversed and current first player removed",
 });
 
 test("does not change game when player is not found", () => {
-  const player1 = {};
-  const player2 = {};
+  const player1 = { id: "player-id-001" };
+  const player2 = { id: "player-id-002" };
 
   let game = {
     players: [player1],

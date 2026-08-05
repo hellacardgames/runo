@@ -1,20 +1,22 @@
 import { changeTurn } from "./changeTurn.js";
 
-type RemovePlayerResult<Game extends TurnBasedGame<Player>, Player> = {
+type RemovePlayerResult<TGame extends Game> = {
   readonly turnChanged: boolean;
-  readonly game: Game;
+  readonly game: TGame;
 };
 
-type TurnBasedGame<Player> = {
-  readonly players: readonly Player[];
+type Game = {
+  readonly players: readonly {
+    readonly id: string;
+  }[];
   readonly currentPlayerIndex: number;
   readonly isReversed?: boolean;
 };
 
-export function removePlayer<Game extends TurnBasedGame<Player>, Player>(
-  game: Game,
-  player: Player,
-): RemovePlayerResult<Game, Player> {
+export function removePlayer<TGame extends Game>(
+  game: TGame,
+  player: TGame["players"][number],
+): RemovePlayerResult<TGame> {
   let turnChanged = false;
 
   const playerIndex = game.players.indexOf(player);
