@@ -42,7 +42,7 @@ test("deals card to player", () => {
     isReversed: false,
   };
 
-  game = dealCardToPlayer(game, player2);
+  game = dealCardToPlayer(game, "player-id-002");
 
   expect(game.players[1]?.hand).toEqual([
     { type: "number", value: 1, color: "red", id: "card-id-001" },
@@ -91,7 +91,7 @@ test("emits cardDealtToPlayer event to all players", () => {
     isReversed: false,
   };
 
-  game = dealCardToPlayer(game, player2);
+  game = dealCardToPlayer(game, "player-id-002");
 
   expect(game.players[0]?.events).toEqual(
     expect.arrayContaining([
@@ -146,7 +146,7 @@ test("emits cardDealt event to player only", () => {
     isReversed: false,
   };
 
-  game = dealCardToPlayer(game, player2);
+  game = dealCardToPlayer(game, "player-id-002");
 
   expect(game.players[0]?.events).not.toEqual(
     expect.arrayContaining([
