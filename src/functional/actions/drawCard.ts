@@ -24,7 +24,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (player !== getCurrentPlayer(game)) {
+  if (player.id !== getCurrentPlayer(game).id) {
     return { success: false, error: "outOfTurn" };
   }
   if (hasPlayableCard(player.hand, game.discardPile)) {

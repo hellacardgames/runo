@@ -1,10 +1,10 @@
-export function changeTurn<
-  Game extends {
-    readonly players: readonly unknown[];
-    readonly currentPlayerIndex: number;
-    readonly isReversed?: boolean;
-  },
->(game: Game): Game {
+type Game = {
+  readonly players: readonly unknown[];
+  readonly currentPlayerIndex: number;
+  readonly isReversed?: boolean;
+};
+
+export function changeTurn<TGame extends Game>(game: TGame): TGame {
   let currentPlayerIndex: number;
 
   if (game.isReversed) {
