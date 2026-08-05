@@ -1,5 +1,4 @@
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
-import { addCardToPlayerHand } from "../lib/addCardToPlayerHand.js";
 import { changeTurn } from "../lib/changeTurn.js";
 import { takeCardFromDrawPile } from "../lib/takeCardFromDrawPile.js";
 import { emitEvent } from "../lib/emitEvent.js";
@@ -7,8 +6,10 @@ import { emitEventToPlayer } from "../lib/emitEventToPlayer.js";
 import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
-import type { StartedGame } from "../types/Game.js";
 import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
+import { updatePlayer } from "../lib/updatePlayer.js";
+import { addCardToHand } from "../lib/addCardToHand.js";
+import type { StartedGame } from "../types/Game.js";
 
 type DrawCardResult =
   | {
@@ -41,7 +42,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   const takeCardResult = takeCardFromDrawPile(game);
   game = takeCardResult.game;
   const { card } = takeCardResult;
-  game = addCardToPlayerHand(game, player.id, card);
+  game = updatePlayer(game, player.id, (p) => addCardToHand(p, card));
   game = emitEventToPlayer(game, player.id, { type: "drewCard", card });
 
   const isPlayable = isCardPlayable(card, player.hand, game.discardPile);

@@ -1,8 +1,9 @@
 import { emitEvent } from "./emitEvent.js";
 import { emitEventToPlayer } from "./emitEventToPlayer.js";
 import { takeCardFromDrawPile } from "./takeCardFromDrawPile.js";
-import { addCardToPlayerHand } from "./addCardToPlayerHand.js";
 import { requirePlayer } from "./requirePlayer.js";
+import { updatePlayer } from "./updatePlayer.js";
+import { addCardToHand } from "./addCardToHand.js";
 import type { StartedGame } from "../types/Game.js";
 
 export function dealCardToPlayer(
@@ -14,7 +15,7 @@ export function dealCardToPlayer(
   const takeCardResult = takeCardFromDrawPile(game);
   game = takeCardResult.game;
   const { card } = takeCardResult;
-  game = addCardToPlayerHand(game, player.id, card);
+  game = updatePlayer(game, player.id, (p) => addCardToHand(p, card));
 
   game = emitEventToPlayer(game, player.id, { type: "cardDealt", card });
   game = emitEvent(game, {
