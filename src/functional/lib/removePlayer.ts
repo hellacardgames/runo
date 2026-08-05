@@ -1,4 +1,5 @@
 import { changeTurn } from "./changeTurn.js";
+import { requirePlayer } from "./requirePlayer.js";
 
 type RemovePlayerResult<TGame extends Game> = {
   readonly turnChanged: boolean;
@@ -15,23 +16,20 @@ type Game = {
 
 export function removePlayer<TGame extends Game>(
   game: TGame,
-  player: TGame["players"][number],
+  playerId: string,
 ): RemovePlayerResult<TGame> {
+  const { index } = requirePlayer(game, playerId);
+
   let turnChanged = false;
 
-  const playerIndex = game.players.indexOf(player);
-  if (playerIndex === -1) {
-    return { turnChanged, game };
-  }
-
-  if (playerIndex === game.currentPlayerIndex) {
+  if (index === game.currentPlayerIndex) {
     game = changeTurn(game);
     turnChanged = true;
   }
 
-  game = { ...game, players: game.players.filter((_, i) => i !== playerIndex) };
+  game = { ...game, players: game.players.filter((_, i) => i !== index) };
 
-  if (game.currentPlayerIndex > playerIndex) {
+  if (game.currentPlayerIndex > index) {
     game = { ...game, currentPlayerIndex: game.currentPlayerIndex - 1 };
   }
 

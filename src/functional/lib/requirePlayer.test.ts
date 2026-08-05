@@ -6,7 +6,7 @@ test("returns player when player id exists in game", () => {
     players: [{ id: "player-id-001" }],
   };
 
-  const player = requirePlayer(game, "player-id-001");
+  const { player } = requirePlayer(game, "player-id-001");
 
   expect(player.id).toBe("player-id-001");
 });

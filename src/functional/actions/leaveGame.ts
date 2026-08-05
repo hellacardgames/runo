@@ -23,7 +23,7 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
 
   game = emitEvent(game, { type: "playerLeft", username: player.username });
 
-  const removePlayerResult = removePlayer(game, player);
+  const removePlayerResult = removePlayer(game, player.id);
   game = removePlayerResult.game;
 
   if (removePlayerResult.turnChanged) {

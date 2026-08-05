@@ -11,15 +11,15 @@ test("removes the given player", () => {
     currentPlayerIndex: 0,
   };
 
-  let result = removePlayer(game, player2);
+  let result = removePlayer(game, "player-id-002");
   game = result.game;
   expect(game.players).toEqual([player1, player3]);
 
-  result = removePlayer(game, player3);
+  result = removePlayer(game, "player-id-003");
   game = result.game;
   expect(game.players).toEqual([player1]);
 
-  result = removePlayer(game, player1);
+  result = removePlayer(game, "player-id-001");
   game = result.game;
   expect(game.players).toEqual([]);
 });
@@ -34,7 +34,7 @@ test("keeps current player when an earlier player is removed", () => {
     currentPlayerIndex: 2,
   };
 
-  const result = removePlayer(game, player2);
+  const result = removePlayer(game, "player-id-002");
   game = result.game;
 
   expect(game.currentPlayerIndex).toBe(1);
@@ -51,7 +51,7 @@ test("keeps current player when a later player is removed", () => {
     currentPlayerIndex: 1,
   };
 
-  const result = removePlayer(game, player3);
+  const result = removePlayer(game, "player-id-003");
   game = result.game;
 
   expect(game.currentPlayerIndex).toBe(1);
@@ -68,7 +68,7 @@ test("changes turn when removing current player", () => {
     currentPlayerIndex: 0,
   };
 
-  const result = removePlayer(game, player1);
+  const result = removePlayer(game, "player-id-001");
   game = result.game;
 
   expect(result.turnChanged).toBe(true);
@@ -87,7 +87,7 @@ test("changes turn when removing current player in reverse", () => {
     isReversed: true,
   };
 
-  const result = removePlayer(game, player3);
+  const result = removePlayer(game, "player-id-003");
   game = result.game;
 
   expect(result.turnChanged).toBe(true);
@@ -105,7 +105,7 @@ test("does not change turn when not removing current player", () => {
     currentPlayerIndex: 0,
   };
 
-  const result = removePlayer(game, player2);
+  const result = removePlayer(game, "player-id-002");
   game = result.game;
 
   expect(result.turnChanged).toEqual(false);
@@ -123,7 +123,7 @@ test("wraps turn to first player when current last player is removed", () => {
     currentPlayerIndex: 2,
   };
 
-  const result = removePlayer(game, player3);
+  const result = removePlayer(game, "player-id-003");
   game = result.game;
 
   expect(result.turnChanged).toBe(true);
@@ -142,7 +142,7 @@ test("wraps turn to last player when reversed and current first player removed",
     isReversed: true,
   };
 
-  const result = removePlayer(game, player1);
+  const result = removePlayer(game, "player-id-001");
   game = result.game;
 
   expect(result.turnChanged).toBe(true);
@@ -150,19 +150,15 @@ test("wraps turn to last player when reversed and current first player removed",
   expect(game.players[game.currentPlayerIndex]).toBe(player3);
 });
 
-test("does not change game when player is not found", () => {
+test("throws when player does not exist in game", () => {
   const player1 = { id: "player-id-001" };
-  const player2 = { id: "player-id-002" };
 
-  let game = {
+  const game = {
     players: [player1],
     currentPlayerIndex: 0,
   };
 
-  const result = removePlayer(game, player2);
-  game = result.game;
-
-  expect(game.players).toEqual([player1]);
-  expect(game.currentPlayerIndex).toBe(0);
-  expect(result.turnChanged).toBe(false);
+  expect(() => removePlayer(game, "some-random-id")).toThrow(
+    "Player some-random-id does not exist in game.",
+  );
 });

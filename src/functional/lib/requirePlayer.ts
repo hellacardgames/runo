@@ -1,3 +1,8 @@
+type RequirePlayerResult<TGame extends Game> = {
+  readonly player: Player<TGame>;
+  readonly index: number;
+};
+
 type Player<TGame extends Game> = TGame["players"][number];
 
 type Game = {
@@ -9,12 +14,15 @@ type Game = {
 export function requirePlayer<TGame extends Game>(
   game: TGame,
   playerId: string,
-): Player<TGame> {
-  const player = game.players.find((p) => p.id === playerId);
+): RequirePlayerResult<TGame> {
+  const index = game.players.findIndex((p) => p.id === playerId);
 
-  if (!player) {
+  if (index === -1) {
     throw new Error(`Player ${playerId} does not exist in game.`);
   }
 
-  return player;
+  return {
+    player: game.players[index]!,
+    index,
+  };
 }
