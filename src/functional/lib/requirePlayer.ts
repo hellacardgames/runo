@@ -1,5 +1,3 @@
-import { findPlayer } from "./findPlayer.js";
-
 type RequirePlayerResult<TGame extends Game> = {
   readonly player: Player<TGame>;
   readonly index: number;
@@ -17,14 +15,15 @@ export function requirePlayer<TGame extends Game>(
   game: TGame,
   playerId: string,
 ): RequirePlayerResult<TGame> {
-  const { player, index } = findPlayer(game, playerId);
+  // const { player, index } = findPlayer(game, playerId);
+  const index = game.players.findIndex((p) => p.id === playerId);
 
-  if (!player) {
+  if (index === -1) {
     throw new Error(`Player ${playerId} does not exist in game.`);
   }
 
   return {
-    player,
+    player: game.players[index]!,
     index,
   };
 }

@@ -7,7 +7,6 @@ import { emitEventToPlayer } from "../lib/emitEventToPlayer.js";
 import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
-import { findPlayer } from "../lib/findPlayer.js";
 import type { StartedGame } from "../types/Game.js";
 
 type DrawCardResult =
@@ -21,7 +20,7 @@ type DrawCardResult =
     };
 
 export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
-  const { player } = findPlayer(game, playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }

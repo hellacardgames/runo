@@ -1,6 +1,5 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { emitEvent } from "../lib/emitEvent.js";
-import { findPlayer } from "../lib/findPlayer.js";
 import { startRound } from "../lib/startRound.js";
 import type { CreatedGame, StartedGame } from "../types/Game.js";
 
@@ -19,7 +18,7 @@ export function startGame(
   game: CreatedGame,
   playerId: string,
 ): StartGameResult {
-  const { player } = findPlayer(game, playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }

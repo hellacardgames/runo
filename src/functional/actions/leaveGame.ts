@@ -1,7 +1,6 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { emitEvent } from "../lib/emitEvent.js";
-import { findPlayer } from "../lib/findPlayer.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import { removePlayer } from "../lib/removePlayer.js";
 import type { Game } from "../types/Game.js";
@@ -17,7 +16,7 @@ type LeaveGameResult =
     };
 
 export function leaveGame(game: Game, playerId: string): LeaveGameResult {
-  const { player } = findPlayer(game, playerId);
+  const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
