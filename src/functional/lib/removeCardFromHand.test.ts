@@ -25,6 +25,6 @@ test("throws if card does not exist in hand", () => {
   };
 
   expect(() => removeCardFromHand(player, card3)).toThrow(
-    "Card does not exist in hand.",
+    "Item does not exist in collection.",
   );
 });
