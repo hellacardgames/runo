@@ -1,4 +1,7 @@
+import { EXPIRY_EXTENSION_MS } from "../constants.js";
+import { emitEvent } from "../lib/emitEvent.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
+import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
 import type {
   CompletedGame,
   ForfeitedGame,
@@ -29,14 +32,13 @@ export function playCard(
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (player !== game.players[game.currentPlayerIndex]) {
+  if (isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" };
   }
-  const cardIndex = player.hand.findIndex((c) => c.id === cardId);
-  if (cardIndex === -1) {
+  const card = player.hand.find((c) => c.id === cardId);
+  if (!card) {
     return { success: false, error: "cardNotFound" };
   }
-  const card = player.hand[cardIndex]!;
   if (card.type === "wild") {
     return { success: false, error: "cardIsWild" };
   }
@@ -44,10 +46,13 @@ export function playCard(
     return { success: false, error: "cardNotPlayable" };
   }
 
-  return { success: true, game };
+  game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
+  game = emitEvent(game, {
+    type: "expirationUpdated",
+    expiresAt: game.expiresAt,
+  });
 
-  // game.expiresAt = Date.now() + EXPIRY_EXTENSION_MS;
-  // emitEvent(game, { type: "expirationUpdated", expiresAt: game.expiresAt });
+  return { success: true, game };
 
   // player.hand.splice(cardIndex, 1);
   // game.discardPile.push(card);

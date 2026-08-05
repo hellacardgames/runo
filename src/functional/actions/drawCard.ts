@@ -8,6 +8,7 @@ import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import type { StartedGame } from "../types/Game.js";
+import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
 
 type DrawCardResult =
   | {
@@ -24,7 +25,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (player.id !== getCurrentPlayer(game).id) {
+  if (!isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" };
   }
   if (hasPlayableCard(player.hand, game.discardPile)) {
