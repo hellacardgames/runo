@@ -16,7 +16,7 @@ export function dealCardToPlayer(
   const { card } = takeCardResult;
   game = addCardToPlayerHand(game, player.id, card);
 
-  game = emitEventToPlayer(game, player, { type: "cardDealt", card });
+  game = emitEventToPlayer(game, player.id, { type: "cardDealt", card });
   game = emitEvent(game, {
     type: "cardDealtToPlayer",
     username: player.username,

@@ -41,7 +41,7 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   game = takeCardResult.game;
   const { card } = takeCardResult;
   game = addCardToPlayerHand(game, player.id, card);
-  game = emitEventToPlayer(game, player, { type: "drewCard", card });
+  game = emitEventToPlayer(game, player.id, { type: "drewCard", card });
 
   const isPlayable = isCardPlayable(card, player.hand, game.discardPile);
   game = emitEvent(game, {
