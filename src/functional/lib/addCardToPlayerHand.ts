@@ -1,6 +1,6 @@
+import { requirePlayer } from "./requirePlayer.js";
 import type { Card } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
-import { requirePlayer } from "./requirePlayer.js";
 
 export function addCardToPlayerHand(
   game: StartedGame,

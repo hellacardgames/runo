@@ -1,5 +1,5 @@
-import type { Game } from "../types/Game.js";
 import { requirePlayer } from "./requirePlayer.js";
+import type { Game } from "../types/Game.js";
 
 export function discardLeavingPlayerCards(game: Game, playerId: string): Game {
   const { player } = requirePlayer(game, playerId);
