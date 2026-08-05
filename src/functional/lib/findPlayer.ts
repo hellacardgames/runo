@@ -1,13 +1,6 @@
-type FindPlayerResult<TGame extends Game> = Found<TGame> | NotFound;
-
-type Found<TGame extends Game> = {
-  readonly player: Player<TGame>;
+type FindPlayerResult<TGame extends Game> = {
+  readonly player: Player<TGame> | undefined;
   readonly index: number;
-};
-
-type NotFound = {
-  readonly player: undefined;
-  readonly index: -1;
 };
 
 type Player<TGame extends Game> = TGame["players"][number];

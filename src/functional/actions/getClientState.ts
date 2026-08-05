@@ -1,3 +1,4 @@
+import { findPlayer } from "../lib/findPlayer.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import type { ClientState } from "../types/ClientState.js";
 import type { Game } from "../types/Game.js";
@@ -17,7 +18,7 @@ export function getClientState(
   game: Game,
   playerId: string,
 ): GetClientStateResult {
-  const player = game.players.find((p) => p.id === playerId);
+  const { player } = findPlayer(game, playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
