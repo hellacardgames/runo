@@ -25,7 +25,7 @@ type SkipCard = {
   readonly color: Color;
 };
 
-type WildCard = {
+export type WildCard = {
   readonly id: string;
   readonly type: "wild";
   readonly isDrawFour: boolean;

@@ -1,7 +1,10 @@
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
+import { addCardToDiscardPile } from "../lib/addCardToDiscardPile.js";
 import { emitEvent } from "../lib/emitEvent.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
+import { removeCardFromHand } from "../lib/removeCardFromHand.js";
+import { updatePlayer } from "../lib/updatePlayer.js";
 import type {
   CompletedGame,
   ForfeitedGame,
@@ -52,11 +55,15 @@ export function playCard(
     expiresAt: game.expiresAt,
   });
 
-  return { success: true, game };
+  game = updatePlayer(game, player.id, (p) => removeCardFromHand(p, card));
+  game = addCardToDiscardPile(game, card);
+  game = emitEvent(game, {
+    type: "cardPlayed",
+    username: player.username,
+    card,
+  });
 
-  // player.hand.splice(cardIndex, 1);
-  // game.discardPile.push(card);
-  // emitEvent(game, { type: "cardPlayed", username: player.username, card });
+  return { success: true, game };
 
   // if (card.type === "reverse") {
   //   if (game.players.length > 2) {
