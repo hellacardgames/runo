@@ -1,4 +1,5 @@
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
+import { updatePlayer } from "../lib/updatePlayer.js";
 import type { ClientState } from "../types/ClientState.js";
 import type { Game } from "../types/Game.js";
 
@@ -40,15 +41,7 @@ export function getClientState(
     // chatMessages: game.chatMessages,
   };
 
-  game = {
-    ...game,
-    players: game.players.map((p) => {
-      if (p.id === player.id) {
-        return { ...p, events: [] };
-      }
-      return p;
-    }),
-  };
+  game = updatePlayer(game, player.id, (p) => ({ ...p, events: [] }));
 
   return { success: true, state, game };
 }
