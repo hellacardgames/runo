@@ -34,12 +34,12 @@ test("discards player cards to bottom of discard pile", () => {
   game = discardLeavingPlayerCards(game, "player-id-001");
 
   expect(game.discardPile).toEqual([
-    { type: "number", value: 1, color: "red", id: "card-id-001" },
-    { type: "drawTwo", color: "red", id: "card-id-002" },
     expect.objectContaining({
       type: "discardedWild",
       card: { type: "wild", isDrawFour: false, id: "card-id-003" },
     }),
+    { type: "drawTwo", color: "red", id: "card-id-002" },
+    { type: "number", value: 1, color: "red", id: "card-id-001" },
     { type: "number", value: 1, color: "green", id: "card-id-004" },
   ]);
 });

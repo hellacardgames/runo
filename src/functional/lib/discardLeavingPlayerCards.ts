@@ -1,19 +1,25 @@
 import { requirePlayer } from "./requirePlayer.js";
-import type { Game } from "../types/Game.js";
+import { updatePlayer } from "./updatePlayer.js";
+import { removeCardFromHand } from "./removeCardFromHand.js";
+import { addWildCardToBottomOfDiscardPile } from "./addWildCardToBottomOfDiscardPile.js";
+import { addCardToBottomOfDiscardPile } from "./addCardToBottomOfDiscardPile.js";
+import type { StartedGame } from "../types/Game.js";
 
-export function discardLeavingPlayerCards(game: Game, playerId: string): Game {
+export function discardLeavingPlayerCards(
+  game: StartedGame,
+  playerId: string,
+): StartedGame {
   const { player } = requirePlayer(game, playerId);
 
-  return {
-    ...game,
-    discardPile: [
-      ...player.hand.map((c) => {
-        if (c.type === "wild") {
-          return { type: "discardedWild", card: c, color: "blue" } as const;
-        }
-        return c;
-      }),
-      ...game.discardPile,
-    ],
-  };
+  const cards = player.hand.slice();
+
+  for (const card of cards) {
+    game = updatePlayer(game, player.id, (p) => removeCardFromHand(p, card));
+    game =
+      card.type === "wild"
+        ? addWildCardToBottomOfDiscardPile(game, card, "red")
+        : addCardToBottomOfDiscardPile(game, card);
+  }
+
+  return game;
 }

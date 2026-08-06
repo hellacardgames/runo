@@ -23,7 +23,9 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
 
   game = emitEvent(game, { type: "playerLeft", username: player.username });
 
-  game = discardLeavingPlayerCards(game, player.id);
+  if (game.status === "started") {
+    game = discardLeavingPlayerCards(game, player.id);
+  }
 
   const removePlayerResult = removePlayer(game, player.id);
   game = removePlayerResult.game;
