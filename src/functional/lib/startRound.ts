@@ -11,10 +11,8 @@ export function startRound(game: StartedGame): StartedGame {
 
   if (game.isReversed) {
     const isReversed = false;
-    game = {
-      ...emitEvent(game, { type: "directionChanged", isReversed }),
-      isReversed,
-    };
+    game = { ...game, isReversed };
+    game = emitEvent(game, { type: "directionChanged", isReversed });
   }
 
   return game;
