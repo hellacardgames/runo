@@ -3,6 +3,7 @@ import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { emitEvent } from "../lib/emitEvent.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
 import { removePlayer } from "../lib/removePlayer.js";
+import { transitionGameToForfeited } from "../lib/transitionGameToForfeited.js";
 import type { Game } from "../types/Game.js";
 
 type LeaveGameResult =
@@ -46,9 +47,9 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
   }
 
   if (game.status === "started" && game.players.length < MIN_PLAYERS) {
+    game = transitionGameToForfeited(game);
     game = {
       ...game,
-      status: "forfeited",
       expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     };
     game = emitEvent(game, { type: "gameForfeited" });
