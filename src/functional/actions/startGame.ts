@@ -1,6 +1,7 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { emitEvent } from "../lib/emitEvent.js";
 import { startRound } from "../lib/startRound.js";
+import { transitionGameToStarted } from "../lib/transitionGameToStarted.js";
 import type { CreatedGame, StartedGame } from "../types/Game.js";
 
 type StartGameResult =
@@ -29,9 +30,10 @@ export function startGame(
     return { success: false, error: "minPlayersNotReached" };
   }
 
-  let startedGame: StartedGame = {
-    ...game,
-    status: "started",
+  let startedGame = transitionGameToStarted(game);
+
+  startedGame = {
+    ...startedGame,
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
   };
 
