@@ -19,3 +19,8 @@ type GameProperties = {
   readonly currentPlayerIndex: number;
   readonly isReversed: boolean;
 };
+
+export type UpdatableGameProperties = Omit<
+  GameProperties,
+  "id" | "createdAt" | "status"
+>;
