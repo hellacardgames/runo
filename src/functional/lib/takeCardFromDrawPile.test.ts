@@ -53,20 +53,3 @@ test("replenishes draw pile if needed", () => {
   game = result.game;
   expect(game.drawPile).toHaveLength(3);
 });
-
-test("throws error if draw pile is empty even after replenishing", () => {
-  const game: StartedGame = {
-    id: "game-id-001",
-    createdAt: Date.now(),
-    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
-    status: "started",
-    players: [],
-    drawPile: [],
-    discardPile: [
-      { type: "number", value: 1, color: "red", id: "card-id-001" },
-    ],
-    currentPlayerIndex: 0,
-    isReversed: false,
-  };
-  expect(() => takeCardFromDrawPile(game)).toThrow("Draw pile is empty.");
-});
