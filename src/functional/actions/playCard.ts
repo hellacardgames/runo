@@ -6,16 +6,12 @@ import { playDrawTwoCard } from "../lib/playDrawTwoCard.js";
 import { playNumberCard } from "../lib/playNumberCard.js";
 import { playReverseCard } from "../lib/playReverseCard.js";
 import { playSkipCard } from "../lib/playSkipCard.js";
-import type {
-  CompletedGame,
-  ForfeitedGame,
-  StartedGame,
-} from "../types/Game.js";
+import type { CompletedGame, StartedGame } from "../types/Game.js";
 
 type PlayCardResult =
   | {
       readonly success: true;
-      readonly game: StartedGame | ForfeitedGame | CompletedGame;
+      readonly game: StartedGame | CompletedGame;
     }
   | {
       readonly success: false;
@@ -58,18 +54,12 @@ export function playCard(
 
   switch (card.type) {
     case "drawTwo":
-      game = playDrawTwoCard(game, player.id, card);
-      break;
+      return { success: true, game: playDrawTwoCard(game, player.id, card) };
     case "number":
-      game = playNumberCard(game, player.id, card);
-      break;
+      return { success: true, game: playNumberCard(game, player.id, card) };
     case "reverse":
-      game = playReverseCard(game, player.id, card);
-      break;
+      return { success: true, game: playReverseCard(game, player.id, card) };
     case "skip":
-      game = playSkipCard(game, player.id, card);
-      break;
+      return { success: true, game: playSkipCard(game, player.id, card) };
   }
-
-  return { success: true, game };
 }
