@@ -1,4 +1,4 @@
-import { requirePlayer } from "./requirePlayer.js";
+import { updatePlayer } from "./updatePlayer.js";
 
 type Game = {
   readonly players: readonly {
@@ -18,18 +18,8 @@ export function emitEventToPlayer<TGame extends Game>(
   playerId: string,
   data: OmitId<Event<TGame>>,
 ): TGame {
-  const { player } = requirePlayer(game, playerId);
-
-  return {
-    ...game,
-    players: game.players.map((p) => {
-      if (p.id !== player.id) {
-        return p;
-      }
-      return {
-        ...p,
-        events: [...p.events, { ...data, id: crypto.randomUUID() }],
-      };
-    }),
-  };
+  return updatePlayer(game, playerId, (p) => ({
+    ...p,
+    events: [...p.events, { ...data, id: crypto.randomUUID() }],
+  }));
 }
