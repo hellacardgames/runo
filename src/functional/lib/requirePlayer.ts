@@ -15,7 +15,6 @@ export function requirePlayer<TGame extends Game>(
   game: TGame,
   playerId: string,
 ): RequirePlayerResult<TGame> {
-  // const { player, index } = findPlayer(game, playerId);
   const index = game.players.findIndex((p) => p.id === playerId);
 
   if (index === -1) {
