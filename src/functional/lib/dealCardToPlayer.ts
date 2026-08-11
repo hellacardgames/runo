@@ -14,10 +14,14 @@ export function dealCardToPlayer(
 
   const takeCardResult = takeCardFromDrawPile(game);
   game = takeCardResult.game;
-  const { card } = takeCardResult;
-  game = updatePlayer(game, player.id, (p) => addCardToHand(p, card));
+  game = updatePlayer(game, player.id, (p) =>
+    addCardToHand(p, takeCardResult.card),
+  );
 
-  game = emitEventToPlayer(game, player.id, { type: "cardDealt", card });
+  game = emitEventToPlayer(game, player.id, {
+    type: "cardDealt",
+    card: takeCardResult.card,
+  });
   game = emitEvent(game, {
     type: "cardDealtToPlayer",
     username: player.username,
