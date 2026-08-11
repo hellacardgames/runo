@@ -40,12 +40,21 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
   });
 
   const takeCardResult = takeCardFromDrawPile(game);
-  game = takeCardResult.game;
-  const { card } = takeCardResult;
-  game = updatePlayer(game, player.id, (p) => addCardToHand(p, card));
-  game = emitEventToPlayer(game, player.id, { type: "drewCard", card });
+  const isPlayable = isCardPlayable(
+    takeCardResult.card,
+    player.hand,
+    game.discardPile,
+  );
 
-  const isPlayable = isCardPlayable(card, player.hand, game.discardPile);
+  game = takeCardResult.game;
+  game = updatePlayer(game, player.id, (p) =>
+    addCardToHand(p, takeCardResult.card),
+  );
+
+  game = emitEventToPlayer(game, player.id, {
+    type: "drewCard",
+    card: takeCardResult.card,
+  });
   game = emitEvent(game, {
     type: "playerDrewCard",
     username: player.username,

@@ -40,18 +40,13 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
 
   if (game.players.length === 2 && game.isReversed) {
     const isReversed = false;
-    game = {
-      ...emitEvent(game, { type: "directionChanged", isReversed }),
-      isReversed,
-    };
+    game = { ...game, isReversed };
+    game = emitEvent(game, { type: "directionChanged", isReversed });
   }
 
   if (game.status === "started" && game.players.length < MIN_PLAYERS) {
     game = transitionGameToForfeited(game);
-    game = {
-      ...game,
-      expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
-    };
+    game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
     game = emitEvent(game, { type: "gameForfeited" });
     game = emitEvent(game, {
       type: "expirationUpdated",

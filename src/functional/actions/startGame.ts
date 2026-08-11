@@ -32,10 +32,7 @@ export function startGame(
 
   let startedGame = transitionGameToStarted(game);
 
-  startedGame = {
-    ...startedGame,
-    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
-  };
+  startedGame = { ...startedGame, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
 
   startedGame = startRound(startedGame);
 

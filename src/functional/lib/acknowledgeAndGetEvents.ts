@@ -1,4 +1,5 @@
 import { requirePlayer } from "./requirePlayer.js";
+import { updatePlayer } from "./updatePlayer.js";
 
 type AcknowledgeAndGetEventsResult<TGame extends Game> = {
   readonly events: readonly Event<TGame>[];
@@ -30,15 +31,7 @@ export function acknowledgeAndGetEvents<TGame extends Game>(
   // -1 => slice(0) => return all events
   const events = player.events.slice(lastReadEventIndex + 1);
 
-  game = {
-    ...game,
-    players: game.players.map((p) => {
-      if (p.id === player.id) {
-        return { ...p, events };
-      }
-      return p;
-    }),
-  };
+  game = updatePlayer(game, player.id, (p) => ({ ...p, events }));
 
   return {
     events,

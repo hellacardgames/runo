@@ -1,4 +1,5 @@
 import { changeTurn } from "./changeTurn.js";
+import { removeItemFromCollection } from "./removeItemFromCollection.js";
 import { requirePlayer } from "./requirePlayer.js";
 
 type RemovePlayerResult<TGame extends Game> = {
@@ -18,7 +19,7 @@ export function removePlayer<TGame extends Game>(
   game: TGame,
   playerId: string,
 ): RemovePlayerResult<TGame> {
-  const { index } = requirePlayer(game, playerId);
+  const { player, index } = requirePlayer(game, playerId);
 
   let turnChanged = false;
 
@@ -27,7 +28,7 @@ export function removePlayer<TGame extends Game>(
     turnChanged = true;
   }
 
-  game = { ...game, players: game.players.filter((_, i) => i !== index) };
+  game = { ...game, players: removeItemFromCollection(game.players, player) };
 
   if (game.currentPlayerIndex > index) {
     game = { ...game, currentPlayerIndex: game.currentPlayerIndex - 1 };

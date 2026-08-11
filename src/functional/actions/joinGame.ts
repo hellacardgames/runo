@@ -1,4 +1,5 @@
 import { MAX_PLAYERS } from "../constants.js";
+import { addItemToCollection } from "../lib/addItemToCollection.js";
 import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
@@ -34,10 +35,7 @@ export function joinGame(
     score: 0,
   };
 
-  game = {
-    ...game,
-    players: [...game.players, player],
-  };
+  game = { ...game, players: addItemToCollection(game.players, player) };
 
   return { success: true, game, playerId: player.id };
 }
