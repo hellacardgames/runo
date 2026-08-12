@@ -55,12 +55,14 @@ export function playSkipCard(
       game = startRound(game);
     }
   } else {
-    game = changeTurn(game);
-    game = changeTurn(game);
-    game = emitEvent(game, {
-      type: "turnChanged",
-      currentPlayerUsername: getCurrentPlayer(game).username,
-    });
+    if (game.players.length > 2) {
+      game = changeTurn(game);
+      game = changeTurn(game);
+      game = emitEvent(game, {
+        type: "turnChanged",
+        currentPlayerUsername: getCurrentPlayer(game).username,
+      });
+    }
   }
 
   return game;

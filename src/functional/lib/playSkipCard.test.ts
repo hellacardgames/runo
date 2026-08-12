@@ -134,6 +134,7 @@ test("advances to next player", () => {
     color: "red",
     id: "card-id-001",
   };
+
   const game: StartedGame = {
     id: "game-id-001",
     createdAt: Date.now(),
@@ -182,6 +183,55 @@ test("advances to next player", () => {
   const newGame = playSkipCard(game, skipCard);
 
   expect(newGame.currentPlayerIndex).toBe(0);
+});
+
+test("does not advance to next player when only two players", () => {
+  const skipCard: SkipCard = {
+    type: "skip",
+    color: "red",
+    id: "card-id-001",
+  };
+
+  const game: StartedGame = {
+    id: "game-id-001",
+    createdAt: Date.now(),
+    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
+    status: "started",
+    players: [
+      {
+        id: "player-id-001",
+        userId: "user-id-001",
+        username: "username-001",
+        events: [],
+        hand: [],
+        score: 0,
+      },
+      {
+        id: "player-id-002",
+        userId: "user-id-002",
+        username: "username-002",
+        events: [],
+        hand: [
+          { type: "number", value: 9, color: "yellow", id: "card-id-071" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+          skipCard,
+          { type: "drawTwo", color: "green", id: "card-id-066" },
+        ],
+        score: 0,
+      },
+    ],
+    drawPile: [],
+    discardPile: [
+      { type: "reverse", color: "yellow", id: "card-id-028" },
+      { type: "drawTwo", color: "blue", id: "card-id-037" },
+    ],
+    currentPlayerIndex: 1,
+    isReversed: false,
+  };
+
+  const newGame = playSkipCard(game, skipCard);
+
+  expect(newGame.currentPlayerIndex).toBe(1);
 });
 
 test("emits cardPlayed event to all players", () => {
@@ -342,6 +392,71 @@ test("emits turnChanged event to all players", () => {
   );
 
   expect(newGame.players[2]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "turnChanged",
+        currentPlayerUsername: "username-001",
+      }),
+    ]),
+  );
+});
+
+test("does not emit turnChanged event when only two players", () => {
+  const skipCard: SkipCard = {
+    type: "skip",
+    color: "red",
+    id: "card-id-001",
+  };
+
+  const game: StartedGame = {
+    id: "game-id-001",
+    createdAt: Date.now(),
+    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
+    status: "started",
+    players: [
+      {
+        id: "player-id-001",
+        userId: "user-id-001",
+        username: "username-001",
+        events: [],
+        hand: [],
+        score: 0,
+      },
+      {
+        id: "player-id-002",
+        userId: "user-id-002",
+        username: "username-002",
+        events: [],
+        hand: [
+          { type: "number", value: 9, color: "yellow", id: "card-id-071" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+          skipCard,
+          { type: "drawTwo", color: "green", id: "card-id-066" },
+        ],
+        score: 0,
+      },
+    ],
+    drawPile: [],
+    discardPile: [
+      { type: "reverse", color: "yellow", id: "card-id-028" },
+      { type: "drawTwo", color: "blue", id: "card-id-037" },
+    ],
+    currentPlayerIndex: 1,
+    isReversed: false,
+  };
+
+  const newGame = playSkipCard(game, skipCard);
+
+  expect(newGame.players[0]?.events).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "turnChanged",
+        currentPlayerUsername: "username-001",
+      }),
+    ]),
+  );
+
+  expect(newGame.players[1]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         type: "turnChanged",
