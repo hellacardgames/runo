@@ -27,6 +27,16 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./manager": {
+      "import": {
+        "types": "./dist/manager/index.d.mts",
+        "default": "./dist/manager/index.mjs"
+      },
+      "require": {
+        "types": "./dist/manager/index.d.cts",
+        "default": "./dist/manager/index.cjs"
+      }
     }
   },
   "files": [
