@@ -12,6 +12,6 @@ export function isCurrentPlayer<TGame extends Game>(
   game: TGame,
   playerId: string,
 ): boolean {
-  requirePlayer(game, playerId);
-  return getCurrentPlayer(game).id === playerId;
+  const { player } = requirePlayer(game, playerId);
+  return getCurrentPlayer(game).id === player.id;
 }
