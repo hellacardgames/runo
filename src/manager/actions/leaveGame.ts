@@ -1,7 +1,21 @@
 import { leaveGame as doLeaveGame } from "../../actions/leaveGame.js";
 import { games } from "../games.js";
 
-export function leaveGame(gameId: string, playerId: string) {
+type LeaveGameResult =
+  | {
+      readonly success: true;
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound";
+    }
+  | DoLeaveGameError;
+
+type DoLeaveGameError = Extract<DoLeaveGameResult, { success: false }>;
+
+type DoLeaveGameResult = ReturnType<typeof doLeaveGame>;
+
+export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };

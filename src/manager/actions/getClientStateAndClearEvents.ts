@@ -1,7 +1,31 @@
 import { getClientStateAndClearEvents as doGetClientStateAndClearEvents } from "../../actions/getClientStateAndClearEvents.js";
 import { games } from "../games.js";
+import type { ClientState } from "../../types/ClientState.js";
 
-export function getClientStateAndClearEvents(gameId: string, playerId: string) {
+type GetClientStateAndClearEventsResult =
+  | {
+      readonly success: true;
+      readonly state: ClientState;
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound";
+    }
+  | DoGetClientStateAndClearEventsError;
+
+type DoGetClientStateAndClearEventsError = Extract<
+  DoGetClientStateAndClearEventsResult,
+  { success: false }
+>;
+
+type DoGetClientStateAndClearEventsResult = ReturnType<
+  typeof doGetClientStateAndClearEvents
+>;
+
+export function getClientStateAndClearEvents(
+  gameId: string,
+  playerId: string,
+): GetClientStateAndClearEventsResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };

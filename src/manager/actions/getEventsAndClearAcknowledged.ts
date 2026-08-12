@@ -1,11 +1,32 @@
 import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../../actions/getEventsAndClearAcknowledged.js";
 import { games } from "../games.js";
+import type { GameEvent } from "../../types/GameEvent.js";
+
+type GetEventsAndClearAcknowledgedResult =
+  | {
+      readonly success: true;
+      readonly events: readonly GameEvent[];
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound";
+    }
+  | DoGetEventsAndClearAcknowledgedError;
+
+type DoGetEventsAndClearAcknowledgedError = Extract<
+  DoGetEventsAndClearAcknowledgedResult,
+  { success: false }
+>;
+
+type DoGetEventsAndClearAcknowledgedResult = ReturnType<
+  typeof doGetEventsAndClearAcknowledged
+>;
 
 export function getEventsAndClearAcknowledged(
   gameId: string,
   playerId: string,
   lastReadId: string | null,
-) {
+): GetEventsAndClearAcknowledgedResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };

@@ -1,7 +1,25 @@
 import { playCard as doPlayCard } from "../../actions/playCard.js";
 import { games } from "../games.js";
 
-export function playCard(gameId: string, playerId: string, cardId: string) {
+type PlayCardResult =
+  | {
+      readonly success: true;
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound" | "invalidStatus";
+    }
+  | DoPlayCardError;
+
+type DoPlayCardError = Extract<DoPlayCardResult, { success: false }>;
+
+type DoPlayCardResult = ReturnType<typeof doPlayCard>;
+
+export function playCard(
+  gameId: string,
+  playerId: string,
+  cardId: string,
+): PlayCardResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };

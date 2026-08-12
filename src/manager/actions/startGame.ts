@@ -1,7 +1,21 @@
 import { startGame as doStartGame } from "../../actions/startGame.js";
 import { games } from "../games.js";
 
-export function startGame(gameId: string, playerId: string) {
+type StartGameResult =
+  | {
+      readonly success: true;
+    }
+  | {
+      readonly success: false;
+      readonly error: "gameNotFound" | "invalidStatus";
+    }
+  | DoStartGameError;
+
+type DoStartGameError = Extract<DoStartGameResult, { success: false }>;
+
+type DoStartGameResult = ReturnType<typeof doStartGame>;
+
+export function startGame(gameId: string, playerId: string): StartGameResult {
   const game = games.get(gameId);
   if (!game) {
     return { success: false, error: "gameNotFound" };
