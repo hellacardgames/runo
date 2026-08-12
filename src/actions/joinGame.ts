@@ -1,40 +1,31 @@
-import { emitEvent } from "@hellacardgames/lib";
-import { games } from "../games.js";
 import { MAX_PLAYERS } from "../constants.js";
+import { addItemToCollection } from "../lib/addItemToCollection.js";
+import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
 type JoinGameResult =
   | {
       readonly success: true;
+      readonly game: CreatedGame;
       readonly playerId: string;
     }
   | {
       readonly success: false;
-      readonly error:
-        | "gameNotFound"
-        | "invalidStatus"
-        | "maxPlayersReached"
-        | "alreadyInGame";
+      readonly error: "maxPlayersReached" | "alreadyInGame";
     };
 
 export function joinGame(
-  gameId: string,
+  game: CreatedGame,
   userId: string,
   username: string,
 ): JoinGameResult {
-  const game = games.get(gameId);
-  if (!game) {
-    return { success: false, error: "gameNotFound" };
-  }
-  if (game.status !== "open") {
-    return { success: false, error: "invalidStatus" };
-  }
   if (game.players.length === MAX_PLAYERS) {
     return { success: false, error: "maxPlayersReached" };
   }
   if (game.players.find((p) => p.userId === userId)) {
     return { success: false, error: "alreadyInGame" };
   }
+
   const player: Player = {
     id: crypto.randomUUID(),
     userId,
@@ -43,7 +34,8 @@ export function joinGame(
     hand: [],
     score: 0,
   };
-  game.players.push(player);
-  emitEvent(game, { type: "playerJoined", username });
-  return { success: true, playerId: player.id };
+
+  game = { ...game, players: addItemToCollection(game.players, player) };
+
+  return { success: true, game, playerId: player.id };
 }

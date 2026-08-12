@@ -1,23 +1,14 @@
-import { CARDS, EXPIRY_EXTENSION_MS, MAX_GAMES } from "../constants.js";
-import { games } from "../games.js";
-import type { Game } from "../types/Game.js";
+import { EXPIRY_EXTENSION_MS } from "../constants.js";
+import { CARDS } from "../constants.js";
+import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 
-type CreateGameResult =
-  | {
-      readonly success: true;
-      readonly gameId: string;
-      readonly playerId: string;
-    }
-  | {
-      readonly success: false;
-      readonly error: "maxGamesReached";
-    };
+type CreateGameResult = {
+  readonly game: CreatedGame;
+  readonly playerId: string;
+};
 
 export function createGame(userId: string, username: string): CreateGameResult {
-  if (games.size === MAX_GAMES) {
-    return { success: false, error: "maxGamesReached" };
-  }
   const player: Player = {
     id: crypto.randomUUID(),
     userId,
@@ -26,19 +17,19 @@ export function createGame(userId: string, username: string): CreateGameResult {
     hand: [],
     score: 0,
   };
+
   const createdAt = Date.now();
-  const game: Game = {
-    status: "open",
+  const game: CreatedGame = {
     id: crypto.randomUUID(),
     createdAt,
     expiresAt: createdAt + EXPIRY_EXTENSION_MS,
-    chatMessages: [],
+    status: "created",
     players: [player],
-    drawPile: [...CARDS],
+    drawPile: CARDS,
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
   };
-  games.set(game.id, game);
-  return { success: true, gameId: game.id, playerId: player.id };
+
+  return { game, playerId: player.id };
 }

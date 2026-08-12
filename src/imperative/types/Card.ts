@@ -1,31 +1,31 @@
 export type Card = NumberCard | DrawTwoCard | ReverseCard | SkipCard | WildCard;
 
-export type NumberCard = {
+type NumberCard = {
   readonly id: string;
   readonly type: "number";
   readonly color: Color;
   readonly value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 };
 
-export type DrawTwoCard = {
+type DrawTwoCard = {
   readonly id: string;
   readonly type: "drawTwo";
   readonly color: Color;
 };
 
-export type ReverseCard = {
+type ReverseCard = {
   readonly id: string;
   readonly type: "reverse";
   readonly color: Color;
 };
 
-export type SkipCard = {
+type SkipCard = {
   readonly id: string;
   readonly type: "skip";
   readonly color: Color;
 };
 
-export type WildCard = {
+type WildCard = {
   readonly id: string;
   readonly type: "wild";
   readonly isDrawFour: boolean;

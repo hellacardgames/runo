@@ -1,31 +1,31 @@
-import { games } from "../games.js";
+import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
+import { updatePlayer } from "../lib/updatePlayer.js";
 import type { ClientState } from "../types/ClientState.js";
+import type { Game } from "../types/Game.js";
 
 type GetClientStateResult =
   | {
       readonly success: true;
       readonly state: ClientState;
+      readonly game: Game;
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "playerNotFound";
+      readonly error: "playerNotFound";
     };
 
 export function getClientState(
-  gameId: string,
+  game: Game,
   playerId: string,
 ): GetClientStateResult {
-  const game = games.get(gameId);
-  if (!game) {
-    return { success: false, error: "gameNotFound" };
-  }
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
+
   const state: ClientState = {
     status: game.status,
-    gameId,
+    gameId: game.id,
     playerId,
     username: player.username,
     players: game.players.map((p) => ({
@@ -34,12 +34,14 @@ export function getClientState(
       score: p.score,
     })),
     hand: player.hand,
-    lastDiscard: game.discardPile[game.discardPile.length - 1]!,
-    currentPlayerUsername: game.players[game.currentPlayerIndex]!.username,
+    lastDiscard: game.discardPile[game.discardPile.length - 1] ?? null,
+    currentPlayerUsername: getCurrentPlayer(game).username,
     isReversed: game.isReversed,
     expiresAt: game.expiresAt,
-    chatMessages: game.chatMessages,
+    // chatMessages: game.chatMessages,
   };
-  player.events.length = 0;
-  return { success: true, state };
+
+  game = updatePlayer(game, player.id, (p) => ({ ...p, events: [] }));
+
+  return { success: true, state, game };
 }

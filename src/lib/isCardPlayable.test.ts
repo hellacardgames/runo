@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import type { Card, DiscardedCard } from "../types/Card.js";
 import { isCardPlayable } from "./isCardPlayable.js";
+import type { Card, DiscardedCard } from "../types/Card.js";
 
 test("card with same number but different color is playable", () => {
   const card: Card = { id: "###", type: "number", color: "blue", value: 5 };

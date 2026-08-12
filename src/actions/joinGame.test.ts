@@ -1,69 +1,49 @@
-// import { beforeEach, expect, test } from "vitest";
-// import { createGame } from "./createGame.js";
-// import { games } from "../games.js";
-// import { joinGame } from "./joinGame.js";
-// import { MAX_PLAYERS } from "../constants.js";
+import { expect, test } from "vitest";
+import { createGame } from "./createGame.js";
+import { joinGame } from "./joinGame.js";
+import { MAX_PLAYERS } from "../constants.js";
 
-// beforeEach(() => {
-//   games.clear();
-// });
+test("adds a player", () => {
+  let { game } = createGame("user-id-001", "bob");
+  const result = joinGame(game, "user-id-002", "alice");
+  if (!result.success) {
+    throw new Error("Expected joinGame to succeed.");
+  }
+  ({ game } = result);
+  expect(game.players).toHaveLength(2);
+  const player = game.players[1];
+  if (!player) {
+    throw new Error("Expected player to be defined.");
+  }
+  expect(player.id).toBe(result.playerId);
+  expect(player.userId).toBe("user-id-002");
+  expect(player.username).toBe("alice");
+  expect(player.events).toHaveLength(0);
+  expect(player.hand).toHaveLength(0);
+  expect(player.score).toBe(0);
+});
 
-// test("adds a player", () => {
-//   const createGameResult = createGame("Bob");
-//   if (!createGameResult.success) {
-//     throw new Error("Expected createGame to succeed.");
-//   }
-//   const joinGameResult = joinGame(createGameResult.gameId, "Sally");
-//   if (!joinGameResult.success) {
-//     throw new Error("Expected joinGame to succeed.");
-//   }
-//   const game = games.get(createGameResult.gameId);
-//   if (!game) {
-//     throw new Error("Expected game to exist.");
-//   }
-//   expect(game.playerList).toHaveLength(2);
-//   const player = game.playerList.findById(joinGameResult.playerId);
-//   if (!player) {
-//     throw new Error("Expected player to exist.");
-//   }
-//   expect(player.name).toBe("Sally");
-//   expect(player.hand).toHaveLength(0);
-//   expect(player.roundsWon).toBe(0);
-//   expect(player.points).toBe(0);
-//   expect(player).toBe(game.playerList.getAt(1));
-// });
+test("allows up to MAX_PLAYERS players", () => {
+  let { game } = createGame("user-id-000", "username");
+  for (let i = 0; i < MAX_PLAYERS - 1; i++) {
+    const result = joinGame(game, `user-id-00${i + 1}`, "username");
+    if (!result.success) {
+      throw new Error("Expected joinGame to succeed.");
+    }
+    ({ game } = result);
+  }
+  const joinGameResult = joinGame(game, "user-id-010", "username");
+  if (joinGameResult.success) {
+    throw new Error("Expected joinGame to fail.");
+  }
+  expect(joinGameResult.error).toBe("maxPlayersReached");
+});
 
-// test("allows up to MAX_PLAYERS players", () => {
-//   const createGameResult = createGame("Bob");
-//   if (!createGameResult.success) {
-//     throw new Error("Expected createGame to succeed.");
-//   }
-//   for (let i = 0; i < MAX_PLAYERS - 1; i++) {
-//     const joinGameResult = joinGame(createGameResult.gameId, "Bob");
-//     expect(joinGameResult.success).toBe(true);
-//   }
-//   const joinGameResult = joinGame(createGameResult.gameId, "Bob");
-//   if (joinGameResult.success) {
-//     throw new Error("Expected joinGame to fail.");
-//   }
-//   expect(joinGameResult.error).toBe("maxPlayersReached");
-// });
-
-// test("only allows joining open games", () => {
-//   const createGameResult = createGame("Bob");
-//   if (!createGameResult.success) {
-//     throw new Error("Expected createGame to succeed.");
-//   }
-//   const game = games.get(createGameResult.gameId);
-//   if (!game) {
-//     throw new Error("Expected game to exist.");
-//   }
-//   for (const status of ["active", "completed", "forfeited"] as const) {
-//     game.status = status;
-//     const joinGameResult = joinGame(createGameResult.gameId, "Bob");
-//     if (joinGameResult.success) {
-//       throw new Error("Expected joinGame to fail.");
-//     }
-//     expect(joinGameResult.error).toBe("invalidStatus");
-//   }
-// });
+test("prevents same user from joining twice", () => {
+  const { game } = createGame("user-id-001", "bob");
+  const result = joinGame(game, "user-id-001", "bob");
+  if (result.success) {
+    throw new Error("Expected joinGame to fail.");
+  }
+  expect(result.error).toBe("alreadyInGame");
+});
