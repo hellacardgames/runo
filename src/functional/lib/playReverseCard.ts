@@ -12,6 +12,7 @@ import { raiseScore } from "./raiseScore.js";
 import { returnPlayerCards } from "./returnPlayerCards.js";
 import { getCurrentPlayer } from "./getCurrentPlayer.js";
 import { changeToNextPlayer } from "./changeToNextPlayer.js";
+import { changeDirection } from "./changeDirection.js";
 import type { ReverseCard } from "../types/Card.js";
 import type { CompletedGame, StartedGame } from "../types/Game.js";
 
@@ -56,10 +57,7 @@ export function playReverseCard(
     }
   } else {
     if (game.players.length > 2) {
-      const isReversed = !game.isReversed;
-      game = { ...game, isReversed };
-      game = emitEvent(game, { type: "directionChanged", isReversed });
-
+      game = changeDirection(game);
       game = changeToNextPlayer(game);
     }
   }

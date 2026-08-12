@@ -1,7 +1,7 @@
 import { shuffle } from "./shuffle.js";
 import { discardFirstCard } from "./discardFirstCard.js";
 import { dealCardsToPlayers } from "./dealCardsToPlayers.js";
-import { emitEvent } from "./emitEvent.js";
+import { changeDirection } from "./changeDirection.js";
 import type { StartedGame } from "../types/Game.js";
 
 export function startRound(game: StartedGame): StartedGame {
@@ -10,9 +10,7 @@ export function startRound(game: StartedGame): StartedGame {
   game = discardFirstCard(game);
 
   if (game.isReversed) {
-    const isReversed = false;
-    game = { ...game, isReversed };
-    game = emitEvent(game, { type: "directionChanged", isReversed });
+    game = changeDirection(game);
   }
 
   return game;

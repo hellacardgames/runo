@@ -1,4 +1,5 @@
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
+import { changeDirection } from "../lib/changeDirection.js";
 import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { emitEvent } from "../lib/emitEvent.js";
 import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
@@ -38,20 +39,20 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
     });
   }
 
-  if (game.players.length === 2 && game.isReversed) {
-    const isReversed = false;
-    game = { ...game, isReversed };
-    game = emitEvent(game, { type: "directionChanged", isReversed });
-  }
+  if (game.status === "started") {
+    if (game.players.length === 2 && game.isReversed) {
+      game = changeDirection(game);
+    }
 
-  if (game.status === "started" && game.players.length < MIN_PLAYERS) {
-    game = transitionGameToForfeited(game);
-    game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
-    game = emitEvent(game, { type: "gameForfeited" });
-    game = emitEvent(game, {
-      type: "expirationUpdated",
-      expiresAt: game.expiresAt,
-    });
+    if (game.players.length < MIN_PLAYERS) {
+      game = transitionGameToForfeited(game);
+      game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
+      game = emitEvent(game, { type: "gameForfeited" });
+      game = emitEvent(game, {
+        type: "expirationUpdated",
+        expiresAt: game.expiresAt,
+      });
+    }
   }
 
   return { success: true, game };
