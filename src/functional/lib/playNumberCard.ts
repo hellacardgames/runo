@@ -1,4 +1,3 @@
-import { requirePlayer } from "./requirePlayer.js";
 import { updatePlayer } from "./updatePlayer.js";
 import { removeCardFromHand } from "./removeCardFromHand.js";
 import { addCardToDiscardPile } from "./addCardToDiscardPile.js";
@@ -20,37 +19,38 @@ export function playNumberCard(
   game: StartedGame,
   card: NumberCard,
 ): StartedGame | CompletedGame {
-  const player = getCurrentPlayer(game);
+  const currentPlayer = getCurrentPlayer(game);
 
-  game = updatePlayer(game, player.id, (p) => removeCardFromHand(p, card));
+  game = updatePlayer(game, currentPlayer.id, (p) =>
+    removeCardFromHand(p, card),
+  );
   game = addCardToDiscardPile(game, card);
   game = emitEvent(game, {
     type: "cardPlayed",
-    username: player.username,
+    username: currentPlayer.username,
     card,
   });
 
-  if (isOutOfCards(game, player.id)) {
-    game = raiseScore(game, player.id, calculatePoints(game));
+  if (isOutOfCards(game, currentPlayer.id)) {
+    game = raiseScore(game, currentPlayer.id, calculatePoints(game));
     game = returnPlayerCards(game);
     game = returnDiscardPile(game);
 
-    const { player: updatedPlayer } = requirePlayer(game, player.id);
+    const updatedCurrentPlayer = getCurrentPlayer(game);
 
-    if (isGameWinner(game, player.id)) {
+    if (isGameWinner(game, currentPlayer.id)) {
       game = emitEvent(game, {
         type: "playerWonGame",
-        username: updatedPlayer.username,
-        score: updatedPlayer.score,
+        username: updatedCurrentPlayer.username,
+        score: updatedCurrentPlayer.score,
       });
       game = emitEvent(game, { type: "gameCompleted" });
       return transitionGameToCompleted(game);
     } else {
-      const { player: updatedPlayer } = requirePlayer(game, player.id);
       game = emitEvent(game, {
         type: "playerWonRound",
-        username: updatedPlayer.username,
-        score: updatedPlayer.score,
+        username: updatedCurrentPlayer.username,
+        score: updatedCurrentPlayer.score,
       });
       game = startRound(game);
     }
