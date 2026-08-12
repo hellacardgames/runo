@@ -1,4 +1,4 @@
-import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../lib/getEventsAndClearAcknowledged.js";
+import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "@hellacardgames/lib";
 import type { Game } from "../types/Game.js";
 import type { GameEvent } from "../types/GameEvent.js";
 
