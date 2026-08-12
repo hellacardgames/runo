@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { acknowledgeAndGetEvents } from "./acknowledgeAndGetEvents.js";
+import { getEventsAndClearAcknowledged } from "./getEventsAndClearAcknowledged.js";
 
 type Game = {
   players: Player[];
@@ -29,7 +29,7 @@ test("returns all events and purges none when lastReadId is null", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(game, "player-id-001", null);
+  const result = getEventsAndClearAcknowledged(game, "player-id-001", null);
 
   expect(result.events).toEqual([
     { type: "some-event", id: "event-id-001" },
@@ -64,7 +64,7 @@ test("returns all events and purges none when lastReadId is not found", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(
+  const result = getEventsAndClearAcknowledged(
     game,
     "player-id-001",
     "non-existent-id",
@@ -103,7 +103,11 @@ test("purges acknowledged events and returns unread events", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(game, "player-id-001", "event-id-002");
+  const result = getEventsAndClearAcknowledged(
+    game,
+    "player-id-001",
+    "event-id-002",
+  );
 
   expect(result.events).toEqual([
     { type: "some-event", id: "event-id-003" },
@@ -134,7 +138,11 @@ test("acknowledges the first event", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(game, "player-id-001", "event-id-001");
+  const result = getEventsAndClearAcknowledged(
+    game,
+    "player-id-001",
+    "event-id-001",
+  );
 
   expect(result.events).toEqual([
     { type: "some-event", id: "event-id-002" },
@@ -167,7 +175,11 @@ test("acknowledges the last event", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(game, "player-id-001", "event-id-005");
+  const result = getEventsAndClearAcknowledged(
+    game,
+    "player-id-001",
+    "event-id-005",
+  );
 
   expect(result.events).toEqual([]);
   expect(result.game.players[0]?.events).toEqual([]);
@@ -183,7 +195,7 @@ test("returns no events when there are no events", () => {
     players: [player],
   };
 
-  const result = acknowledgeAndGetEvents(game, "player-id-001", null);
+  const result = getEventsAndClearAcknowledged(game, "player-id-001", null);
 
   expect(result.events).toEqual([]);
   expect(result.game.players[0]?.events).toEqual([]);

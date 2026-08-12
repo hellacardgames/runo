@@ -1,8 +1,8 @@
-import { acknowledgeAndGetEvents as doAcknowledgeAndGetEvents } from "../lib/acknowledgeAndGetEvents.js";
+import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../lib/getEventsAndClearAcknowledged.js";
 import type { Game } from "../types/Game.js";
 import type { GameEvent } from "../types/GameEvent.js";
 
-type AcknowledgeAndGetEventsResult =
+type GetEventsAndClearAcknowledgedResult =
   | {
       readonly success: true;
       readonly events: readonly GameEvent[];
@@ -13,17 +13,17 @@ type AcknowledgeAndGetEventsResult =
       readonly error: "playerNotFound";
     };
 
-export function acknowledgeAndGetEvents(
+export function getEventsAndClearAcknowledged(
   game: Game,
   playerId: string,
   lastReadId: string | null,
-): AcknowledgeAndGetEventsResult {
+): GetEventsAndClearAcknowledgedResult {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
 
-  const result = doAcknowledgeAndGetEvents(game, player.id, lastReadId);
+  const result = doGetEventsAndClearAcknowledged(game, player.id, lastReadId);
 
   return {
     success: true,
