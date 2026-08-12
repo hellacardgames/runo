@@ -3,7 +3,7 @@ import { updatePlayer } from "../lib/updatePlayer.js";
 import type { ClientState } from "../types/ClientState.js";
 import type { Game } from "../types/Game.js";
 
-type GetClientStateResult =
+type GetClientStateAndClearEventsResult =
   | {
       readonly success: true;
       readonly state: ClientState;
@@ -14,10 +14,10 @@ type GetClientStateResult =
       readonly error: "playerNotFound";
     };
 
-export function getClientState(
+export function getClientStateAndClearEvents(
   game: Game,
   playerId: string,
-): GetClientStateResult {
+): GetClientStateAndClearEventsResult {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" };
