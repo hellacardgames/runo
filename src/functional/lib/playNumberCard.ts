@@ -18,10 +18,9 @@ import type { CompletedGame, StartedGame } from "../types/Game.js";
 
 export function playNumberCard(
   game: StartedGame,
-  playerId: string,
   card: NumberCard,
 ): StartedGame | CompletedGame {
-  const { player } = requirePlayer(game, playerId);
+  const player = getCurrentPlayer(game);
 
   game = updatePlayer(game, player.id, (p) => removeCardFromHand(p, card));
   game = addCardToDiscardPile(game, card);
@@ -36,19 +35,22 @@ export function playNumberCard(
     game = returnPlayerCards(game);
     game = returnDiscardPile(game);
 
+    const { player: updatedPlayer } = requirePlayer(game, player.id);
+
     if (isGameWinner(game, player.id)) {
       game = emitEvent(game, {
         type: "playerWonGame",
-        username: getCurrentPlayer(game).username,
-        score: getCurrentPlayer(game).score,
+        username: updatedPlayer.username,
+        score: updatedPlayer.score,
       });
       game = emitEvent(game, { type: "gameCompleted" });
       return transitionGameToCompleted(game);
     } else {
+      const { player: updatedPlayer } = requirePlayer(game, player.id);
       game = emitEvent(game, {
         type: "playerWonRound",
-        username: getCurrentPlayer(game).username,
-        score: getCurrentPlayer(game).score,
+        username: updatedPlayer.username,
+        score: updatedPlayer.score,
       });
       game = startRound(game);
     }

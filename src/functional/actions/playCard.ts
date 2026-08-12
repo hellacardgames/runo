@@ -54,12 +54,12 @@ export function playCard(
 
   switch (card.type) {
     case "drawTwo":
-      return { success: true, game: playDrawTwoCard(game, player.id, card) };
+      return { success: true, game: playDrawTwoCard(game, card) };
     case "number":
-      return { success: true, game: playNumberCard(game, player.id, card) };
+      return { success: true, game: playNumberCard(game, card) };
     case "reverse":
-      return { success: true, game: playReverseCard(game, player.id, card) };
+      return { success: true, game: playReverseCard(game, card) };
     case "skip":
-      return { success: true, game: playSkipCard(game, player.id, card) };
+      return { success: true, game: playSkipCard(game, card) };
   }
 }

@@ -1,13 +1,12 @@
-import { requirePlayer } from "./requirePlayer.js";
+import { getCurrentPlayer } from "./getCurrentPlayer.js";
 import type { ReverseCard } from "../types/Card.js";
-import type { StartedGame } from "../types/Game.js";
+import type { CompletedGame, StartedGame } from "../types/Game.js";
 
 export function playReverseCard(
   game: StartedGame,
-  playerId: string,
   card: ReverseCard,
-): StartedGame {
-  const { player } = requirePlayer(game, playerId);
+): StartedGame | CompletedGame {
+  const player = getCurrentPlayer(game);
 
   console.log(card, player);
 

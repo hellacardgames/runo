@@ -1,13 +1,12 @@
-import { requirePlayer } from "./requirePlayer.js";
+import { getCurrentPlayer } from "./getCurrentPlayer.js";
 import type { SkipCard } from "../types/Card.js";
-import type { StartedGame } from "../types/Game.js";
+import type { CompletedGame, StartedGame } from "../types/Game.js";
 
 export function playSkipCard(
   game: StartedGame,
-  playerId: string,
   card: SkipCard,
-): StartedGame {
-  const { player } = requirePlayer(game, playerId);
+): StartedGame | CompletedGame {
+  const player = getCurrentPlayer(game);
 
   console.log(card, player);
 

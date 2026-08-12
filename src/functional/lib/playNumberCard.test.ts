@@ -55,11 +55,11 @@ test("removes card from player hand", () => {
     ],
     drawPile: [],
     discardPile: [],
-    currentPlayerIndex: 0,
+    currentPlayerIndex: 1,
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[1]!.hand).toEqual([
     { type: "number", value: 9, color: "yellow", id: "card-id-071" },
@@ -121,7 +121,7 @@ test("adds card to top of discard pile", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.discardPile).toEqual([
     { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -183,7 +183,7 @@ test("emits cardPlayed event to all players", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
@@ -269,7 +269,7 @@ test("emits turnChanged event to all players", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
@@ -350,7 +350,7 @@ test("updates score when player wins round", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[1]?.score).toBe(43);
 });
@@ -406,7 +406,7 @@ test("emits playerWonRound event when player wins round", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
@@ -490,7 +490,7 @@ test("starts new round when player wins round", () => {
     isReversed: true,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.hand).toHaveLength(INITIAL_HAND_SIZE);
   expect(newGame.players[1]?.hand).toHaveLength(INITIAL_HAND_SIZE);
@@ -550,7 +550,7 @@ test("transitions to completed when player wins game", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.status).toBe("completed");
 });
@@ -606,7 +606,7 @@ test("emits playerWonGame event when player wins game", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
@@ -690,7 +690,7 @@ test("emits gameCompleted event when player wins game", () => {
     isReversed: false,
   };
 
-  const newGame = playNumberCard(game, "player-id-002", numberCard);
+  const newGame = playNumberCard(game, numberCard);
 
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
