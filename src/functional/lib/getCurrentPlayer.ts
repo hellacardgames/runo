@@ -8,9 +8,9 @@ type Game = {
 export function getCurrentPlayer<TGame extends Game>(
   game: TGame,
 ): Player<TGame> {
-  const player = game.players[game.currentPlayerIndex];
-  if (!player) {
+  const currentPlayer = game.players[game.currentPlayerIndex];
+  if (!currentPlayer) {
     throw new Error(`Current player not found.`);
   }
-  return player;
+  return currentPlayer;
 }
