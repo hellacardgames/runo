@@ -5,13 +5,13 @@ import { emitEvent } from "./emitEvent.js";
 import { isOutOfCards } from "./isOutOfCards.js";
 import { isGameWinner } from "./isGameWinner.js";
 import { transitionGameToCompleted } from "./transitionGameToCompleted.js";
-import { changeTurn } from "./changeTurn.js";
 import { startRound } from "./startRound.js";
 import { returnDiscardPile } from "./returnDiscardPile.js";
 import { calculatePoints } from "./calculatePoints.js";
 import { raiseScore } from "./raiseScore.js";
 import { returnPlayerCards } from "./returnPlayerCards.js";
 import { getCurrentPlayer } from "./getCurrentPlayer.js";
+import { changeToNextPlayer } from "./changeToNextPlayer.js";
 import type { NumberCard } from "../types/Card.js";
 import type { CompletedGame, StartedGame } from "../types/Game.js";
 
@@ -55,11 +55,7 @@ export function playNumberCard(
       game = startRound(game);
     }
   } else {
-    game = changeTurn(game);
-    game = emitEvent(game, {
-      type: "turnChanged",
-      currentPlayerUsername: getCurrentPlayer(game).username,
-    });
+    game = changeToNextPlayer(game);
   }
 
   return game;

@@ -5,13 +5,13 @@ import { emitEvent } from "./emitEvent.js";
 import { isOutOfCards } from "./isOutOfCards.js";
 import { isGameWinner } from "./isGameWinner.js";
 import { transitionGameToCompleted } from "./transitionGameToCompleted.js";
-import { changeTurn } from "./changeTurn.js";
 import { startRound } from "./startRound.js";
 import { returnDiscardPile } from "./returnDiscardPile.js";
 import { calculatePoints } from "./calculatePoints.js";
 import { raiseScore } from "./raiseScore.js";
 import { returnPlayerCards } from "./returnPlayerCards.js";
 import { getCurrentPlayer } from "./getCurrentPlayer.js";
+import { skipNextPlayer } from "./skipNextPlayer.js";
 import type { SkipCard } from "../types/Card.js";
 import type { CompletedGame, StartedGame } from "../types/Game.js";
 
@@ -56,12 +56,7 @@ export function playSkipCard(
     }
   } else {
     if (game.players.length > 2) {
-      game = changeTurn(game);
-      game = changeTurn(game);
-      game = emitEvent(game, {
-        type: "turnChanged",
-        currentPlayerUsername: getCurrentPlayer(game).username,
-      });
+      game = skipNextPlayer(game);
     }
   }
 

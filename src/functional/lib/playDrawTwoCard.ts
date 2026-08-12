@@ -5,7 +5,6 @@ import { emitEvent } from "./emitEvent.js";
 import { isOutOfCards } from "./isOutOfCards.js";
 import { isGameWinner } from "./isGameWinner.js";
 import { transitionGameToCompleted } from "./transitionGameToCompleted.js";
-import { changeTurn } from "./changeTurn.js";
 import { startRound } from "./startRound.js";
 import { returnDiscardPile } from "./returnDiscardPile.js";
 import { calculatePoints } from "./calculatePoints.js";
@@ -14,6 +13,7 @@ import { returnPlayerCards } from "./returnPlayerCards.js";
 import { getCurrentPlayer } from "./getCurrentPlayer.js";
 import { getNextPlayer } from "./getNextPlayer.js";
 import { drawTwoCards } from "./drawTwoCards.js";
+import { skipNextPlayer } from "./skipNextPlayer.js";
 import type { DrawTwoCard } from "../types/Card.js";
 import type { CompletedGame, StartedGame } from "../types/Game.js";
 
@@ -61,12 +61,7 @@ export function playDrawTwoCard(
     }
   } else {
     if (game.players.length > 2) {
-      game = changeTurn(game);
-      game = changeTurn(game);
-      game = emitEvent(game, {
-        type: "turnChanged",
-        currentPlayerUsername: getCurrentPlayer(game).username,
-      });
+      game = skipNextPlayer(game);
     }
   }
 
