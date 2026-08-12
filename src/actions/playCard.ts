@@ -1,7 +1,6 @@
+import { emitEvent, isCurrentPlayer } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
-import { emitEvent } from "../lib/emitEvent.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
-import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
 import { playDrawTwoCard } from "../lib/playDrawTwoCard.js";
 import { playNumberCard } from "../lib/playNumberCard.js";
 import { playReverseCard } from "../lib/playReverseCard.js";

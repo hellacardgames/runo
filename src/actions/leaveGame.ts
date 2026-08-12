@@ -1,9 +1,7 @@
+import { emitEvent, getCurrentPlayer, removePlayer } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { changeDirection } from "../lib/changeDirection.js";
 import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
-import { emitEvent } from "../lib/emitEvent.js";
-import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
-import { removePlayer } from "../lib/removePlayer.js";
 import { transitionGameToForfeited } from "../lib/transitionGameToForfeited.js";
 import type { Game } from "../types/Game.js";
 

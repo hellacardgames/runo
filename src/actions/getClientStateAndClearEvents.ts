@@ -1,5 +1,4 @@
-import { getCurrentPlayer } from "../lib/getCurrentPlayer.js";
-import { updatePlayer } from "../lib/updatePlayer.js";
+import { getCurrentPlayer, updatePlayer } from "@hellacardgames/lib";
 import type { ClientState } from "../types/ClientState.js";
 import type { Game } from "../types/Game.js";
 

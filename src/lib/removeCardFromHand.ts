@@ -1,4 +1,4 @@
-import { removeItemFromCollection } from "./removeItemFromCollection.js";
+import { removeItemFromCollection } from "@hellacardgames/lib";
 
 type Player = {
   readonly hand: readonly unknown[];

@@ -1,5 +1,5 @@
+import { addItemToCollection } from "@hellacardgames/lib";
 import { MAX_PLAYERS } from "../constants.js";
-import { addItemToCollection } from "../lib/addItemToCollection.js";
 import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
 

@@ -1,5 +1,4 @@
-import { requirePlayer } from "./requirePlayer.js";
-import { updatePlayer } from "./updatePlayer.js";
+import { requirePlayer, updatePlayer } from "@hellacardgames/lib";
 import { removeCardFromHand } from "./removeCardFromHand.js";
 import { addWildCardToBottomOfDiscardPile } from "./addWildCardToBottomOfDiscardPile.js";
 import { addCardToBottomOfDiscardPile } from "./addCardToBottomOfDiscardPile.js";

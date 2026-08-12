@@ -1,4 +1,4 @@
-import { requirePlayer } from "./requirePlayer.js";
+import { requirePlayer } from "@hellacardgames/lib";
 import type { StartedGame } from "../types/Game.js";
 
 export function isOutOfCards(game: StartedGame, playerId: string): boolean {

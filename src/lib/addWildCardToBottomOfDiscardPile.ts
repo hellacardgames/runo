@@ -1,4 +1,4 @@
-import { prependItemToCollection } from "./prependItemToCollection.js";
+import { prependItemToCollection } from "@hellacardgames/lib";
 import type { Color, WildCard } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
 

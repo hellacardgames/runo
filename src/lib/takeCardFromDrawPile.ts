@@ -1,5 +1,5 @@
+import { takeLastItemFromCollection } from "@hellacardgames/lib";
 import { replenishDrawPile } from "./replenishDrawPile.js";
-import { takeLastItemFromCollection } from "./takeLastItemFromCollection.js";
 import type { Card } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
 

@@ -1,4 +1,4 @@
-import { updatePlayer } from "./updatePlayer.js";
+import { updatePlayer } from "@hellacardgames/lib";
 import type { StartedGame } from "../types/Game.js";
 
 export function raiseScore(

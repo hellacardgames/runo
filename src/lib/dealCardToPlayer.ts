@@ -1,8 +1,10 @@
-import { emitEvent } from "./emitEvent.js";
-import { emitEventToPlayer } from "./emitEventToPlayer.js";
+import {
+  emitEvent,
+  emitEventToPlayer,
+  requirePlayer,
+  updatePlayer,
+} from "@hellacardgames/lib";
 import { takeCardFromDrawPile } from "./takeCardFromDrawPile.js";
-import { requirePlayer } from "./requirePlayer.js";
-import { updatePlayer } from "./updatePlayer.js";
 import { addCardToHand } from "./addCardToHand.js";
 import type { StartedGame } from "../types/Game.js";
 

@@ -1,6 +1,8 @@
-import { emitEvent } from "./emitEvent.js";
-import { emitEventToPlayer } from "./emitEventToPlayer.js";
-import { updatePlayer } from "./updatePlayer.js";
+import {
+  emitEvent,
+  emitEventToPlayer,
+  updatePlayer,
+} from "@hellacardgames/lib";
 import type { Card } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
 

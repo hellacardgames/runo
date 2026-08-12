@@ -1,7 +1,6 @@
+import { emitEvent, isCurrentPlayer } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
-import { emitEvent } from "../lib/emitEvent.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
-import { isCurrentPlayer } from "../lib/isCurrentPlayer.js";
 import { playWildCard as doPlayWildCard } from "../lib/playWildCard.js";
 import type { Color } from "../types/Card.js";
 import type { CompletedGame, StartedGame } from "../types/Game.js";

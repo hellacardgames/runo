@@ -1,5 +1,4 @@
-import { requirePlayer } from "./requirePlayer.js";
-import { updatePlayer } from "./updatePlayer.js";
+import { requirePlayer, updatePlayer } from "@hellacardgames/lib";
 
 type GetEventsAndClearAcknowledgedResult<TGame extends Game> = {
   readonly events: readonly Event<TGame>[];

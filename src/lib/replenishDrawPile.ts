@@ -1,4 +1,4 @@
-import { shuffle } from "./shuffle.js";
+import { shuffle } from "@hellacardgames/lib";
 import type { StartedGame } from "../types/Game.js";
 
 export function replenishDrawPile(game: StartedGame): StartedGame {

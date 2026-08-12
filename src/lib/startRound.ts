@@ -1,4 +1,4 @@
-import { shuffle } from "./shuffle.js";
+import { shuffle } from "@hellacardgames/lib";
 import { discardFirstCard } from "./discardFirstCard.js";
 import { dealCardsToPlayers } from "./dealCardsToPlayers.js";
 import { changeDirection } from "./changeDirection.js";

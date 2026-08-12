@@ -1,9 +1,13 @@
 import { expect, test, vi } from "vitest";
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
 
-vi.mock("./shuffle.js", () => ({
-  shuffle: <T>(cards: readonly T[]) => [...cards].reverse(),
-}));
+vi.mock(import("@hellacardgames/lib"), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    shuffle: <T>(cards: readonly T[]) => [...cards].reverse(),
+  };
+});
 
 import { startRound } from "./startRound.js";
 import type { StartedGame } from "../types/Game.js";

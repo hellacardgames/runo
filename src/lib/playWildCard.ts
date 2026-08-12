@@ -1,6 +1,10 @@
-import { updatePlayer } from "./updatePlayer.js";
+import {
+  emitEvent,
+  getCurrentPlayer,
+  getNextPlayer,
+  updatePlayer,
+} from "@hellacardgames/lib";
 import { removeCardFromHand } from "./removeCardFromHand.js";
-import { emitEvent } from "./emitEvent.js";
 import { isOutOfCards } from "./isOutOfCards.js";
 import { isGameWinner } from "./isGameWinner.js";
 import { transitionGameToCompleted } from "./transitionGameToCompleted.js";
@@ -9,8 +13,6 @@ import { returnDiscardPile } from "./returnDiscardPile.js";
 import { calculatePoints } from "./calculatePoints.js";
 import { raiseScore } from "./raiseScore.js";
 import { returnPlayerCards } from "./returnPlayerCards.js";
-import { getCurrentPlayer } from "./getCurrentPlayer.js";
-import { getNextPlayer } from "./getNextPlayer.js";
 import { drawFourCards } from "./drawFourCards.js";
 import { addWildCardToDiscardPile } from "./addWildCardToDiscardPile.js";
 import { changeToNextPlayer } from "./changeToNextPlayer.js";

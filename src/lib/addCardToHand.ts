@@ -1,4 +1,4 @@
-import { addItemToCollection } from "./addItemToCollection.js";
+import { addItemToCollection } from "@hellacardgames/lib";
 
 type Player = {
   readonly hand: readonly unknown[];

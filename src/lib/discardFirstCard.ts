@@ -1,4 +1,4 @@
-import { emitEvent } from "./emitEvent.js";
+import { emitEvent } from "@hellacardgames/lib";
 import type { StartedGame } from "../types/Game.js";
 
 export function discardFirstCard(game: StartedGame): StartedGame {
