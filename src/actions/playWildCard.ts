@@ -30,7 +30,7 @@ export function playWildCard(
   if (!player) {
     return { success: false, error: "playerNotFound" };
   }
-  if (isCurrentPlayer(game, player.id)) {
+  if (!isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" };
   }
   const card = player.hand.find((c) => c.id === cardId);
