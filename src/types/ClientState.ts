@@ -1,5 +1,5 @@
 import type { Card, DiscardedCard } from "./Card.js";
-// import type { ChatMessage } from "./ChatMessage.js";
+import type { ChatMessage } from "./ChatMessage.js";
 
 export type ClientState = {
   readonly status: "created" | "started" | "completed" | "forfeited";
@@ -12,7 +12,7 @@ export type ClientState = {
   readonly currentPlayerUsername: string;
   readonly isReversed: boolean;
   readonly expiresAt: number;
-  // readonly chatMessages: readonly ChatMessage[];
+  readonly chatMessages: readonly ChatMessage[];
 };
 
 type Player = {
