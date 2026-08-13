@@ -18,7 +18,7 @@ test("adds a player", () => {
   expect(player.id).toBe(result.playerId);
   expect(player.userId).toBe("user-id-002");
   expect(player.username).toBe("alice");
-  expect(player.events).toHaveLength(0);
+  expect(player.events).toHaveLength(1);
   expect(player.hand).toHaveLength(0);
   expect(player.score).toBe(0);
 });

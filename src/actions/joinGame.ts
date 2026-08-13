@@ -1,4 +1,4 @@
-import { addItemToCollection } from "@hellacardgames/lib";
+import { addItemToCollection, emitEvent } from "@hellacardgames/lib";
 import { MAX_PLAYERS } from "../constants.js";
 import type { CreatedGame } from "../types/Game.js";
 import type { Player } from "../types/Player.js";
@@ -36,6 +36,7 @@ export function joinGame(
   };
 
   game = { ...game, players: addItemToCollection(game.players, player) };
+  game = emitEvent(game, { type: "playerJoined", username });
 
   return { success: true, game, playerId: player.id };
 }
