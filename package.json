@@ -66,6 +66,6 @@
     "vitest": "^4.1.9"
   },
   "dependencies": {
-    "@hellacardgames/lib": "^0.5.0"
+    "@hellacardgames/lib": "^0.5.1"
   }
 }
