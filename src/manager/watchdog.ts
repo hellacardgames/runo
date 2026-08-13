@@ -9,7 +9,7 @@ class Watchdog {
 
   wakeUp() {
     const now = Date.now();
-    console.log(`watchdog wakeUp at ${now} (${GAME_KEY})`);
+    // console.log(`watchdog wakeUp at ${now} (${GAME_KEY})`);
     for (const game of games.values()) {
       if (game.expiresAt <= now) {
         games.delete(game.id);
