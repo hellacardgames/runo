@@ -59,6 +59,7 @@ test("removes card from player hand", () => {
     discardPile: [],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -123,6 +124,7 @@ test("adds card to top of discard pile", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -187,6 +189,7 @@ test("makes next player draw two cards", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -251,6 +254,7 @@ test("advances to next player", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -303,6 +307,7 @@ test("does not advance to next player when only two players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -363,6 +368,7 @@ test("emits cardPlayed event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -451,6 +457,7 @@ test("emits turnChanged event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -528,6 +535,7 @@ test("does not emit turnChanged event when only two players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -603,6 +611,7 @@ test("updates score when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -662,6 +671,7 @@ test("emits playerWonRound event when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -749,6 +759,7 @@ test("starts new round when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -812,6 +823,7 @@ test("does not advance to next player when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -870,6 +882,7 @@ test("transitions to completed when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -928,6 +941,7 @@ test("emits playerWonGame event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);
@@ -1014,6 +1028,7 @@ test("emits gameCompleted event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playDrawTwoCard(game, drawTwoCard);

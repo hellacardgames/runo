@@ -1,4 +1,5 @@
 import type { Card, DiscardedCard } from "./Card.js";
+import type { ChatMessage } from "./ChatMessage.js";
 import type { Player } from "./Player.js";
 
 export type Game = CreatedGame | StartedGame | ForfeitedGame | CompletedGame;
@@ -18,4 +19,5 @@ type GameProperties = {
   readonly discardPile: readonly DiscardedCard[];
   readonly currentPlayerIndex: number;
   readonly isReversed: boolean;
+  readonly chatMessages: readonly ChatMessage[];
 };

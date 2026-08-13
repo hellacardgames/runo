@@ -7,4 +7,5 @@ export { joinGame } from "./actions/joinGame.js";
 export { leaveGame } from "./actions/leaveGame.js";
 export { playCard } from "./actions/playCard.js";
 export { playWildCard } from "./actions/playWildCard.js";
+export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";

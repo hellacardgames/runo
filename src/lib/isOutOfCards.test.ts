@@ -39,6 +39,7 @@ test("returns true when player is out of cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(isOutOfCards(game, "player-id-002")).toBe(true);
@@ -80,6 +81,7 @@ test("returns false when player is not out of cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(isOutOfCards(game, "player-id-002")).toBe(false);

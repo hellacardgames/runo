@@ -18,6 +18,7 @@ test("adds card to bottom of discard pile", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = addCardToBottomOfDiscardPile(game, {

@@ -29,6 +29,7 @@ export function createGame(userId: string, username: string): CreateGameResult {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   return { game, playerId: player.id };

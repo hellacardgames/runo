@@ -35,6 +35,7 @@ test("takes two cards from draw pile and gives to player", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = drawTwoCards(game, "player-id-002");
@@ -82,6 +83,7 @@ test("emits drewCard events to player", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = drawTwoCards(game, "player-id-002");
@@ -134,6 +136,7 @@ test("emits playerDrewTwoCards event to all players", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = drawTwoCards(game, "player-id-002");

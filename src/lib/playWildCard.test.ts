@@ -56,6 +56,7 @@ test("removes card from player hand", () => {
     discardPile: [],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -117,6 +118,7 @@ test("adds card to top of discard pile", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -183,6 +185,7 @@ test("makes next player draw four cards", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -246,6 +249,7 @@ test("advances to next player", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -308,6 +312,7 @@ test("advances to player after next when card is a draw four", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -362,6 +367,7 @@ test("does not change current player when only two players and card is a draw fo
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -422,6 +428,7 @@ test("emits cardPlayed event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -510,6 +517,7 @@ test("emits turnChanged event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -589,6 +597,7 @@ test("does not emit turnChanged event when only two players and card is a draw f
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -660,6 +669,7 @@ test("updates score when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -715,6 +725,7 @@ test("emits playerWonRound event when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -798,6 +809,7 @@ test("starts new round when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -857,6 +869,7 @@ test("does not advance to next player when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -912,6 +925,7 @@ test("transitions to completed when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -967,6 +981,7 @@ test("emits playerWonGame event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");
@@ -1050,6 +1065,7 @@ test("emits gameCompleted event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playWildCard(game, wildCard, "blue");

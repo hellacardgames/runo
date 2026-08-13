@@ -18,6 +18,7 @@ test("takes cards from top of the draw pile", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   const result = takeCardsFromDrawPile(game, 2);
   game = result.game;
@@ -46,6 +47,7 @@ test("replenishes draw pile if needed", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   const result = takeCardsFromDrawPile(game, 2);
   game = result.game;

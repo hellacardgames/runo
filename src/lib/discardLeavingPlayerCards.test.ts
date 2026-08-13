@@ -29,6 +29,7 @@ test("discards player cards to bottom of discard pile", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = discardLeavingPlayerCards(game, "player-id-001");
@@ -70,6 +71,7 @@ test("throws if player does not exist in game", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(() => discardLeavingPlayerCards(game, "some-random-id")).toThrow(

@@ -51,6 +51,7 @@ test("returns correct points when players have cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(calculatePoints(game)).toBe(127);
@@ -92,6 +93,7 @@ test("returns zero when players have no cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(calculatePoints(game)).toBe(0);
@@ -108,6 +110,7 @@ test("returns zero when there are no players", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(calculatePoints(game)).toBe(0);

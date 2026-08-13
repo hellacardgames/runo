@@ -26,6 +26,7 @@ test("returns discarded cards to draw pile", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = returnDiscardPile(game);
@@ -58,6 +59,7 @@ test("does nothing when discard pile is empty", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = returnDiscardPile(game);

@@ -14,6 +14,7 @@ test("discards first card", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = discardFirstCard(game);
   expect(game.discardPile).toEqual([
@@ -39,6 +40,7 @@ test("skips cards that are not number cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = discardFirstCard(game);
   expect(game.discardPile).toEqual([
@@ -58,6 +60,7 @@ test("throws when draw pile is empty", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   expect(() => discardFirstCard(game)).toThrow("Draw pile is empty.");
 });
@@ -78,6 +81,7 @@ test("throws when draw pile contains no number cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   expect(() => discardFirstCard(game)).toThrow(
     "Draw pile has no number cards.",
@@ -112,6 +116,7 @@ test("emits card discarded event to all players", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = discardFirstCard(game);

@@ -39,6 +39,7 @@ test("changes to the next player", () => {
     discardPile: [],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = changeToNextPlayer(game);
@@ -82,6 +83,7 @@ test("emits a turnChanged event to all players", () => {
     discardPile: [],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = changeToNextPlayer(game);

@@ -39,6 +39,7 @@ test("returns true when player has exactly enough points", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(isGameWinner(game, "player-id-002")).toBe(true);
@@ -80,6 +81,7 @@ test("returns true when player has more than enough points", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(isGameWinner(game, "player-id-002")).toBe(true);
@@ -121,6 +123,7 @@ test("returns false when player does not have enough points", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(isGameWinner(game, "player-id-002")).toBe(false);

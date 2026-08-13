@@ -23,6 +23,7 @@ test("does not throw when the last player leaves", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   expect(() => leaveGame(game, "player-id-001")).not.toThrow();

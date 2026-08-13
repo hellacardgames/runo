@@ -37,8 +37,7 @@ export function getClientStateAndClearEvents(
     currentPlayerUsername: getCurrentPlayer(game).username,
     isReversed: game.isReversed,
     expiresAt: game.expiresAt,
-    chatMessages: [],
-    // chatMessages: game.chatMessages,
+    chatMessages: game.chatMessages,
   };
 
   game = updatePlayer(game, player.id, (p) => ({ ...p, events: [] }));

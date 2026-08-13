@@ -61,6 +61,7 @@ test("deals cards to players in round-robin order", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = dealCardsToPlayers(game);
   expect(game.players[0]?.hand).toEqual([

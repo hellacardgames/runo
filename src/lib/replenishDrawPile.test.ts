@@ -33,6 +33,7 @@ test("takes all discarded cards except for top card", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = replenishDrawPile(game);
   expect(game.discardPile).toEqual([
@@ -76,6 +77,7 @@ test("unwraps discarded wild cards", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = replenishDrawPile(game);
   const drawPileSorted = [...game.drawPile].sort((a, b) =>
@@ -108,6 +110,7 @@ test("shuffles draw pile after replenishing", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
   game = replenishDrawPile(game);
   expect(game.drawPile).toEqual([

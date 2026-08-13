@@ -27,6 +27,7 @@ test("shuffles and discards first card", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = startRound(game);
@@ -85,6 +86,7 @@ test("deals cards to players", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: true,
+    chatMessages: [],
   };
 
   game = startRound(game);
@@ -144,6 +146,7 @@ test("restore normal direction if reversed and emit event to all players", () =>
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: true,
+    chatMessages: [],
   };
 
   game = startRound(game);

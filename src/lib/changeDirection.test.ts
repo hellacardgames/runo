@@ -31,6 +31,7 @@ test("changes direction to reverse and emits directionChanged event to all playe
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = changeDirection(game);
@@ -74,6 +75,7 @@ test("changes direction to forward and emits directionChanged event to all playe
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: true,
+    chatMessages: [],
   };
 
   game = changeDirection(game);

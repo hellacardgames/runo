@@ -40,6 +40,7 @@ test("deals card to player", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = dealCardToPlayer(game, "player-id-002");
@@ -89,6 +90,7 @@ test("emits cardDealtToPlayer event to all players", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = dealCardToPlayer(game, "player-id-002");
@@ -144,6 +146,7 @@ test("emits cardDealt event to player only", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = dealCardToPlayer(game, "player-id-002");

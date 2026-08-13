@@ -39,6 +39,7 @@ test("raises player score", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = raiseScore(game, "player-id-002", 129);
@@ -82,6 +83,7 @@ test("does not raise other player scores", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = raiseScore(game, "player-id-002", 129);

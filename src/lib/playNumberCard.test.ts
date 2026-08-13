@@ -57,6 +57,7 @@ test("removes card from player hand", () => {
     discardPile: [],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -119,6 +120,7 @@ test("adds card to top of discard pile", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -181,6 +183,7 @@ test("advances to next player", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -239,6 +242,7 @@ test("emits cardPlayed event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -325,6 +329,7 @@ test("emits turnChanged event to all players", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -406,6 +411,7 @@ test("updates score when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -462,6 +468,7 @@ test("emits playerWonRound event when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -546,6 +553,7 @@ test("starts new round when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -606,6 +614,7 @@ test("does not advance to next player when player wins round", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: true,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -662,6 +671,7 @@ test("transitions to completed when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -718,6 +728,7 @@ test("emits playerWonGame event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);
@@ -802,6 +813,7 @@ test("emits gameCompleted event when player wins game", () => {
     ],
     currentPlayerIndex: 1,
     isReversed: false,
+    chatMessages: [],
   };
 
   const newGame = playNumberCard(game, numberCard);

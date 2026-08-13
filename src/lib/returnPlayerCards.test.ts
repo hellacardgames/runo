@@ -49,6 +49,7 @@ test("returns player cards to draw pile", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = returnPlayerCards(game);
@@ -111,6 +112,7 @@ test("does nothing when players have no cards", () => {
     discardPile: [],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = returnPlayerCards(game);

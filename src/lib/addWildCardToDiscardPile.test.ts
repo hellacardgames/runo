@@ -18,6 +18,7 @@ test("adds wild card to discard pile", () => {
     ],
     currentPlayerIndex: 0,
     isReversed: false,
+    chatMessages: [],
   };
 
   game = addWildCardToDiscardPile(
