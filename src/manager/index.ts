@@ -1,3 +1,5 @@
+import { watchdog } from "./watchdog.js";
+
 export { createGame } from "./actions/createGame.js";
 export { drawCard } from "./actions/drawCard.js";
 export { getClientStateAndClearEvents } from "./actions/getClientStateAndClearEvents.js";
@@ -9,3 +11,5 @@ export { playCard } from "./actions/playCard.js";
 export { playWildCard } from "./actions/playWildCard.js";
 export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";
+
+watchdog.start();
