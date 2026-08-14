@@ -7,13 +7,13 @@ type StartGameResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus";
-    }
-  | DoStartGameError;
-
-type DoStartGameError = Extract<DoStartGameResult, { success: false }>;
-
-type DoStartGameResult = ReturnType<typeof doStartGame>;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "playerNotFound"
+        | "playerNotAdmin"
+        | "minPlayersNotReached";
+    };
 
 export function startGame(gameId: string, playerId: string): StartGameResult {
   const game = games.get(gameId);

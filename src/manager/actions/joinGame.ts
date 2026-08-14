@@ -8,13 +8,12 @@ type JoinGameResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus";
-    }
-  | DoJoinGameError;
-
-type DoJoinGameError = Extract<DoJoinGameResult, { success: false }>;
-
-type DoJoinGameResult = ReturnType<typeof doJoinGame>;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "maxPlayersReached"
+        | "alreadyInGame";
+    };
 
 export function joinGame(
   gameId: string,

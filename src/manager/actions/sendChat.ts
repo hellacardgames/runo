@@ -7,13 +7,8 @@ type SendChatResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound";
-    }
-  | DoSendChatError;
-
-type DoSendChatError = Extract<DoSendChatResult, { success: false }>;
-
-type DoSendChatResult = ReturnType<typeof doSendChat>;
+      readonly error: "gameNotFound" | "playerNotFound";
+    };
 
 export function sendChat(
   gameId: string,

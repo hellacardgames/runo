@@ -7,13 +7,13 @@ type DrawCardResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus";
-    }
-  | DoDrawCardError;
-
-type DoDrawCardError = Extract<DoDrawCardResult, { success: false }>;
-
-type DoDrawCardResult = ReturnType<typeof doDrawCard>;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "playerNotFound"
+        | "outOfTurn"
+        | "hasPlayableCard";
+    };
 
 export function drawCard(gameId: string, playerId: string): DrawCardResult {
   const game = games.get(gameId);

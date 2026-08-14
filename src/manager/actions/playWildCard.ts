@@ -8,13 +8,15 @@ type PlayWildCardResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus";
-    }
-  | DoPlayWildCardError;
-
-type DoPlayWildCardError = Extract<DoPlayWildCardResult, { success: false }>;
-
-type DoPlayWildCardResult = ReturnType<typeof doPlayWildCard>;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "playerNotFound"
+        | "outOfTurn"
+        | "cardNotFound"
+        | "cardNotWild"
+        | "cardNotPlayable";
+    };
 
 export function playWildCard(
   gameId: string,

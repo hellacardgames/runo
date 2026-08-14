@@ -7,13 +7,15 @@ type PlayCardResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus";
-    }
-  | DoPlayCardError;
-
-type DoPlayCardError = Extract<DoPlayCardResult, { success: false }>;
-
-type DoPlayCardResult = ReturnType<typeof doPlayCard>;
+      readonly error:
+        | "gameNotFound"
+        | "invalidStatus"
+        | "playerNotFound"
+        | "outOfTurn"
+        | "cardNotFound"
+        | "cardIsWild"
+        | "cardNotPlayable";
+    };
 
 export function playCard(
   gameId: string,

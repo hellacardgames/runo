@@ -9,18 +9,8 @@ type GetClientStateAndClearEventsResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound";
-    }
-  | DoGetClientStateAndClearEventsError;
-
-type DoGetClientStateAndClearEventsError = Extract<
-  DoGetClientStateAndClearEventsResult,
-  { success: false }
->;
-
-type DoGetClientStateAndClearEventsResult = ReturnType<
-  typeof doGetClientStateAndClearEvents
->;
+      readonly error: "gameNotFound" | "playerNotFound";
+    };
 
 export function getClientStateAndClearEvents(
   gameId: string,

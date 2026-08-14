@@ -9,18 +9,8 @@ type GetEventsAndClearAcknowledgedResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound";
-    }
-  | DoGetEventsAndClearAcknowledgedError;
-
-type DoGetEventsAndClearAcknowledgedError = Extract<
-  DoGetEventsAndClearAcknowledgedResult,
-  { success: false }
->;
-
-type DoGetEventsAndClearAcknowledgedResult = ReturnType<
-  typeof doGetEventsAndClearAcknowledged
->;
+      readonly error: "gameNotFound" | "playerNotFound";
+    };
 
 export function getEventsAndClearAcknowledged(
   gameId: string,

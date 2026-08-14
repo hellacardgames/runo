@@ -7,13 +7,8 @@ type LeaveGameResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound";
-    }
-  | DoLeaveGameError;
-
-type DoLeaveGameError = Extract<DoLeaveGameResult, { success: false }>;
-
-type DoLeaveGameResult = ReturnType<typeof doLeaveGame>;
+      readonly error: "gameNotFound" | "playerNotFound";
+    };
 
 export function leaveGame(gameId: string, playerId: string): LeaveGameResult {
   const game = games.get(gameId);
