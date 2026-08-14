@@ -1,6 +1,6 @@
-import { getClientStateAndClearEvents as doGetClientStateAndClearEvents } from "../../actions/getClientStateAndClearEvents.js";
+import { getClientStateAndClearEvents as doGetClientStateAndClearEvents } from "../../game/actions/getClientStateAndClearEvents.js";
 import { games } from "../games.js";
-import type { ClientState } from "../../types/ClientState.js";
+import type { ClientState } from "../../game/types/ClientState.js";
 
 type GetClientStateAndClearEventsResult =
   | {

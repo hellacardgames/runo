@@ -1,4 +1,4 @@
-import { startGame as doStartGame } from "../../actions/startGame.js";
+import { startGame as doStartGame } from "../../game/actions/startGame.js";
 import { games } from "../games.js";
 
 type StartGameResult =

@@ -1,6 +1,6 @@
-import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../../actions/getEventsAndClearAcknowledged.js";
+import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../../game/actions/getEventsAndClearAcknowledged.js";
 import { games } from "../games.js";
-import type { GameEvent } from "../../types/GameEvent.js";
+import type { GameEvent } from "../../game/types/GameEvent.js";
 
 type GetEventsAndClearAcknowledgedResult =
   | {

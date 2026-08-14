@@ -1,4 +1,4 @@
-import { playCard as doPlayCard } from "../../actions/playCard.js";
+import { playCard as doPlayCard } from "../../game/actions/playCard.js";
 import { games } from "../games.js";
 
 type PlayCardResult =

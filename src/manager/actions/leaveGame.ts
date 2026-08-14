@@ -1,4 +1,4 @@
-import { leaveGame as doLeaveGame } from "../../actions/leaveGame.js";
+import { leaveGame as doLeaveGame } from "../../game/actions/leaveGame.js";
 import { games } from "../games.js";
 
 type LeaveGameResult =

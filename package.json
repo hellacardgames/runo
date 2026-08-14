@@ -15,17 +15,17 @@
     "url": "https://github.com/hellacardgames/runo/issues"
   },
   "homepage": "https://github.com/hellacardgames/runo#readme",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.cts",
+  "main": "./dist/game/index.cjs",
+  "types": "./dist/game/index.d.cts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "types": "./dist/game/index.d.mts",
+        "default": "./dist/game/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "types": "./dist/game/index.d.cts",
+        "default": "./dist/game/index.cjs"
       }
     },
     "./manager": {

@@ -1,4 +1,4 @@
-import { joinGame as doJoinGame } from "../../actions/joinGame.js";
+import { joinGame as doJoinGame } from "../../game/actions/joinGame.js";
 import { games } from "../games.js";
 
 type JoinGameResult =

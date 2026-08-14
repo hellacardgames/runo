@@ -1,4 +1,4 @@
-import { MAX_PLAYERS } from "../../constants.js";
+import { MAX_PLAYERS } from "../../game/constants.js";
 import { games } from "../games.js";
 
 type GetJoinableGamesResult = {
