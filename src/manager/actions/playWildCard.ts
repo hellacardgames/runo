@@ -1,6 +1,6 @@
 import { playWildCard as doPlayWildCard } from "../../actions/playWildCard.js";
-import { isColor } from "../../lib/isColor.js";
 import { games } from "../games.js";
+import type { Color } from "../../types/Card.js";
 
 type PlayWildCardResult =
   | {
@@ -8,7 +8,7 @@ type PlayWildCardResult =
     }
   | {
       readonly success: false;
-      readonly error: "gameNotFound" | "invalidStatus" | "invalidColor";
+      readonly error: "gameNotFound" | "invalidStatus";
     }
   | DoPlayWildCardError;
 
@@ -20,7 +20,7 @@ export function playWildCard(
   gameId: string,
   playerId: string,
   cardId: string,
-  color: string,
+  color: Color,
 ): PlayWildCardResult {
   const game = games.get(gameId);
   if (!game) {
@@ -28,9 +28,6 @@ export function playWildCard(
   }
   if (game.status !== "started") {
     return { success: false, error: "invalidStatus" };
-  }
-  if (!isColor(color)) {
-    return { success: false, error: "invalidColor" };
   }
 
   const result = doPlayWildCard(game, playerId, cardId, color);
