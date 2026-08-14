@@ -12,4 +12,11 @@ export { playWildCard } from "./actions/playWildCard.js";
 export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";
 
+export { COLORS } from "../types/Card.js";
+
+export type { Card, Color, DiscardedCard } from "../types/Card.js";
+export type { ChatMessage } from "../types/ChatMessage.js";
+export type { ClientState } from "../types/ClientState.js";
+export type { GameEvent } from "../types/GameEvent.js";
+
 watchdog.start();

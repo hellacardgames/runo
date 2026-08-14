@@ -40,4 +40,6 @@ type DiscardedWildCard = {
   readonly color: Color;
 };
 
-export type Color = "red" | "yellow" | "green" | "blue";
+export type Color = (typeof COLORS)[number];
+
+export const COLORS = ["blue", "green", "red", "yellow"] as const;

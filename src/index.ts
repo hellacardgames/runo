@@ -7,3 +7,11 @@ export { leaveGame } from "./actions/leaveGame.js";
 export { playCard } from "./actions/playCard.js";
 export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";
+
+export { COLORS } from "./types/Card.js";
+
+export type { Card, Color, DiscardedCard } from "./types/Card.js";
+export type { ChatMessage } from "./types/ChatMessage.js";
+export type { ClientState } from "./types/ClientState.js";
+export type { Game } from "./types/Game.js";
+export type { GameEvent } from "./types/GameEvent.js";
