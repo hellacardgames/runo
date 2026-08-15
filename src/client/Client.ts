@@ -56,17 +56,17 @@ export class Client {
 
   constructor(config: ClientConfig) {
     this.actionUrls = {
-      createGame: `${config.baseUrl}/${config.actionUrls.createGame}`,
-      drawCard: `${config.baseUrl}/${config.actionUrls.drawCard}`,
-      getClientStateAndClearEvents: `${config.baseUrl}/${config.actionUrls.getClientStateAndClearEvents}`,
-      getEventsAndClearAcknowledged: `${config.baseUrl}/${config.actionUrls.getEventsAndClearAcknowledged}`,
-      getJoinableGames: `${config.baseUrl}/${config.actionUrls.getJoinableGames}`,
-      joinGame: `${config.baseUrl}/${config.actionUrls.joinGame}`,
-      leaveGame: `${config.baseUrl}/${config.actionUrls.leaveGame}`,
-      playCard: `${config.baseUrl}/${config.actionUrls.playCard}`,
-      playWildCard: `${config.baseUrl}/${config.actionUrls.playWildCard}`,
-      sendChat: `${config.baseUrl}/${config.actionUrls.sendChat}`,
-      startGame: `${config.baseUrl}/${config.actionUrls.startGame}`,
+      createGame: `${config.baseUrl}${config.actionUrls.createGame}`,
+      drawCard: `${config.baseUrl}${config.actionUrls.drawCard}`,
+      getClientStateAndClearEvents: `${config.baseUrl}${config.actionUrls.getClientStateAndClearEvents}`,
+      getEventsAndClearAcknowledged: `${config.baseUrl}${config.actionUrls.getEventsAndClearAcknowledged}`,
+      getJoinableGames: `${config.baseUrl}${config.actionUrls.getJoinableGames}`,
+      joinGame: `${config.baseUrl}${config.actionUrls.joinGame}`,
+      leaveGame: `${config.baseUrl}${config.actionUrls.leaveGame}`,
+      playCard: `${config.baseUrl}${config.actionUrls.playCard}`,
+      playWildCard: `${config.baseUrl}${config.actionUrls.playWildCard}`,
+      sendChat: `${config.baseUrl}${config.actionUrls.sendChat}`,
+      startGame: `${config.baseUrl}${config.actionUrls.startGame}`,
     };
   }
 
