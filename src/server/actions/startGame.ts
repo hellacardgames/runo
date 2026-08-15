@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { startGame as doStartGame } from "../../manager/actions/startGame.js";
 
-type StartGameResult =
+export type StartGameResult =
   | {
       readonly success: true;
     }

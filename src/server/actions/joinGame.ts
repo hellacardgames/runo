@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { joinGame as doJoinGame } from "../../manager/actions/joinGame.js";
 
-type JoinGameResult =
+export type JoinGameResult =
   | {
       readonly success: true;
       readonly playerId: string;

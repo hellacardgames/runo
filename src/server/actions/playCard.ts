@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { playCard as doPlayCard } from "../../manager/actions/playCard.js";
 
-type PlayCardResult =
+export type PlayCardResult =
   | {
       readonly success: true;
     }

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { playWildCard as doPlayWildCard } from "../../manager/actions/playWildCard.js";
 import { COLORS } from "../../game/types/Card.js";
 
-type PlayWildCardResult =
+export type PlayWildCardResult =
   | {
       readonly success: true;
     }

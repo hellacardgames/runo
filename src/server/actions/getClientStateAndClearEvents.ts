@@ -2,7 +2,7 @@ import { z } from "zod";
 import { getClientStateAndClearEvents as doGetClientStateAndClearEvents } from "../../manager/actions/getClientStateAndClearEvents.js";
 import type { ClientState } from "../../game/types/ClientState.js";
 
-type GetClientStateAndClearEventsResult =
+export type GetClientStateAndClearEventsResult =
   | {
       readonly success: true;
       readonly state: ClientState;

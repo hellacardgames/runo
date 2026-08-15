@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { leaveGame as doLeaveGame } from "../../manager/actions/leaveGame.js";
 
-type LeaveGameResult =
+export type LeaveGameResult =
   | {
       readonly success: true;
     }

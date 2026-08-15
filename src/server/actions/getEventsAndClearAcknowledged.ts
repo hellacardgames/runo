@@ -2,7 +2,7 @@ import { z } from "zod";
 import { getEventsAndClearAcknowledged as doGetEventsAndClearAcknowledged } from "../../manager/actions/getEventsAndClearAcknowledged.js";
 import type { GameEvent } from "../../game/types/GameEvent.js";
 
-type GetEventsAndClearAcknowledgedResult =
+export type GetEventsAndClearAcknowledgedResult =
   | {
       readonly success: true;
       readonly events: readonly GameEvent[];

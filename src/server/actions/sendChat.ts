@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { sendChat as doSendChat } from "../../manager/actions/sendChat.js";
 
-type SendChatResult =
+export type SendChatResult =
   | {
       readonly success: true;
     }

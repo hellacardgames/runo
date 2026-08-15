@@ -1,6 +1,6 @@
 import { createGame as doCreateGame } from "../../manager/actions/createGame.js";
 
-type CreateGameResult =
+export type CreateGameResult =
   | {
       readonly success: true;
       readonly gameId: string;
