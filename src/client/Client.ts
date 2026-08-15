@@ -1,4 +1,3 @@
-import type { Color } from "../game/types/Card.js";
 import type { CreateGameResult } from "../server/actions/createGame.js";
 import type { DrawCardResult } from "../server/actions/drawCard.js";
 import type { GetClientStateAndClearEventsResult } from "../server/actions/getClientStateAndClearEvents.js";
@@ -10,6 +9,30 @@ import type { PlayCardResult } from "../server/actions/playCard.js";
 import type { PlayWildCardResult } from "../server/actions/playWildCard.js";
 import type { SendChatResult } from "../server/actions/sendChat.js";
 import type { StartGameResult } from "../server/actions/startGame.js";
+import type { Card, Color, DiscardedCard } from "../game/types/Card.js";
+import type { ChatMessage } from "../game/types/ChatMessage.js";
+import type { ClientState } from "../game/types/ClientState.js";
+import type { GameEvent } from "../game/types/GameEvent.js";
+
+export type {
+  CreateGameResult,
+  DrawCardResult,
+  GetClientStateAndClearEventsResult,
+  GetEventsAndClearAcknowledgedResult,
+  GetJoinableGamesResult,
+  JoinGameResult,
+  LeaveGameResult,
+  PlayCardResult,
+  PlayWildCardResult,
+  SendChatResult,
+  StartGameResult,
+  Card,
+  Color,
+  DiscardedCard,
+  ChatMessage,
+  ClientState,
+  GameEvent,
+};
 
 type ClientConfig = {
   readonly baseUrl: string;
