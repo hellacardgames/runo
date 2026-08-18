@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { addItemToCollection, emitEvent } from "@hellacardgames/lib";
 import type { ChatMessage } from "../types/ChatMessage.js";
 import type { Game } from "../types/Game.js";
@@ -24,7 +23,7 @@ export function sendChat(
   }
 
   const message: ChatMessage = {
-    id: randomUUID(),
+    id: crypto.randomUUID(),
     username: player.username,
     text,
   };
