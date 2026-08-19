@@ -1,3 +1,3 @@
-import type { Game } from "../game/types/Game.js";
+import type { Game } from "../game/index.js";
 
 export const games = new Map<string, Game>();

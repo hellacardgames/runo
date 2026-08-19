@@ -1,4 +1,4 @@
-import { createGame as doCreateGame } from "../../game/actions/createGame.js";
+import { createGame as doCreateGame } from "../../game/index.js";
 import { MAX_GAMES } from "../constants.js";
 import { games } from "../games.js";
 

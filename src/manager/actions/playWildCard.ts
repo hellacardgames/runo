@@ -1,6 +1,6 @@
-import { playWildCard as doPlayWildCard } from "../../game/actions/playWildCard.js";
+import { playWildCard as doPlayWildCard } from "../../game/index.js";
 import { games } from "../games.js";
-import type { Color } from "../../game/types/Card.js";
+import type { Color } from "../../game/index.js";
 
 type PlayWildCardResult =
   | {

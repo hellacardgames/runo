@@ -1,3 +1,5 @@
+export { MAX_PLAYERS } from "./constants.js";
+
 export { createGame } from "./actions/createGame.js";
 export { drawCard } from "./actions/drawCard.js";
 export { getClientStateAndClearEvents } from "./actions/getClientStateAndClearEvents.js";
@@ -5,5 +7,11 @@ export { getEventsAndClearAcknowledged } from "./actions/getEventsAndClearAcknow
 export { joinGame } from "./actions/joinGame.js";
 export { leaveGame } from "./actions/leaveGame.js";
 export { playCard } from "./actions/playCard.js";
+export { playWildCard } from "./actions/playWildCard.js";
 export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";
+
+export type { Color } from "./types/Card.js";
+export type { ClientState } from "./types/ClientState.js";
+export type { Game } from "./types/Game.js";
+export type { GameEvent } from "./types/GameEvent.js";

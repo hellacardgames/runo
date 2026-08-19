@@ -1,4 +1,4 @@
-import { sendChat as doSendChat } from "../../game/actions/sendChat.js";
+import { sendChat as doSendChat } from "../../game/index.js";
 import { games } from "../games.js";
 
 type SendChatResult =
