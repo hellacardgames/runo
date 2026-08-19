@@ -11,6 +11,8 @@ export { playWildCard } from "./actions/playWildCard.js";
 export { sendChat } from "./actions/sendChat.js";
 export { startGame } from "./actions/startGame.js";
 
+export { COLORS } from "./types/Card.js";
+
 export type { Color } from "./types/Card.js";
 export type { ClientState } from "./types/ClientState.js";
 export type { Game } from "./types/Game.js";

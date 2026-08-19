@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { playWildCard as doPlayWildCard } from "../../manager/actions/playWildCard.js";
-import { COLORS } from "../../game/types/Card.js";
+import { playWildCard as doPlayWildCard, COLORS } from "../../manager/index.js";
 
 export type PlayWildCardResult =
   | {
