@@ -1,18 +1,22 @@
-import type { CreateGameResult } from "../server/actions/createGame.js";
-import type { DrawCardResult } from "../server/actions/drawCard.js";
-import type { GetClientStateAndClearEventsResult } from "../server/actions/getClientStateAndClearEvents.js";
-import type { GetEventsAndClearAcknowledgedResult } from "../server/actions/getEventsAndClearAcknowledged.js";
-import type { GetJoinableGamesResult } from "../server/actions/getJoinableGames.js";
-import type { JoinGameResult } from "../server/actions/joinGame.js";
-import type { LeaveGameResult } from "../server/actions/leaveGame.js";
-import type { PlayCardResult } from "../server/actions/playCard.js";
-import type { PlayWildCardResult } from "../server/actions/playWildCard.js";
-import type { SendChatResult } from "../server/actions/sendChat.js";
-import type { StartGameResult } from "../server/actions/startGame.js";
-import type { Card, Color, DiscardedCard } from "../game/types/Card.js";
-import type { ChatMessage } from "../game/types/ChatMessage.js";
-import type { ClientState } from "../game/types/ClientState.js";
-import type { GameEvent } from "../game/types/GameEvent.js";
+import type {
+  CreateGameResult,
+  DrawCardResult,
+  GetClientStateAndClearEventsResult,
+  GetEventsAndClearAcknowledgedResult,
+  GetJoinableGamesResult,
+  JoinGameResult,
+  LeaveGameResult,
+  PlayCardResult,
+  PlayWildCardResult,
+  SendChatResult,
+  StartGameResult,
+  Card,
+  ChatMessage,
+  ClientState,
+  Color,
+  DiscardedCard,
+  GameEvent,
+} from "../server/index.js";
 
 export type {
   CreateGameResult,
@@ -27,10 +31,10 @@ export type {
   SendChatResult,
   StartGameResult,
   Card,
-  Color,
-  DiscardedCard,
   ChatMessage,
   ClientState,
+  Color,
+  DiscardedCard,
   GameEvent,
 };
 

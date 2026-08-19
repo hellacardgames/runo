@@ -13,7 +13,8 @@ export { startGame } from "./actions/startGame.js";
 
 export { COLORS } from "./types/Card.js";
 
-export type { Color } from "./types/Card.js";
+export type { Card, Color, DiscardedCard } from "./types/Card.js";
+export type { ChatMessage } from "./types/ChatMessage.js";
 export type { ClientState } from "./types/ClientState.js";
 export type { Game } from "./types/Game.js";
 export type { GameEvent } from "./types/GameEvent.js";

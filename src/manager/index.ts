@@ -14,6 +14,14 @@ export { startGame } from "./actions/startGame.js";
 
 export { COLORS } from "../game/index.js";
 
-export type { ClientState, GameEvent } from "../game/index.js";
+export type {
+  Card,
+  ChatMessage,
+  ClientState,
+  Color,
+  DiscardedCard,
+  Game,
+  GameEvent,
+} from "../game/index.js";
 
 watchdog.start();
