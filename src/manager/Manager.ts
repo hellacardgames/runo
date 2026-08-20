@@ -1,5 +1,4 @@
-import { MAX_GAMES } from "./constants.js";
-import { Watchdog } from "./Watchdog.js";
+import { ManagerBase } from "@hellacardgames/lib";
 import {
   createGame,
   drawCard,
@@ -145,18 +144,9 @@ export type StartGameResult =
         | "minPlayersNotReached";
     };
 
-export class Manager {
-  private readonly games: Map<string, Game>;
-  private readonly watchdog: Watchdog<Game>;
-
-  constructor() {
-    this.games = new Map<string, Game>();
-    this.watchdog = new Watchdog(this.games);
-    this.watchdog.start();
-  }
-
+export class Manager extends ManagerBase<Game> {
   createGame(userId: string, username: string): CreateGameResult {
-    if (this.games.size === MAX_GAMES) {
+    if (this.games.size === this.maxGames) {
       return { success: false, error: "maxGamesReached" };
     }
     const result = createGame(userId, username);

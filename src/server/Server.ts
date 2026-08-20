@@ -214,7 +214,7 @@ const startGameInputSchema = z
   .transform(({ gameId, playerId }) => [gameId, playerId] as const);
 
 export class Server {
-  private readonly manager = new Manager();
+  private readonly manager: Manager;
 
   readonly actions = [
     { path: "/createGame", action: this.createGame.bind(this) },
@@ -235,6 +235,10 @@ export class Server {
     { path: "/sendChat", action: this.sendChat.bind(this) },
     { path: "/startGame", action: this.startGame.bind(this) },
   ] as const;
+
+  constructor(...args: ConstructorParameters<typeof Manager>) {
+    this.manager = new Manager(...args);
+  }
 
   private createGame(userId: string, username: string): CreateGameResult {
     return this.manager.createGame(userId, username);
