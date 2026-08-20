@@ -28,7 +28,6 @@ export type {
   ClientState,
   Color,
   DiscardedCard,
-  Game,
   GameEvent,
 } from "../manager/index.js";
 

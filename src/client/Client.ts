@@ -10,33 +10,8 @@ import type {
   PlayWildCardResult,
   SendChatResult,
   StartGameResult,
-  Card,
-  ChatMessage,
-  ClientState,
   Color,
-  DiscardedCard,
-  GameEvent,
 } from "../server/index.js";
-
-export type {
-  CreateGameResult,
-  DrawCardResult,
-  GetClientStateAndClearEventsResult,
-  GetEventsAndClearAcknowledgedResult,
-  GetJoinableGamesResult,
-  JoinGameResult,
-  LeaveGameResult,
-  PlayCardResult,
-  PlayWildCardResult,
-  SendChatResult,
-  StartGameResult,
-  Card,
-  ChatMessage,
-  ClientState,
-  Color,
-  DiscardedCard,
-  GameEvent,
-};
 
 export class Client {
   private readonly baseUrl: string;

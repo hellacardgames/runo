@@ -20,7 +20,6 @@ export type {
   ClientState,
   Color,
   DiscardedCard,
-  Game,
   GameEvent,
 } from "../game/index.js";
 
