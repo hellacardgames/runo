@@ -15,7 +15,7 @@ import {
 } from "../game/index.js";
 import type { ClientState, Color, Game, GameEvent } from "../game/index.js";
 
-type CreateGameResult =
+export type CreateGameResult =
   | {
       readonly success: true;
       readonly gameId: string;
@@ -26,7 +26,7 @@ type CreateGameResult =
       readonly error: "maxGamesReached";
     };
 
-type DrawCardResult =
+export type DrawCardResult =
   | {
       readonly success: true;
     }
@@ -40,7 +40,7 @@ type DrawCardResult =
         | "hasPlayableCard";
     };
 
-type GetClientStateAndClearEventsResult =
+export type GetClientStateAndClearEventsResult =
   | {
       readonly success: true;
       readonly state: ClientState;
@@ -50,7 +50,7 @@ type GetClientStateAndClearEventsResult =
       readonly error: "gameNotFound" | "playerNotFound";
     };
 
-type GetEventsAndClearAcknowledgedResult =
+export type GetEventsAndClearAcknowledgedResult =
   | {
       readonly success: true;
       readonly events: readonly GameEvent[];
@@ -60,14 +60,14 @@ type GetEventsAndClearAcknowledgedResult =
       readonly error: "gameNotFound" | "playerNotFound";
     };
 
-type GetJoinableGamesResult = {
+export type GetJoinableGamesResult = {
   readonly games: readonly {
     readonly id: string;
     readonly numPlayers: number;
   }[];
 };
 
-type JoinGameResult =
+export type JoinGameResult =
   | {
       readonly success: true;
       readonly playerId: string;
@@ -81,7 +81,7 @@ type JoinGameResult =
         | "alreadyInGame";
     };
 
-type LeaveGameResult =
+export type LeaveGameResult =
   | {
       readonly success: true;
     }
@@ -90,7 +90,7 @@ type LeaveGameResult =
       readonly error: "gameNotFound" | "playerNotFound";
     };
 
-type PlayCardResult =
+export type PlayCardResult =
   | {
       readonly success: true;
     }
@@ -106,7 +106,7 @@ type PlayCardResult =
         | "cardNotPlayable";
     };
 
-type PlayWildCardResult =
+export type PlayWildCardResult =
   | {
       readonly success: true;
     }
@@ -122,7 +122,7 @@ type PlayWildCardResult =
         | "cardNotPlayable";
     };
 
-type SendChatResult =
+export type SendChatResult =
   | {
       readonly success: true;
     }
@@ -131,7 +131,7 @@ type SendChatResult =
       readonly error: "gameNotFound" | "playerNotFound";
     };
 
-type StartGameResult =
+export type StartGameResult =
   | {
       readonly success: true;
     }

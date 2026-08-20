@@ -1,3 +1,4 @@
+import type { Color } from "../game/index.js";
 import type {
   CreateGameResult,
   DrawCardResult,
@@ -10,8 +11,21 @@ import type {
   PlayWildCardResult,
   SendChatResult,
   StartGameResult,
-  Color,
 } from "../server/index.js";
+
+export type {
+  CreateGameResult,
+  DrawCardResult,
+  GetClientStateAndClearEventsResult,
+  GetEventsAndClearAcknowledgedResult,
+  GetJoinableGamesResult,
+  JoinGameResult,
+  LeaveGameResult,
+  PlayCardResult,
+  PlayWildCardResult,
+  SendChatResult,
+  StartGameResult,
+};
 
 export class Client {
   private readonly baseUrl: string;

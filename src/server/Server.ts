@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Manager } from "../manager2/index.js";
+import { Manager } from "../manager/index.js";
 import { COLORS } from "../game/index.js";
 import type { ClientState, GameEvent } from "../game/index.js";
 

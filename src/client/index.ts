@@ -12,7 +12,7 @@ export type {
   PlayWildCardResult,
   SendChatResult,
   StartGameResult,
-} from "../server/index.js";
+} from "./Client.js";
 
 export type {
   Card,
@@ -21,4 +21,4 @@ export type {
   Color,
   DiscardedCard,
   GameEvent,
-} from "../server/index.js";
+} from "../game/index.js";
