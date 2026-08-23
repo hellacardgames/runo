@@ -5,44 +5,25 @@ import { playDrawTwoCard } from "../lib/playDrawTwoCard.js";
 import { playNumberCard } from "../lib/playNumberCard.js";
 import { playReverseCard } from "../lib/playReverseCard.js";
 import { playSkipCard } from "../lib/playSkipCard.js";
-import type { CompletedGame, StartedGame } from "../types/Game.js";
+import type { StartedGame } from "../types/Game.js";
 
-type PlayCardResult =
-  | {
-      readonly success: true;
-      readonly game: StartedGame | CompletedGame;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "playerNotFound"
-        | "outOfTurn"
-        | "cardNotFound"
-        | "cardIsWild"
-        | "cardNotPlayable";
-    };
-
-export function playCard(
-  game: StartedGame,
-  playerId: string,
-  cardId: string,
-): PlayCardResult {
+export function playCard(game: StartedGame, playerId: string, cardId: string) {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
-    return { success: false, error: "playerNotFound" };
+    return { success: false, error: "playerNotFound" } as const;
   }
   if (!isCurrentPlayer(game, player.id)) {
-    return { success: false, error: "outOfTurn" };
+    return { success: false, error: "outOfTurn" } as const;
   }
   const card = player.hand.find((c) => c.id === cardId);
   if (!card) {
-    return { success: false, error: "cardNotFound" };
+    return { success: false, error: "cardNotFound" } as const;
   }
   if (card.type === "wild") {
-    return { success: false, error: "cardIsWild" };
+    return { success: false, error: "cardIsWild" } as const;
   }
   if (!isCardPlayable(card, player.hand, game.discardPile)) {
-    return { success: false, error: "cardNotPlayable" };
+    return { success: false, error: "cardNotPlayable" } as const;
   }
 
   game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
@@ -53,12 +34,12 @@ export function playCard(
 
   switch (card.type) {
     case "drawTwo":
-      return { success: true, game: playDrawTwoCard(game, card) };
+      return { success: true, game: playDrawTwoCard(game, card) } as const;
     case "number":
-      return { success: true, game: playNumberCard(game, card) };
+      return { success: true, game: playNumberCard(game, card) } as const;
     case "reverse":
-      return { success: true, game: playReverseCard(game, card) };
+      return { success: true, game: playReverseCard(game, card) } as const;
     case "skip":
-      return { success: true, game: playSkipCard(game, card) };
+      return { success: true, game: playSkipCard(game, card) } as const;
   }
 }

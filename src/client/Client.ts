@@ -1,31 +1,5 @@
 import type { Color } from "../game/index.js";
-import type {
-  CreateGameResult,
-  DrawCardResult,
-  GetClientStateAndClearEventsResult,
-  GetEventsAndClearAcknowledgedResult,
-  GetJoinableGamesResult,
-  JoinGameResult,
-  LeaveGameResult,
-  PlayCardResult,
-  PlayWildCardResult,
-  SendChatResult,
-  StartGameResult,
-} from "../server/index.js";
-
-export type {
-  CreateGameResult,
-  DrawCardResult,
-  GetClientStateAndClearEventsResult,
-  GetEventsAndClearAcknowledgedResult,
-  GetJoinableGamesResult,
-  JoinGameResult,
-  LeaveGameResult,
-  PlayCardResult,
-  PlayWildCardResult,
-  SendChatResult,
-  StartGameResult,
-};
+import type { Server } from "../server/index.js";
 
 export class Client {
   private readonly baseUrl: string;
@@ -34,18 +8,21 @@ export class Client {
     this.baseUrl = baseUrl;
   }
 
-  async createGame(accessToken: string): Promise<CreateGameResult> {
+  async createGame(accessToken: string) {
     const response = await fetch(`${this.baseUrl}/createGame`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const result = await response.json();
+    const result: ReturnType<Server["createGame"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async drawCard(gameId: string, playerId: string): Promise<DrawCardResult> {
+  async drawCard(gameId: string, playerId: string) {
     const response = await fetch(`${this.baseUrl}/drawCard`, {
       method: "POST",
       headers: {
@@ -53,14 +30,14 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["drawCard"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async getClientStateAndClearEvents(
-    gameId: string,
-    playerId: string,
-  ): Promise<GetClientStateAndClearEventsResult> {
+  async getClientStateAndClearEvents(gameId: string, playerId: string) {
     const response = await fetch(
       `${this.baseUrl}/getClientStateAndClearEvents`,
       {
@@ -71,7 +48,11 @@ export class Client {
         body: JSON.stringify({ gameId, playerId }),
       },
     );
-    const result = await response.json();
+    const result: ReturnType<Server["getClientStateAndClearEvents"]> =
+      await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
@@ -79,7 +60,7 @@ export class Client {
     gameId: string,
     playerId: string,
     lastReadId: string | null,
-  ): Promise<GetEventsAndClearAcknowledgedResult> {
+  ) {
     const response = await fetch(
       `${this.baseUrl}/getEventsAndClearAcknowledged`,
       {
@@ -90,19 +71,24 @@ export class Client {
         body: JSON.stringify({ gameId, playerId, lastReadId }),
       },
     );
-    const result = await response.json();
+    const result: ReturnType<Server["getEventsAndClearAcknowledged"]> =
+      await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async getJoinableGames(): Promise<GetJoinableGamesResult> {
+  async getJoinableGames() {
     const response = await fetch(`${this.baseUrl}/getJoinableGames`, {
       method: "POST",
     });
-    const result = await response.json();
+    const result: ReturnType<Server["getJoinableGames"]> =
+      await response.json();
     return result;
   }
 
-  async joinGame(gameId: string, accessToken: string): Promise<JoinGameResult> {
+  async joinGame(gameId: string, accessToken: string) {
     const response = await fetch(`${this.baseUrl}/joinGame`, {
       method: "POST",
       headers: {
@@ -111,11 +97,14 @@ export class Client {
       },
       body: JSON.stringify({ gameId }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["joinGame"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async leaveGame(gameId: string, playerId: string): Promise<LeaveGameResult> {
+  async leaveGame(gameId: string, playerId: string) {
     const response = await fetch(`${this.baseUrl}/leaveGame`, {
       method: "POST",
       headers: {
@@ -123,15 +112,14 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["leaveGame"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async playCard(
-    gameId: string,
-    playerId: string,
-    cardId: string,
-  ): Promise<PlayCardResult> {
+  async playCard(gameId: string, playerId: string, cardId: string) {
     const response = await fetch(`${this.baseUrl}/playCard`, {
       method: "POST",
       headers: {
@@ -139,7 +127,10 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, cardId }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["playCard"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
@@ -148,7 +139,7 @@ export class Client {
     playerId: string,
     cardId: string,
     color: Color,
-  ): Promise<PlayWildCardResult> {
+  ) {
     const response = await fetch(`${this.baseUrl}/playWildCard`, {
       method: "POST",
       headers: {
@@ -156,15 +147,14 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, cardId, color }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["playWildCard"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async sendChat(
-    gameId: string,
-    playerId: string,
-    text: string,
-  ): Promise<SendChatResult> {
+  async sendChat(gameId: string, playerId: string, text: string) {
     const response = await fetch(`${this.baseUrl}/sendChat`, {
       method: "POST",
       headers: {
@@ -172,11 +162,14 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, text }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["sendChat"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 
-  async startGame(gameId: string, playerId: string): Promise<StartGameResult> {
+  async startGame(gameId: string, playerId: string) {
     const response = await fetch(`${this.baseUrl}/startGame`, {
       method: "POST",
       headers: {
@@ -184,7 +177,10 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result = await response.json();
+    const result: ReturnType<Server["startGame"]> = await response.json();
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
     return result;
   }
 }

@@ -12,26 +12,16 @@ import { addCardToHand } from "../lib/addCardToHand.js";
 import { changeToNextPlayer } from "../lib/changeToNextPlayer.js";
 import type { StartedGame } from "../types/Game.js";
 
-type DrawCardResult =
-  | {
-      readonly success: true;
-      readonly game: StartedGame;
-    }
-  | {
-      readonly success: false;
-      readonly error: "playerNotFound" | "outOfTurn" | "hasPlayableCard";
-    };
-
-export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
+export function drawCard(game: StartedGame, playerId: string) {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
-    return { success: false, error: "playerNotFound" };
+    return { success: false, error: "playerNotFound" } as const;
   }
   if (!isCurrentPlayer(game, player.id)) {
-    return { success: false, error: "outOfTurn" };
+    return { success: false, error: "outOfTurn" } as const;
   }
   if (hasPlayableCard(player.hand, game.discardPile)) {
-    return { success: false, error: "hasPlayableCard" };
+    return { success: false, error: "hasPlayableCard" } as const;
   }
 
   game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
@@ -66,5 +56,5 @@ export function drawCard(game: StartedGame, playerId: string): DrawCardResult {
     game = changeToNextPlayer(game);
   }
 
-  return { success: true, game };
+  return { success: true, game } as const;
 }

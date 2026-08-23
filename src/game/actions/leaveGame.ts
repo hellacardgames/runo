@@ -5,20 +5,10 @@ import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
 import { transitionGameToForfeited } from "../lib/transitionGameToForfeited.js";
 import type { Game } from "../types/Game.js";
 
-type LeaveGameResult =
-  | {
-      readonly success: true;
-      readonly game: Game;
-    }
-  | {
-      readonly success: false;
-      readonly error: "playerNotFound";
-    };
-
-export function leaveGame(game: Game, playerId: string): LeaveGameResult {
+export function leaveGame(game: Game, playerId: string) {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
-    return { success: false, error: "playerNotFound" };
+    return { success: false, error: "playerNotFound" } as const;
   }
 
   game = emitEvent(game, { type: "playerLeft", username: player.username });
@@ -53,5 +43,5 @@ export function leaveGame(game: Game, playerId: string): LeaveGameResult {
     }
   }
 
-  return { success: true, game };
+  return { success: true, game } as const;
 }

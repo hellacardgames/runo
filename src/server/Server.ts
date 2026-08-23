@@ -1,142 +1,6 @@
 import { z } from "zod";
 import { Manager } from "../manager/index.js";
 import { COLORS } from "../game/index.js";
-import type { ClientState, GameEvent } from "../game/index.js";
-
-export type CreateGameResult =
-  | {
-      readonly success: true;
-      readonly gameId: string;
-      readonly playerId: string;
-    }
-  | {
-      readonly success: false;
-      readonly error: "maxGamesReached";
-    };
-
-export type DrawCardResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "invalidInput"
-        | "gameNotFound"
-        | "invalidStatus"
-        | "playerNotFound"
-        | "outOfTurn"
-        | "hasPlayableCard";
-    };
-
-export type GetClientStateAndClearEventsResult =
-  | {
-      readonly success: true;
-      readonly state: ClientState;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidInput" | "gameNotFound" | "playerNotFound";
-    };
-
-export type GetEventsAndClearAcknowledgedResult =
-  | {
-      readonly success: true;
-      readonly events: readonly GameEvent[];
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidInput" | "gameNotFound" | "playerNotFound";
-    };
-
-export type GetJoinableGamesResult = {
-  readonly games: readonly {
-    readonly id: string;
-    readonly numPlayers: number;
-  }[];
-};
-
-export type JoinGameResult =
-  | {
-      readonly success: true;
-      readonly playerId: string;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "invalidInput"
-        | "gameNotFound"
-        | "invalidStatus"
-        | "maxPlayersReached"
-        | "alreadyInGame";
-    };
-
-export type LeaveGameResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidInput" | "gameNotFound" | "playerNotFound";
-    };
-
-export type PlayCardResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "invalidInput"
-        | "gameNotFound"
-        | "invalidStatus"
-        | "playerNotFound"
-        | "outOfTurn"
-        | "cardNotFound"
-        | "cardIsWild"
-        | "cardNotPlayable";
-    };
-
-export type PlayWildCardResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "invalidInput"
-        | "gameNotFound"
-        | "invalidStatus"
-        | "playerNotFound"
-        | "outOfTurn"
-        | "cardNotFound"
-        | "cardNotWild"
-        | "cardNotPlayable";
-    };
-
-export type SendChatResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error: "invalidInput" | "gameNotFound" | "playerNotFound";
-    };
-
-export type StartGameResult =
-  | {
-      readonly success: true;
-    }
-  | {
-      readonly success: false;
-      readonly error:
-        | "invalidInput"
-        | "gameNotFound"
-        | "invalidStatus"
-        | "playerNotFound"
-        | "playerNotAdmin"
-        | "minPlayersNotReached";
-    };
 
 const drawCardInputSchema = z
   .object({
@@ -240,93 +104,129 @@ export class Server {
     this.manager = new Manager(...args);
   }
 
-  private createGame(userId: string, username: string): CreateGameResult {
-    return this.manager.createGame(userId, username);
+  private createGame(userId: string, username: string) {
+    const result = this.manager.createGame(userId, username);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private drawCard(input: unknown): DrawCardResult {
+  private drawCard(input: unknown) {
     const parseResult = drawCardInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.drawCard(...parseResult.data);
+    const result = this.manager.drawCard(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private getClientStateAndClearEvents(
-    input: unknown,
-  ): GetClientStateAndClearEventsResult {
+  private getClientStateAndClearEvents(input: unknown) {
     const parseResult =
       getClientStateAndClearEventsInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.getClientStateAndClearEvents(...parseResult.data);
+    const result = this.manager.getClientStateAndClearEvents(
+      ...parseResult.data,
+    );
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private getEventsAndClearAcknowledged(
-    input: unknown,
-  ): GetEventsAndClearAcknowledgedResult {
+  private getEventsAndClearAcknowledged(input: unknown) {
     const parseResult =
       getEventsAndClearAcknowledgedInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.getEventsAndClearAcknowledged(...parseResult.data);
+    const result = this.manager.getEventsAndClearAcknowledged(
+      ...parseResult.data,
+    );
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private getJoinableGames(): GetJoinableGamesResult {
+  private getJoinableGames() {
     return this.manager.getJoinableGames();
   }
 
-  private joinGame(
-    input: unknown,
-    userId: string,
-    username: string,
-  ): JoinGameResult {
+  private joinGame(input: unknown, userId: string, username: string) {
     const parseResult = joinGameInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.joinGame(...parseResult.data, userId, username);
+    const result = this.manager.joinGame(...parseResult.data, userId, username);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private leaveGame(input: unknown): LeaveGameResult {
+  private leaveGame(input: unknown) {
     const parseResult = leaveGameInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.leaveGame(...parseResult.data);
+    const result = this.manager.leaveGame(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private playCard(input: unknown): PlayCardResult {
+  private playCard(input: unknown) {
     const parseResult = playCardInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.playCard(...parseResult.data);
+    const result = this.manager.playCard(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private playWildCard(input: unknown): PlayWildCardResult {
+  private playWildCard(input: unknown) {
     const parseResult = playWildCardInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.playWildCard(...parseResult.data);
+    const result = this.manager.playWildCard(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private sendChat(input: unknown): SendChatResult {
+  private sendChat(input: unknown) {
     const parseResult = sendChatInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.sendChat(...parseResult.data);
+    const result = this.manager.sendChat(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 
-  private startGame(input: unknown): StartGameResult {
+  private startGame(input: unknown) {
     const parseResult = startGameInputSchema.safeParse(input);
     if (!parseResult.success) {
-      return { success: false, error: "invalidInput" };
+      return { success: false, error: "invalidInput" } as const;
     }
-    return this.manager.startGame(...parseResult.data);
+    const result = this.manager.startGame(...parseResult.data);
+    if (!result.success) {
+      return { success: false, error: result.error } as const;
+    }
+    return result;
   }
 }
