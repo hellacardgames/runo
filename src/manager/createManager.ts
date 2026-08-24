@@ -1,4 +1,4 @@
-import { createManagerFactory } from "../lib/createManagerFactory.js";
+import { createManagerFactory } from "@hellacardgames/lib";
 import {
   createGame,
   drawCard,

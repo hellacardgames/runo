@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createServerFactory } from "../lib/createServerFactory.js";
+import { createServerFactory } from "@hellacardgames/lib";
 import { createManager } from "../manager/index.js";
 import { COLORS } from "../game/index.js";
 
