@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Manager } from "../manager/index.js";
+import { createManager } from "../manager/index.js";
 import { COLORS } from "../game/index.js";
 
 const drawCardInputSchema = z
@@ -78,7 +78,7 @@ const startGameInputSchema = z
   .transform(({ gameId, playerId }) => [gameId, playerId] as const);
 
 export class Server {
-  private readonly manager: Manager;
+  private readonly manager: ReturnType<typeof createManager>;
 
   readonly actions = [
     { path: "/createGame", action: this.createGame.bind(this) },
@@ -100,8 +100,8 @@ export class Server {
     { path: "/startGame", action: this.startGame.bind(this) },
   ] as const;
 
-  constructor(...args: ConstructorParameters<typeof Manager>) {
-    this.manager = new Manager(...args);
+  constructor(...args: Parameters<typeof createManager>) {
+    this.manager = createManager(...args);
   }
 
   private createGame(userId: string, username: string) {
