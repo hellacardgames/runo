@@ -59,7 +59,9 @@ type Params<
     | { success: true; game: StartedGame<TGame> }
     | { success: false; error: TStartGameError };
 
-  readonly createCustomActions: (games: Map<string, TGame>) => TCustomActions;
+  readonly createCustomActions: (
+    games: Map<string, TGame>,
+  ) => Readonly<TCustomActions>;
 };
 
 type CreatedGame<TGame extends Game> = Extract<TGame, { status: "created" }>;

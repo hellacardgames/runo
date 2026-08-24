@@ -1,5 +1,15 @@
 import type { Color } from "../game/index.js";
-import type { Server } from "../server/index.js";
+import type { createServer } from "../server/index.js";
+
+type Server = ReturnType<typeof createServer>;
+
+type ServerResult<
+  TServer extends {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    actions: readonly { path: string; action: (...args: any[]) => any }[];
+  },
+  TPath extends TServer["actions"][number]["path"],
+> = ReturnType<Extract<TServer["actions"][number], { path: TPath }>["action"]>;
 
 export class Client {
   private readonly baseUrl: string;
@@ -15,7 +25,7 @@ export class Client {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const result: ReturnType<Server["createGame"]> = await response.json();
+    const result: ServerResult<Server, "/createGame"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -30,7 +40,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result: ReturnType<Server["drawCard"]> = await response.json();
+    const result: ServerResult<Server, "/drawCard"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -48,7 +58,7 @@ export class Client {
         body: JSON.stringify({ gameId, playerId }),
       },
     );
-    const result: ReturnType<Server["getClientStateAndClearEvents"]> =
+    const result: ServerResult<Server, "/getClientStateAndClearEvents"> =
       await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
@@ -71,7 +81,7 @@ export class Client {
         body: JSON.stringify({ gameId, playerId, lastReadId }),
       },
     );
-    const result: ReturnType<Server["getEventsAndClearAcknowledged"]> =
+    const result: ServerResult<Server, "/getEventsAndClearAcknowledged"> =
       await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
@@ -83,7 +93,7 @@ export class Client {
     const response = await fetch(`${this.baseUrl}/getJoinableGames`, {
       method: "POST",
     });
-    const result: ReturnType<Server["getJoinableGames"]> =
+    const result: ServerResult<Server, "/getJoinableGames"> =
       await response.json();
     return result;
   }
@@ -97,7 +107,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId }),
     });
-    const result: ReturnType<Server["joinGame"]> = await response.json();
+    const result: ServerResult<Server, "/joinGame"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -112,7 +122,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result: ReturnType<Server["leaveGame"]> = await response.json();
+    const result: ServerResult<Server, "/leaveGame"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -127,7 +137,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, cardId }),
     });
-    const result: ReturnType<Server["playCard"]> = await response.json();
+    const result: ServerResult<Server, "/playCard"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -147,7 +157,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, cardId, color }),
     });
-    const result: ReturnType<Server["playWildCard"]> = await response.json();
+    const result: ServerResult<Server, "/playWildCard"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -162,7 +172,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId, text }),
     });
-    const result: ReturnType<Server["sendChat"]> = await response.json();
+    const result: ServerResult<Server, "/sendChat"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
@@ -177,7 +187,7 @@ export class Client {
       },
       body: JSON.stringify({ gameId, playerId }),
     });
-    const result: ReturnType<Server["startGame"]> = await response.json();
+    const result: ServerResult<Server, "/startGame"> = await response.json();
     if (!result.success) {
       return { success: false, error: result.error } as const;
     }
