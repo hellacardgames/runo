@@ -9,7 +9,6 @@ import {
   MAX_PLAYERS,
   playCard,
   playWildCard,
-  sendChat,
   startGame,
 } from "../game/index.js";
 import type { Color } from "../game/index.js";
@@ -21,7 +20,6 @@ export const createManager = createManagerFactory({
   getEventsAndClearAcknowledged,
   joinGame,
   leaveGame,
-  sendChat,
   startGame,
   createCustomActions: (games) => ({
     drawCard: (gameId: string, playerId: string) => {
