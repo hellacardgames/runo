@@ -3,10 +3,10 @@ import { EXPIRY_EXTENSION_MS } from "../constants.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { playWildCard as doPlayWildCard } from "../lib/playWildCard.js";
 import type { Color } from "../types/Card.js";
-import type { StartedGame } from "../types/Game.js";
+import type { Game } from "../types/Game.js";
 
 export function playWildCard(
-  game: StartedGame,
+  game: Game,
   playerId: string,
   cardId: string,
   color: Color,
@@ -14,6 +14,9 @@ export function playWildCard(
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
+  }
+  if (game.status !== "started") {
+    return { success: false, error: "invalidStatus" } as const;
   }
   if (!isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" } as const;

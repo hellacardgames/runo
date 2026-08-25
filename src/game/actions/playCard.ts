@@ -5,12 +5,15 @@ import { playDrawTwoCard } from "../lib/playDrawTwoCard.js";
 import { playNumberCard } from "../lib/playNumberCard.js";
 import { playReverseCard } from "../lib/playReverseCard.js";
 import { playSkipCard } from "../lib/playSkipCard.js";
-import type { StartedGame } from "../types/Game.js";
+import type { Game } from "../types/Game.js";
 
-export function playCard(game: StartedGame, playerId: string, cardId: string) {
+export function playCard(game: Game, playerId: string, cardId: string) {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
+  }
+  if (game.status !== "started") {
+    return { success: false, error: "invalidStatus" } as const;
   }
   if (!isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" } as const;

@@ -10,12 +10,15 @@ import { hasPlayableCard } from "../lib/hasPlayableCard.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { addCardToHand } from "../lib/addCardToHand.js";
 import { changeToNextPlayer } from "../lib/changeToNextPlayer.js";
-import type { StartedGame } from "../types/Game.js";
+import type { Game } from "../types/Game.js";
 
-export function drawCard(game: StartedGame, playerId: string) {
+export function drawCard(game: Game, playerId: string) {
   const player = game.players.find((p) => p.id === playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
+  }
+  if (game.status !== "started") {
+    return { success: false, error: "invalidStatus" } as const;
   }
   if (!isCurrentPlayer(game, player.id)) {
     return { success: false, error: "outOfTurn" } as const;

@@ -29,9 +29,6 @@ export const createManager = createManagerFactory({
       if (!game) {
         return { success: false, error: "gameNotFound" } as const;
       }
-      if (game.status !== "started") {
-        return { success: false, error: "invalidStatus" } as const;
-      }
       const result = drawCard(game, playerId);
       if (!result.success) {
         return { success: false as const, error: result.error } as const;
@@ -43,9 +40,6 @@ export const createManager = createManagerFactory({
       const game = games.get(gameId);
       if (!game) {
         return { success: false, error: "gameNotFound" } as const;
-      }
-      if (game.status !== "started") {
-        return { success: false, error: "invalidStatus" } as const;
       }
       const result = playCard(game, playerId, cardId);
       if (!result.success) {
@@ -63,9 +57,6 @@ export const createManager = createManagerFactory({
       const game = games.get(gameId);
       if (!game) {
         return { success: false, error: "gameNotFound" } as const;
-      }
-      if (game.status !== "started") {
-        return { success: false, error: "invalidStatus" } as const;
       }
       const result = playWildCard(game, playerId, cardId, color);
       if (!result.success) {
