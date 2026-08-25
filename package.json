@@ -1,6 +1,6 @@
 {
   "name": "@hellacardgames/runo",
-  "version": "0.25.2",
+  "version": "0.25.3",
   "description": "A TypeScript library implementing the RUNO card game.",
   "type": "module",
   "license": "MIT",
