@@ -9,6 +9,8 @@ export { playCard } from "./actions/playCard.js";
 export { playWildCard } from "./actions/playWildCard.js";
 export { startGame } from "./actions/startGame.js";
 
+export { getEventsAndClearAcknowledged, sendChat } from "@hellacardgames/lib";
+
 export { COLORS } from "./types/Card.js";
 
 export type { Card, Color, DiscardedCard } from "./types/Card.js";
