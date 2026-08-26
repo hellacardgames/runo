@@ -22,9 +22,9 @@ export const createManager = createManagerFactory({
   leaveGame,
   sendChat,
   startGame,
-  addCustomActions: (wrapAction) => ({
-    drawCard: wrapAction(drawCard),
-    playCard: wrapAction(playCard),
-    playWildCard: wrapAction(playWildCard),
-  }),
+  gameplayActions: {
+    drawCard,
+    playCard,
+    playWildCard,
+  },
 });
