@@ -27,12 +27,6 @@ export function drawCard(game: Game, playerId: string) {
     return { success: false, error: "hasPlayableCard" } as const;
   }
 
-  game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
-  game = emitEvent(game, {
-    type: "expirationUpdated",
-    expiresAt: game.expiresAt,
-  });
-
   const takeCardResult = takeCardFromDrawPile(game);
   const isPlayable = isCardPlayable(
     takeCardResult.card,
@@ -58,6 +52,12 @@ export function drawCard(game: Game, playerId: string) {
   if (!isPlayable) {
     game = changeToNextPlayer(game);
   }
+
+  game = { ...game, expiresAt: Date.now() + EXPIRY_EXTENSION_MS };
+  game = emitEvent(game, {
+    type: "expirationUpdated",
+    expiresAt: game.expiresAt,
+  });
 
   return { success: true, game } as const;
 }
