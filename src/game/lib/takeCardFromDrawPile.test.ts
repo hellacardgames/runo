@@ -10,6 +10,7 @@ test("takes a card from top of the draw pile", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },
@@ -39,6 +40,7 @@ test("replenishes draw pile if needed", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [],
     discardPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },

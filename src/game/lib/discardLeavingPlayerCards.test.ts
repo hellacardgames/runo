@@ -23,6 +23,7 @@ test("discards player cards to bottom of discard pile", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "number", value: 1, color: "green", id: "card-id-004" },
@@ -65,6 +66,7 @@ test("throws if player does not exist in game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "number", value: 1, color: "green", id: "card-id-004" },

@@ -19,6 +19,7 @@ test("takes all discarded cards except for top card", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [],
     discardPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
@@ -61,6 +62,7 @@ test("unwraps discarded wild cards", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [],
     discardPile: [
       {
@@ -96,6 +98,7 @@ test("shuffles draw pile after replenishing", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [],
     discardPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },

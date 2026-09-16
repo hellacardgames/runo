@@ -1,4 +1,4 @@
-import { emitEvent, isPlayerAdmin } from "@hellacardgames/lib";
+import { emitEvent } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { startRound } from "../lib/startRound.js";
 import { transitionGameToStarted } from "../lib/transitionGameToStarted.js";
@@ -9,7 +9,7 @@ export function startGame(game: Game, playerId: string) {
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
   }
-  if (!isPlayerAdmin(game, player.id)) {
+  if (player.id !== game.adminId) {
     return { success: false, error: "playerNotAdmin" } as const;
   }
   if (game.status !== "created") {

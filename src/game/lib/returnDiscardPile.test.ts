@@ -10,6 +10,7 @@ test("returns discarded cards to draw pile", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [
       { type: "number", value: 2, color: "yellow", id: "card-id-072" },
       { type: "number", value: 7, color: "yellow", id: "card-id-001" },
@@ -52,6 +53,7 @@ test("does nothing when discard pile is empty", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [
       { type: "number", value: 2, color: "yellow", id: "card-id-072" },
       { type: "number", value: 7, color: "yellow", id: "card-id-001" },

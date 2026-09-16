@@ -42,6 +42,7 @@ test("returns player cards to draw pile", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 2, color: "yellow", id: "card-id-072" },
       { type: "number", value: 7, color: "yellow", id: "card-id-001" },
@@ -105,6 +106,7 @@ test("does nothing when players have no cards", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 2, color: "yellow", id: "card-id-072" },
       { type: "number", value: 7, color: "yellow", id: "card-id-001" },

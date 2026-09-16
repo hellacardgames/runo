@@ -27,6 +27,7 @@ test("takes two cards from draw pile and gives to player", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 5, color: "green", id: "card-id-001" },
       { type: "number", value: 9, color: "blue", id: "card-id-002" },
@@ -75,6 +76,7 @@ test("emits drewCard events to player", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 5, color: "green", id: "card-id-001" },
       { type: "number", value: 9, color: "blue", id: "card-id-002" },
@@ -128,6 +130,7 @@ test("emits playerDrewTwoCards event to all players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 5, color: "green", id: "card-id-001" },
       { type: "number", value: 9, color: "blue", id: "card-id-002" },

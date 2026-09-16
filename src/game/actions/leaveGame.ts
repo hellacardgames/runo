@@ -1,4 +1,9 @@
-import { emitEvent, getCurrentPlayer, removePlayer } from "@hellacardgames/lib";
+import {
+  emitEvent,
+  getCurrentPlayer,
+  removePlayer,
+  requirePlayerOne,
+} from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { changeDirection } from "../lib/changeDirection.js";
 import { discardLeavingPlayerCards } from "../lib/discardLeavingPlayerCards.js";
@@ -24,6 +29,15 @@ export function leaveGame(game: Game, playerId: string) {
     game = emitEvent(game, {
       type: "turnChanged",
       currentPlayerUsername: getCurrentPlayer(game).username,
+    });
+  }
+
+  if (game.players.length > 0 && player.id === game.adminId) {
+    const newAdmin = requirePlayerOne(game);
+    game = { ...game, adminId: newAdmin.id };
+    game = emitEvent(game, {
+      type: "adminChanged",
+      username: newAdmin.username,
     });
   }
 

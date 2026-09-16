@@ -52,6 +52,7 @@ test("removes card from player hand", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [],
     currentPlayerIndex: 1,
@@ -111,6 +112,7 @@ test("adds card to top of discard pile", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -173,6 +175,7 @@ test("advances to next player", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -223,6 +226,7 @@ test("does not advance to next player when only two players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -281,6 +285,7 @@ test("emits cardPlayed event to all players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -367,6 +372,7 @@ test("emits turnChanged event to all players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -442,6 +448,7 @@ test("does not emit turnChanged event when only two players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -514,6 +521,7 @@ test("updates score when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [...CARDS],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -570,6 +578,7 @@ test("emits playerWonRound event when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [...CARDS],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -654,6 +663,7 @@ test("starts new round when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [...CARDS],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -714,6 +724,7 @@ test("does not advance to next player when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [...CARDS],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -770,6 +781,7 @@ test("transitions to completed when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -826,6 +838,7 @@ test("emits playerWonGame event when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },
@@ -910,6 +923,7 @@ test("emits gameCompleted event when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [
       { type: "reverse", color: "yellow", id: "card-id-028" },

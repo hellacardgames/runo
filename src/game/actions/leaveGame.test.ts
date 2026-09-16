@@ -19,6 +19,7 @@ test("does not throw when the last player leaves", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [],
     discardPile: [],
     currentPlayerIndex: 0,

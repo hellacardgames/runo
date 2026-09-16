@@ -52,6 +52,7 @@ test("removes card from player hand", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -114,6 +115,7 @@ test("adds card to top of discard pile", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -179,6 +181,7 @@ test("makes next player draw two cards", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -244,6 +247,7 @@ test("advances to next player", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -297,6 +301,7 @@ test("does not advance to next player when only two players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -358,6 +363,7 @@ test("emits cardPlayed event to all players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -447,6 +453,7 @@ test("emits turnChanged event to all players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -525,6 +532,7 @@ test("does not emit turnChanged event when only two players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -600,6 +608,7 @@ test("updates score when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       ...CARDS,
       { type: "number", value: 1, color: "red", id: "card-id-101" },
@@ -660,6 +669,7 @@ test("emits playerWonRound event when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       ...CARDS,
       { type: "number", value: 1, color: "red", id: "card-id-101" },
@@ -748,6 +758,7 @@ test("starts new round when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       ...CARDS,
       { type: "number", value: 1, color: "red", id: "card-id-101" },
@@ -812,6 +823,7 @@ test("does not advance to next player when player wins round", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       ...CARDS,
       { type: "number", value: 1, color: "red", id: "card-id-101" },
@@ -872,6 +884,7 @@ test("transitions to completed when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -931,6 +944,7 @@ test("emits playerWonGame event when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },
@@ -1018,6 +1032,7 @@ test("emits gameCompleted event when player wins game", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-101" },
       { type: "number", value: 1, color: "red", id: "card-id-102" },

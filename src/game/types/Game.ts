@@ -15,6 +15,7 @@ type GameProperties = {
   readonly expiresAt: number;
   readonly status: "created" | "started" | "forfeited" | "completed";
   readonly players: readonly Player[];
+  readonly adminId: string;
   readonly drawPile: readonly Card[];
   readonly discardPile: readonly DiscardedCard[];
   readonly currentPlayerIndex: number;

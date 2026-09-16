@@ -7,6 +7,7 @@ export type ClientState = {
   readonly playerId: string;
   readonly username: string;
   readonly players: readonly Player[];
+  readonly adminUsername: string;
   readonly hand: readonly Card[];
   readonly lastDiscard: DiscardedCard | null;
   readonly currentPlayerUsername: string;

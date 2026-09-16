@@ -19,6 +19,7 @@ test("shuffles and discards first card", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },
@@ -66,6 +67,7 @@ test("deals cards to players", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },
@@ -126,6 +128,7 @@ test("restore normal direction if reversed and emit event to all players", () =>
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },

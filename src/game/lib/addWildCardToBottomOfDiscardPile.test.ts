@@ -10,6 +10,7 @@ test("adds wild card to bottom of discard pile", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [],
+    adminId: "",
     drawPile: [],
     discardPile: [
       { id: "card-id-001", type: "number", value: 1, color: "red" },

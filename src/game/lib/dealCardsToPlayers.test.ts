@@ -35,6 +35,7 @@ test("deals cards to players in round-robin order", () => {
         score: 0,
       },
     ],
+    adminId: "player-id-001",
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },

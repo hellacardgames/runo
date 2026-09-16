@@ -32,6 +32,7 @@ test("deals card to player", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [player1, player2],
+    adminId: player1.id,
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-004" },
       { type: "number", value: 1, color: "red", id: "card-id-005" },
@@ -82,6 +83,7 @@ test("emits cardDealtToPlayer event to all players", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [player1, player2],
+    adminId: player1.id,
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },
@@ -138,6 +140,7 @@ test("emits cardDealt event to player only", () => {
     expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
     status: "started",
     players: [player1, player2],
+    adminId: player1.id,
     drawPile: [
       { type: "number", value: 1, color: "red", id: "card-id-001" },
       { type: "number", value: 1, color: "red", id: "card-id-002" },

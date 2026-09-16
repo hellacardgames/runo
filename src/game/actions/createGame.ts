@@ -20,6 +20,7 @@ export function createGame(userId: string, username: string) {
     expiresAt: createdAt + EXPIRY_EXTENSION_MS,
     status: "created",
     players: [player],
+    adminId: player.id,
     drawPile: CARDS,
     discardPile: [],
     currentPlayerIndex: 0,
