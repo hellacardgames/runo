@@ -1,8 +1,9 @@
 import {
   emitEvent,
   getCurrentPlayer,
+  getPlayerOne,
   removePlayer,
-  requirePlayerOne,
+  tryGetPlayer,
 } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS, MIN_PLAYERS } from "../constants.js";
 import { changeDirection } from "../lib/changeDirection.js";
@@ -11,7 +12,7 @@ import { transitionGameToForfeited } from "../lib/transitionGameToForfeited.js";
 import type { Game } from "../types/Game.js";
 
 export function leaveGame(game: Game, playerId: string) {
-  const player = game.players.find((p) => p.id === playerId);
+  const { player } = tryGetPlayer(game, playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
   }
@@ -33,7 +34,7 @@ export function leaveGame(game: Game, playerId: string) {
   }
 
   if (game.players.length > 0 && player.id === game.adminId) {
-    const newAdmin = requirePlayerOne(game);
+    const newAdmin = getPlayerOne(game);
     game = { ...game, adminId: newAdmin.id };
     game = emitEvent(game, {
       type: "adminChanged",

@@ -1,4 +1,4 @@
-import { emitEvent, isCurrentPlayer } from "@hellacardgames/lib";
+import { emitEvent, isCurrentPlayer, tryGetPlayer } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
 import { isCardPlayable } from "../lib/isCardPlayable.js";
 import { playWildCard as doPlayWildCard } from "../lib/playWildCard.js";
@@ -11,7 +11,7 @@ export function playWildCard(
   cardId: string,
   color: Color,
 ) {
-  const player = game.players.find((p) => p.id === playerId);
+  const { player } = tryGetPlayer(game, playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
   }

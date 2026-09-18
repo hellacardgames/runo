@@ -2,6 +2,7 @@ import {
   emitEvent,
   emitEventToPlayer,
   isCurrentPlayer,
+  tryGetPlayer,
   updatePlayer,
 } from "@hellacardgames/lib";
 import { EXPIRY_EXTENSION_MS } from "../constants.js";
@@ -13,7 +14,7 @@ import { changeToNextPlayer } from "../lib/changeToNextPlayer.js";
 import type { Game } from "../types/Game.js";
 
 export function drawCard(game: Game, playerId: string) {
-  const player = game.players.find((p) => p.id === playerId);
+  const { player } = tryGetPlayer(game, playerId);
   if (!player) {
     return { success: false, error: "playerNotFound" } as const;
   }

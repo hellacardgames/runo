@@ -1,7 +1,7 @@
 import {
   emitEvent,
   emitEventToPlayer,
-  requirePlayer,
+  getPlayer,
   updatePlayer,
 } from "@hellacardgames/lib";
 import { takeCardsFromDrawPile } from "./takeCardsFromDrawPile.js";
@@ -12,7 +12,7 @@ export function drawFourCards(
   game: StartedGame,
   playerId: string,
 ): StartedGame {
-  const { player } = requirePlayer(game, playerId);
+  const { player } = getPlayer(game, playerId);
 
   const takeCardsResult = takeCardsFromDrawPile(game, 4);
   game = takeCardsResult.game;

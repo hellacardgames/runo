@@ -1,7 +1,7 @@
 import {
   emitEvent,
   emitEventToPlayer,
-  requirePlayer,
+  getPlayer,
   updatePlayer,
 } from "@hellacardgames/lib";
 import { takeCardsFromDrawPile } from "./takeCardsFromDrawPile.js";
@@ -9,7 +9,7 @@ import { addCardToHand } from "./addCardToHand.js";
 import type { StartedGame } from "../types/Game.js";
 
 export function drawTwoCards(game: StartedGame, playerId: string): StartedGame {
-  const { player } = requirePlayer(game, playerId);
+  const { player } = getPlayer(game, playerId);
 
   const takeCardsResult = takeCardsFromDrawPile(game, 2);
   game = takeCardsResult.game;

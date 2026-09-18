@@ -1,4 +1,4 @@
-import { requirePlayer, updatePlayer } from "@hellacardgames/lib";
+import { getPlayer, updatePlayer } from "@hellacardgames/lib";
 import { removeCardFromHand } from "./removeCardFromHand.js";
 import { addWildCardToBottomOfDiscardPile } from "./addWildCardToBottomOfDiscardPile.js";
 import { addCardToBottomOfDiscardPile } from "./addCardToBottomOfDiscardPile.js";
@@ -8,7 +8,7 @@ export function discardLeavingPlayerCards(
   game: StartedGame,
   playerId: string,
 ): StartedGame {
-  const { player } = requirePlayer(game, playerId);
+  const { player } = getPlayer(game, playerId);
 
   const cards = player.hand.slice();
 
