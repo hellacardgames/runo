@@ -1,5 +1,6 @@
 import {
   emitEvent,
+  emitEventToOtherPlayers,
   emitEventToPlayer,
   isCurrentPlayer,
   tryGetPlayer,
@@ -41,11 +42,11 @@ export function drawCard(game: Game, playerId: string) {
   );
 
   game = emitEventToPlayer(game, player.id, {
-    type: "drewCard",
+    type: "playerDrewCard",
     card: takeCardResult.card,
   });
-  game = emitEvent(game, {
-    type: "playerDrewCard",
+  game = emitEventToOtherPlayers(game, player.id, {
+    type: "otherPlayerDrewCard",
     username: player.username,
     isPlayable,
   });

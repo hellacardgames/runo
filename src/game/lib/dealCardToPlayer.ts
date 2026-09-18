@@ -1,5 +1,5 @@
 import {
-  emitEvent,
+  emitEventToOtherPlayers,
   emitEventToPlayer,
   getPlayer,
   updatePlayer,
@@ -21,11 +21,11 @@ export function dealCardToPlayer(
   );
 
   game = emitEventToPlayer(game, player.id, {
-    type: "cardDealt",
+    type: "playerCardDealt",
     card: takeCardResult.card,
   });
-  game = emitEvent(game, {
-    type: "cardDealtToPlayer",
+  game = emitEventToOtherPlayers(game, player.id, {
+    type: "otherPlayerCardDealt",
     username: player.username,
   });
 

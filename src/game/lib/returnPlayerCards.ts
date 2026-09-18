@@ -1,5 +1,5 @@
 import {
-  emitEvent,
+  emitEventToOtherPlayers,
   emitEventToPlayer,
   updatePlayer,
 } from "@hellacardgames/lib";
@@ -13,11 +13,11 @@ export function returnPlayerCards(game: StartedGame): StartedGame {
     while ((cardToReturn = cards.pop())) {
       game = { ...game, drawPile: [...game.drawPile, cardToReturn] };
       game = emitEventToPlayer(game, player.id, {
-        type: "returnedCard",
+        type: "playerReturnedCard",
         cardId: cardToReturn.id,
       });
-      game = emitEvent(game, {
-        type: "playerReturnedCard",
+      game = emitEventToOtherPlayers(game, player.id, {
+        type: "otherPlayerReturnedCard",
         username: player.username,
       });
     }

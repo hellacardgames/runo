@@ -17,14 +17,16 @@ export function leaveGame(game: Game, playerId: string) {
     return { success: false, error: "playerNotFound" } as const;
   }
 
-  game = emitEvent(game, { type: "playerLeft", username: player.username });
-
   if (game.status === "started") {
     game = discardLeavingPlayerCards(game, player.id);
   }
 
   const removePlayerResult = removePlayer(game, player.id);
   game = removePlayerResult.game;
+  game = emitEvent(game, {
+    type: "otherPlayerLeft",
+    username: player.username,
+  });
 
   if (removePlayerResult.turnChanged) {
     game = emitEvent(game, {

@@ -1,4 +1,10 @@
-import { emitEvent, getCurrentPlayer, updatePlayer } from "@hellacardgames/lib";
+import {
+  emitEvent,
+  emitEventToOtherPlayers,
+  emitEventToPlayer,
+  getCurrentPlayer,
+  updatePlayer,
+} from "@hellacardgames/lib";
 import { removeCardFromHand } from "./removeCardFromHand.js";
 import { addCardToDiscardPile } from "./addCardToDiscardPile.js";
 import { isOutOfCards } from "./isOutOfCards.js";
@@ -23,8 +29,13 @@ export function playSkipCard(
     removeCardFromHand(p, card),
   );
   game = addCardToDiscardPile(game, card);
-  game = emitEvent(game, {
-    type: "cardPlayed",
+
+  game = emitEventToPlayer(game, currentPlayer.id, {
+    type: "playerPlayedCard",
+    card,
+  });
+  game = emitEventToOtherPlayers(game, currentPlayer.id, {
+    type: "otherPlayerPlayedCard",
     username: currentPlayer.username,
     card,
   });
@@ -37,16 +48,24 @@ export function playSkipCard(
     const updatedCurrentPlayer = getCurrentPlayer(game);
 
     if (isGameWinner(game, currentPlayer.id)) {
-      game = emitEvent(game, {
+      game = emitEventToPlayer(game, updatedCurrentPlayer.id, {
         type: "playerWonGame",
+        score: updatedCurrentPlayer.score,
+      });
+      game = emitEventToOtherPlayers(game, updatedCurrentPlayer.id, {
+        type: "otherPlayerWonGame",
         username: updatedCurrentPlayer.username,
         score: updatedCurrentPlayer.score,
       });
       game = emitEvent(game, { type: "gameCompleted" });
       return transitionGameToCompleted(game);
     } else {
-      game = emitEvent(game, {
+      game = emitEventToPlayer(game, updatedCurrentPlayer.id, {
         type: "playerWonRound",
+        score: updatedCurrentPlayer.score,
+      });
+      game = emitEventToOtherPlayers(game, updatedCurrentPlayer.id, {
+        type: "otherPlayerWonRound",
         username: updatedCurrentPlayer.username,
         score: updatedCurrentPlayer.score,
       });

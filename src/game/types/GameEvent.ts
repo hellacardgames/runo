@@ -8,24 +8,8 @@ export type GameEvent =
       readonly username: string;
     }
   | {
-      readonly type: "cardDealt";
-      readonly id: string;
-      readonly card: Card;
-    }
-  | {
-      readonly type: "cardDealtToPlayer";
-      readonly id: string;
-      readonly username: string;
-    }
-  | {
       readonly type: "cardDiscarded";
       readonly id: string;
-      readonly card: DiscardedCard;
-    }
-  | {
-      readonly type: "cardPlayed";
-      readonly id: string;
-      readonly username: string;
       readonly card: DiscardedCard;
     }
   | {
@@ -41,11 +25,6 @@ export type GameEvent =
   | {
       readonly type: "discardPileReturned";
       readonly id: string;
-    }
-  | {
-      readonly type: "drewCard";
-      readonly id: string;
-      readonly card: Card;
     }
   | {
       readonly type: "expirationUpdated";
@@ -65,52 +44,98 @@ export type GameEvent =
       readonly id: string;
     }
   | {
-      readonly type: "playerDrewCard";
+      readonly type: "otherPlayerCardDealt";
+      readonly id: string;
+      readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerDrewCard";
       readonly id: string;
       readonly username: string;
       readonly isPlayable: boolean;
     }
   | {
-      readonly type: "playerDrewFourCards";
+      readonly type: "otherPlayerDrewFourCards";
       readonly id: string;
       readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerDrewTwoCards";
+      readonly id: string;
+      readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerJoined";
+      readonly id: string;
+      readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerLeft";
+      readonly id: string;
+      readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerPlayedCard";
+      readonly id: string;
+      readonly username: string;
+      readonly card: DiscardedCard;
+    }
+  | {
+      readonly type: "otherPlayerReturnedCard";
+      readonly id: string;
+      readonly username: string;
+    }
+  | {
+      readonly type: "otherPlayerWonGame";
+      readonly id: string;
+      readonly username: string;
+      readonly score: number;
+    }
+  | {
+      readonly type: "otherPlayerWonRound";
+      readonly id: string;
+      readonly username: string;
+      readonly score: number;
+    }
+  | {
+      readonly type: "playerCardDealt";
+      readonly id: string;
+      readonly card: Card;
+    }
+  | {
+      readonly type: "playerDrewCard";
+      readonly id: string;
+      readonly card: Card;
+    }
+  | {
+      readonly type: "playerDrewFourCards";
+      readonly id: string;
+      readonly cards: readonly Card[];
     }
   | {
       readonly type: "playerDrewTwoCards";
       readonly id: string;
-      readonly username: string;
+      readonly cards: readonly Card[];
     }
   | {
-      readonly type: "playerJoined";
+      readonly type: "playerPlayedCard";
       readonly id: string;
-      readonly username: string;
-    }
-  | {
-      readonly type: "playerLeft";
-      readonly id: string;
-      readonly username: string;
+      readonly card: DiscardedCard;
     }
   | {
       readonly type: "playerReturnedCard";
       readonly id: string;
-      readonly username: string;
+      readonly cardId: string;
     }
   | {
       readonly type: "playerWonGame";
       readonly id: string;
-      readonly username: string;
       readonly score: number;
     }
   | {
       readonly type: "playerWonRound";
       readonly id: string;
-      readonly username: string;
       readonly score: number;
-    }
-  | {
-      readonly type: "returnedCard";
-      readonly id: string;
-      readonly cardId: string;
     }
   | {
       readonly type: "turnChanged";

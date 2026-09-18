@@ -1,5 +1,5 @@
 import {
-  emitEvent,
+  emitEventToOtherPlayers,
   emitEventToPlayer,
   getPlayer,
   updatePlayer,
@@ -16,11 +16,14 @@ export function drawTwoCards(game: StartedGame, playerId: string): StartedGame {
 
   takeCardsResult.cards.forEach((card) => {
     game = updatePlayer(game, player.id, (p) => addCardToHand(p, card));
-    game = emitEventToPlayer(game, player.id, { type: "drewCard", card });
   });
 
-  game = emitEvent(game, {
+  game = emitEventToPlayer(game, player.id, {
     type: "playerDrewTwoCards",
+    cards: takeCardsResult.cards,
+  });
+  game = emitEventToOtherPlayers(game, player.id, {
+    type: "otherPlayerDrewTwoCards",
     username: player.username,
   });
 

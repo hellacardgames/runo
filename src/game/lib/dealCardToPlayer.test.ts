@@ -59,7 +59,7 @@ test("deals card to player", () => {
   ]);
 });
 
-test("emits cardDealtToPlayer event to all players", () => {
+test("emits otherPlayerCardDealt event to other players", () => {
   const player1: Player = {
     id: "player-id-001",
     userId: "user-id-001",
@@ -100,23 +100,23 @@ test("emits cardDealtToPlayer event to all players", () => {
   expect(game.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardDealtToPlayer",
+        type: "otherPlayerCardDealt",
         username: "username-002",
       }),
     ]),
   );
 
-  expect(game.players[1]?.events).toEqual(
+  expect(game.players[1]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardDealtToPlayer",
+        type: "otherPlayerCardDealt",
         username: "username-002",
       }),
     ]),
   );
 });
 
-test("emits cardDealt event to player only", () => {
+test("emits playerCardDealt event to player only", () => {
   const player1: Player = {
     id: "player-id-001",
     userId: "user-id-001",
@@ -157,7 +157,7 @@ test("emits cardDealt event to player only", () => {
   expect(game.players[0]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardDealt",
+        type: "playerCardDealt",
         card: { type: "number", value: 1, color: "red", id: "card-id-003" },
       }),
     ]),
@@ -166,7 +166,7 @@ test("emits cardDealt event to player only", () => {
   expect(game.players[1]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardDealt",
+        type: "playerCardDealt",
         card: { type: "number", value: 1, color: "red", id: "card-id-003" },
       }),
     ]),

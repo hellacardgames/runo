@@ -56,7 +56,7 @@ test("takes four cards from draw pile and gives to player", () => {
   expect(game.players[0]?.hand).toHaveLength(0);
 });
 
-test("emits drewCard events to player", () => {
+test("emits playerDrewFourCards event to player", () => {
   let game: StartedGame = {
     id: "game-id-001",
     createdAt: Date.now(),
@@ -96,31 +96,36 @@ test("emits drewCard events to player", () => {
 
   game = drawFourCards(game, "player-id-002");
 
-  expect(game.players[1]?.events.slice(0, 4)).toEqual([
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 3, color: "green", id: "card-id-005" },
-    }),
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 2, color: "red", id: "card-id-004" },
-    }),
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 1, color: "yellow", id: "card-id-003" },
-    }),
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 9, color: "blue", id: "card-id-002" },
-    }),
-  ]);
-
   expect(game.players[0]?.events).not.toEqual(
-    expect.arrayContaining([expect.objectContaining({ type: "drewCard" })]),
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerDrewFourCards",
+        cards: [
+          { type: "number", value: 3, color: "green", id: "card-id-005" },
+          { type: "number", value: 2, color: "red", id: "card-id-004" },
+          { type: "number", value: 1, color: "yellow", id: "card-id-003" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+        ],
+      }),
+    ]),
+  );
+
+  expect(game.players[1]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerDrewFourCards",
+        cards: [
+          { type: "number", value: 3, color: "green", id: "card-id-005" },
+          { type: "number", value: 2, color: "red", id: "card-id-004" },
+          { type: "number", value: 1, color: "yellow", id: "card-id-003" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+        ],
+      }),
+    ]),
   );
 });
 
-test("emits playerDrewFourCards event to all players", () => {
+test("emits otherPlayerDrewFourCards event to other players", () => {
   let game: StartedGame = {
     id: "game-id-001",
     createdAt: Date.now(),
@@ -163,16 +168,16 @@ test("emits playerDrewFourCards event to all players", () => {
   expect(game.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerDrewFourCards",
+        type: "otherPlayerDrewFourCards",
         username: "username-002",
       }),
     ]),
   );
 
-  expect(game.players[1]?.events).toEqual(
+  expect(game.players[1]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerDrewFourCards",
+        type: "otherPlayerDrewFourCards",
         username: "username-002",
       }),
     ]),

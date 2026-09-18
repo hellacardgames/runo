@@ -13,14 +13,20 @@ export const getClientStateAndClearEvents = getClientStateAndClearEventsFactory<
   status: game.status,
   gameId: game.id,
   playerId: player.id,
-  username: player.username,
-  players: game.players.map((p) => ({
-    username: p.username,
-    numCards: p.hand.length,
-    score: p.score,
-  })),
+  player: {
+    username: player.username,
+    hand: player.hand,
+    score: player.score,
+  },
+  otherPlayers: game.players
+    .filter((p) => p.id !== player.id)
+    .map((p) => ({
+      username: p.username,
+      numCards: p.hand.length,
+      score: p.score,
+    })),
+  usernames: game.players.map((p) => p.username),
   adminUsername: getPlayer(game, game.adminId).player.username,
-  hand: player.hand,
   lastDiscard: game.discardPile[game.discardPile.length - 1] ?? null,
   currentPlayerUsername: getCurrentPlayer(game).username,
   isReversed: game.isReversed,

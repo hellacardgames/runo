@@ -1,5 +1,7 @@
 import {
   emitEvent,
+  emitEventToOtherPlayers,
+  emitEventToPlayer,
   getCurrentPlayer,
   getNextPlayer,
   updatePlayer,
@@ -31,8 +33,13 @@ export function playWildCard(
     removeCardFromHand(p, card),
   );
   game = addWildCardToDiscardPile(game, card, color);
-  game = emitEvent(game, {
-    type: "cardPlayed",
+
+  game = emitEventToPlayer(game, currentPlayer.id, {
+    type: "playerPlayedCard",
+    card: { type: "discardedWild", card, color },
+  });
+  game = emitEventToOtherPlayers(game, currentPlayer.id, {
+    type: "otherPlayerPlayedCard",
     username: currentPlayer.username,
     card: { type: "discardedWild", card, color },
   });
@@ -50,16 +57,24 @@ export function playWildCard(
     const updatedCurrentPlayer = getCurrentPlayer(game);
 
     if (isGameWinner(game, currentPlayer.id)) {
-      game = emitEvent(game, {
+      game = emitEventToPlayer(game, updatedCurrentPlayer.id, {
         type: "playerWonGame",
+        score: updatedCurrentPlayer.score,
+      });
+      game = emitEventToOtherPlayers(game, updatedCurrentPlayer.id, {
+        type: "otherPlayerWonGame",
         username: updatedCurrentPlayer.username,
         score: updatedCurrentPlayer.score,
       });
       game = emitEvent(game, { type: "gameCompleted" });
       return transitionGameToCompleted(game);
     } else {
-      game = emitEvent(game, {
+      game = emitEventToPlayer(game, updatedCurrentPlayer.id, {
         type: "playerWonRound",
+        score: updatedCurrentPlayer.score,
+      });
+      game = emitEventToOtherPlayers(game, updatedCurrentPlayer.id, {
+        type: "otherPlayerWonRound",
         username: updatedCurrentPlayer.username,
         score: updatedCurrentPlayer.score,
       });

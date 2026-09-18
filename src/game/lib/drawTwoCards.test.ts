@@ -52,7 +52,7 @@ test("takes two cards from draw pile and gives to player", () => {
   expect(game.players[0]?.hand).toHaveLength(0);
 });
 
-test("emits drewCard events to player", () => {
+test("emits playerDrewTwoCards event to player", () => {
   let game: StartedGame = {
     id: "game-id-001",
     createdAt: Date.now(),
@@ -90,23 +90,32 @@ test("emits drewCard events to player", () => {
 
   game = drawTwoCards(game, "player-id-002");
 
-  expect(game.players[1]?.events.slice(0, 2)).toEqual([
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 1, color: "yellow", id: "card-id-003" },
-    }),
-    expect.objectContaining({
-      type: "drewCard",
-      card: { type: "number", value: 9, color: "blue", id: "card-id-002" },
-    }),
-  ]);
-
   expect(game.players[0]?.events).not.toEqual(
-    expect.arrayContaining([expect.objectContaining({ type: "drewCard" })]),
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerDrewTwoCards",
+        cards: [
+          { type: "number", value: 1, color: "yellow", id: "card-id-003" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+        ],
+      }),
+    ]),
+  );
+
+  expect(game.players[1]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerDrewTwoCards",
+        cards: [
+          { type: "number", value: 1, color: "yellow", id: "card-id-003" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+        ],
+      }),
+    ]),
   );
 });
 
-test("emits playerDrewTwoCards event to all players", () => {
+test("emits otherPlayerDrewTwoCards event to other players", () => {
   let game: StartedGame = {
     id: "game-id-001",
     createdAt: Date.now(),
@@ -147,16 +156,16 @@ test("emits playerDrewTwoCards event to all players", () => {
   expect(game.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerDrewTwoCards",
+        type: "otherPlayerDrewTwoCards",
         username: "username-002",
       }),
     ]),
   );
 
-  expect(game.players[1]?.events).toEqual(
+  expect(game.players[1]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerDrewTwoCards",
+        type: "otherPlayerDrewTwoCards",
         username: "username-002",
       }),
     ]),

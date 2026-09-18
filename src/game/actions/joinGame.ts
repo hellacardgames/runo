@@ -23,8 +23,8 @@ export function joinGame(game: Game, userId: string, username: string) {
     score: 0,
   };
 
+  game = emitEvent(game, { type: "otherPlayerJoined", username });
   game = { ...game, players: addItemToCollection(game.players, player) };
-  game = emitEvent(game, { type: "playerJoined", username });
 
   return { success: true, game, playerId: player.id } as const;
 }

@@ -381,7 +381,94 @@ test("does not change current player when only two players and card is a draw fo
   expect(newGame.currentPlayerIndex).toBe(1);
 });
 
-test("emits cardPlayed event to all players", () => {
+test("emits playerPlayedCard event only to player", () => {
+  const wildCard: WildCard = {
+    type: "wild",
+    isDrawFour: false,
+    id: "card-id-001",
+  };
+
+  const game: StartedGame = {
+    id: "game-id-001",
+    createdAt: Date.now(),
+    expiresAt: Date.now() + EXPIRY_EXTENSION_MS,
+    status: "started",
+    players: [
+      {
+        id: "player-id-001",
+        userId: "user-id-001",
+        username: "username-001",
+        events: [],
+        hand: [],
+        score: 0,
+      },
+      {
+        id: "player-id-002",
+        userId: "user-id-002",
+        username: "username-002",
+        events: [],
+        hand: [
+          { type: "number", value: 9, color: "yellow", id: "card-id-071" },
+          { type: "number", value: 9, color: "blue", id: "card-id-002" },
+          wildCard,
+          { type: "drawTwo", color: "green", id: "card-id-066" },
+        ],
+        score: 0,
+      },
+      {
+        id: "player-id-003",
+        userId: "user-id-003",
+        username: "username-003",
+        events: [],
+        hand: [],
+        score: 0,
+      },
+    ],
+    adminId: "player-id-001",
+    drawPile: [
+      { type: "number", value: 1, color: "red", id: "card-id-101" },
+      { type: "number", value: 1, color: "red", id: "card-id-102" },
+    ],
+    discardPile: [
+      { type: "reverse", color: "yellow", id: "card-id-028" },
+      { type: "drawTwo", color: "blue", id: "card-id-037" },
+    ],
+    currentPlayerIndex: 1,
+    isReversed: false,
+    chatMessages: [],
+  };
+
+  const newGame = playWildCard(game, wildCard, "blue");
+
+  expect(newGame.players[0]?.events).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerPlayedCard",
+        card: { type: "discardedWild", card: wildCard, color: "blue" },
+      }),
+    ]),
+  );
+
+  expect(newGame.players[1]?.events).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerPlayedCard",
+        card: { type: "discardedWild", card: wildCard, color: "blue" },
+      }),
+    ]),
+  );
+
+  expect(newGame.players[2]?.events).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: "playerPlayedCard",
+        card: { type: "discardedWild", card: wildCard, color: "blue" },
+      }),
+    ]),
+  );
+});
+
+test("emits otherPlayerPlayedCard event to other players", () => {
   const wildCard: WildCard = {
     type: "wild",
     isDrawFour: false,
@@ -443,17 +530,17 @@ test("emits cardPlayed event to all players", () => {
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardPlayed",
+        type: "otherPlayerPlayedCard",
         username: "username-002",
         card: { type: "discardedWild", card: wildCard, color: "blue" },
       }),
     ]),
   );
 
-  expect(newGame.players[1]?.events).toEqual(
+  expect(newGame.players[1]?.events).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardPlayed",
+        type: "otherPlayerPlayedCard",
         username: "username-002",
         card: { type: "discardedWild", card: wildCard, color: "blue" },
       }),
@@ -463,7 +550,7 @@ test("emits cardPlayed event to all players", () => {
   expect(newGame.players[2]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "cardPlayed",
+        type: "otherPlayerPlayedCard",
         username: "username-002",
         card: { type: "discardedWild", card: wildCard, color: "blue" },
       }),
@@ -744,7 +831,7 @@ test("emits playerWonRound event when player wins round", () => {
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerWonRound",
+        type: "otherPlayerWonRound",
         username: "username-002",
         score: 43,
       }),
@@ -755,7 +842,6 @@ test("emits playerWonRound event when player wins round", () => {
     expect.arrayContaining([
       expect.objectContaining({
         type: "playerWonRound",
-        username: "username-002",
         score: 43,
       }),
     ]),
@@ -764,7 +850,7 @@ test("emits playerWonRound event when player wins round", () => {
   expect(newGame.players[2]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerWonRound",
+        type: "otherPlayerWonRound",
         username: "username-002",
         score: 43,
       }),
@@ -1004,7 +1090,7 @@ test("emits playerWonGame event when player wins game", () => {
   expect(newGame.players[0]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerWonGame",
+        type: "otherPlayerWonGame",
         username: "username-002",
         score: WINNING_SCORE - 1 + 38,
       }),
@@ -1015,7 +1101,6 @@ test("emits playerWonGame event when player wins game", () => {
     expect.arrayContaining([
       expect.objectContaining({
         type: "playerWonGame",
-        username: "username-002",
         score: WINNING_SCORE - 1 + 38,
       }),
     ]),
@@ -1024,7 +1109,7 @@ test("emits playerWonGame event when player wins game", () => {
   expect(newGame.players[2]?.events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        type: "playerWonGame",
+        type: "otherPlayerWonGame",
         username: "username-002",
         score: WINNING_SCORE - 1 + 38,
       }),
