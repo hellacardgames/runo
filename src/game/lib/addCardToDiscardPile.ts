@@ -1,4 +1,4 @@
-import { addItemToCollection } from "@hellacardgames/lib";
+import { addItem } from "@hellacardgames/lib";
 import type { Card, WildCard } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
 
@@ -8,6 +8,6 @@ export function addCardToDiscardPile(
 ): StartedGame {
   return {
     ...game,
-    discardPile: addItemToCollection(game.discardPile, card),
+    discardPile: addItem(game.discardPile, card),
   };
 }

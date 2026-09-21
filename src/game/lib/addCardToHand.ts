@@ -1,4 +1,4 @@
-import { addItemToCollection } from "@hellacardgames/lib";
+import { addItem } from "@hellacardgames/lib";
 
 type Player = {
   readonly hand: readonly unknown[];
@@ -12,6 +12,6 @@ export function addCardToHand<TPlayer extends Player>(
 ): TPlayer {
   return {
     ...player,
-    hand: addItemToCollection(player.hand, card),
+    hand: addItem(player.hand, card),
   };
 }

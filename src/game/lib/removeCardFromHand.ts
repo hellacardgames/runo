@@ -1,4 +1,4 @@
-import { removeItemFromCollection } from "@hellacardgames/lib";
+import { removeItem } from "@hellacardgames/lib";
 
 type Player = {
   readonly hand: readonly unknown[];
@@ -12,6 +12,6 @@ export function removeCardFromHand<TPlayer extends Player>(
 ): TPlayer {
   return {
     ...player,
-    hand: removeItemFromCollection(player.hand, card),
+    hand: removeItem(player.hand, card),
   };
 }

@@ -1,4 +1,4 @@
-import { prependItemToCollection } from "@hellacardgames/lib";
+import { prependItem } from "@hellacardgames/lib";
 import type { Card, WildCard } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
 
@@ -8,6 +8,6 @@ export function addCardToBottomOfDiscardPile(
 ): StartedGame {
   return {
     ...game,
-    discardPile: prependItemToCollection(game.discardPile, card),
+    discardPile: prependItem(game.discardPile, card),
   };
 }

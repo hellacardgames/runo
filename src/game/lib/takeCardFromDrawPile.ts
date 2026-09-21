@@ -1,4 +1,4 @@
-import { takeLastItemFromCollection } from "@hellacardgames/lib";
+import { takeLastItem } from "@hellacardgames/lib";
 import { replenishDrawPile } from "./replenishDrawPile.js";
 import type { Card } from "../types/Card.js";
 import type { StartedGame } from "../types/Game.js";
@@ -15,9 +15,7 @@ export function takeCardFromDrawPile(
     game = replenishDrawPile(game);
   }
 
-  const { collection: newDrawPile, item: card } = takeLastItemFromCollection(
-    game.drawPile,
-  );
+  const { collection: newDrawPile, item: card } = takeLastItem(game.drawPile);
 
   game = { ...game, drawPile: newDrawPile };
 
